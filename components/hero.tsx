@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import React, { useRef } from "react"
 import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 import { motion } from "framer-motion"
@@ -24,7 +24,7 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
   }
 
   // Split title into words for animation
-  const titleWords = title.split(" ")
+  const titleWords = typeof title === "string" ? title.split(" ") : []
 
   return (
     <>
@@ -46,18 +46,38 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
         </motion.div>
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="flex flex-wrap justify-center text-4xl md:text-5xl lg:text-6xl font-normal mb-6 leading-tight tracking-tight text-white">
-            {titleWords.map((word, index) => (
+          <h1 className="flex flex-col justify-center text-4xl md:text-5xl lg:text-6xl font-normal mb-6 leading-tight tracking-tight text-white">
+            {typeof title === "string" ? (
               <motion.span
-                key={index}
-                className="inline-block mx-1 text-white"
+                className="inline-block text-white"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
               >
-                {word}
+                {title}
               </motion.span>
-            ))}
+            ) : (
+              React.Children.map(title.props.children, (child, index) => {
+                if (React.isValidElement(child)) {
+                  return React.cloneElement(
+                    child as React.ReactElement,
+                    {
+                      className: `${(child as React.ReactElement).props.className || ""} mb-2`,
+                      key: index,
+                    },
+                    <motion.span
+                      className="inline-block text-white"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
+                    >
+                      {(child as React.ReactElement).props.children}
+                    </motion.span>,
+                  )
+                }
+                return child
+              })
+            )}
           </h1>
 
           {subtitle && (
@@ -65,7 +85,7 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
               className="text-lg md:text-xl text-white mb-10 max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 + titleWords.length * 0.1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
               {subtitle}
             </motion.p>

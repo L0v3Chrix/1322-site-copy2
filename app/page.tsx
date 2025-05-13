@@ -100,8 +100,17 @@ export default function Home() {
       {/* Home Section */}
       <Hero
         id="home"
-        title="Control Your Capital. Build Your Legacy."
-        subtitle="Your money should outlive you—with purpose."
+        title={
+          <>
+            <span className="block">Control Your Capital.</span>
+            <span className="block">Build Your Legacy.</span>
+          </>
+        }
+        subtitle={
+          <>
+            Make sure <strong>your</strong> money outlives <strong>you</strong>—with purpose.
+          </>
+        }
         backgroundImage="/images/wheat-field.png"
       />
 
@@ -121,7 +130,7 @@ export default function Home() {
             capital—with clarity, control, and purpose.
           </p>
 
-          <p>Stewardship = ownership, liquidity, and an eternal lens.</p>
+          <p>Stewardship = ownership, liquidity, and a generational mindset.</p>
         </motion.div>
       </Section>
 
@@ -140,19 +149,17 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-normal mb-6">Our Mission:</h3>
+            <h3 className="text-2xl font-normal mb-6">Our Mission: Legacy by Design</h3>
 
             <p>
-              1322 Legacy Strategies exists to empower families to control their capital, steward their wealth
-              faithfully, and build legacies that bless generations.
+              To empower families to control their capital, steward their wealth faithfully, and build legacies that
+              bless generations.
             </p>
 
             <p>
-              Rooted in Proverbs 13:22, we believe wealth is not simply something to accumulate — it is something to
+              Rooted in Proverbs 13:22, we believe wealth is not simply something to accumulate—it is something to
               steward.
             </p>
-
-            <p className="font-bold">Faith. Family. Future.</p>
 
             <p>
               We don't believe in mass-market financial plans. We craft dynamic, relational strategies that honor your
@@ -186,7 +193,7 @@ export default function Home() {
             {
               title: "Stewardship Implementation",
               description:
-                'Tools like the "Family Banking System" (properly structured whole-life insurance), coordinated trusts, and tax-smart income streams.',
+                'Tools like the "Infinite Banking Concept" (properly structured whole-life insurance), coordinated trusts, and tax-smart income streams.',
             },
             {
               title: "Legacy Handoff",
@@ -376,6 +383,17 @@ export default function Home() {
               <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
               <p>Over 70% of new families come from referrals.</p>
             </motion.li>
+
+            <motion.li
+              className="flex items-start"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
+              <p>Supported by a team of CERTIFIED FINANCIAL PLANNERS and Chartered Life Underwriters.</p>
+            </motion.li>
           </ul>
 
           <AnimatedQuote author="Proverbs 13:22" className="my-8">
@@ -399,6 +417,8 @@ export default function Home() {
           transition={{ duration: 0.6 }}
         >
           <p>Schedule Your Discovery Call and start controlling your capital.</p>
+
+          <p className="text-sm italic mb-6">Control your capital. Build your legacy.</p>
 
           <div className="mt-8">
             <ContactButton

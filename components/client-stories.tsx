@@ -14,11 +14,12 @@ export default function ClientStories() {
       title: "Bryan & Carol: Downsizing without Downsides",
       subtitle: "Ages: 63",
       challenge:
-        "Bryan and Carol wanted to sell their suburban house and move closer to their grandkids and a nearby golf course. In our discovery call they voiced two fears: taking on a new mortgage in retirement and shrinking their kids' inheritance.",
+        "Bryan and Carol, both 63, wanted to move closer to the grandkids. They dreamed of golfing mornings and grandkid sleepovers without a bank's permission. In our discovery call they voiced two fears: taking on a new mortgage in retirement and shrinking their kids' inheritance.",
       solution: [
         {
           title: "Legacy Blueprint",
-          content: "",
+          content:
+            'We showed them how to channel the $927,000 net proceeds from the sale into a properly structured whole-life policy—their personal "Family Bank."',
         },
         {
           title: "Stewardship in Action",
@@ -31,15 +32,14 @@ export default function ClientStories() {
             "They enjoy a paid-off home by age 78, a projected six-figure tax-free dividend stream for travel, and a $6.6 million death benefit slated for their children and grandchildren—all without touching Wall Street or bankers.",
         },
       ],
-      disclaimer:
-        "*Illustrations are hypothetical, assume current dividend scales, and are not guarantees of future results.",
+      disclaimer: "*Hypothetical for illustration; dividends, loan rates, and tax law may change.",
     },
     {
       id: "story2",
       title: 'David & Linda: Defusing the "Tax Time-Bomb"',
       subtitle: "Ages: 67 & 65",
       challenge:
-        'David and Linda had nearly $1 million saved, but 85 percent sat in taxable accounts, leaving them anxious about three threats: longevity (outliving their money), taxes (ever-larger RMDs), and markets (another 2008 gut-punch). In our first conversation David called it "a ticking tax bomb."',
+        'David (67) and Linda (65) had nearly $1 million saved, but 85 percent sat in taxable accounts, leaving them anxious about three threats: longevity (outliving their money), taxes (ever-larger RMDs), and markets (another 2008 gut-punch). In our first conversation David called it "a ticking tax bomb."',
       solution: [
         {
           title: "Legacy Blueprint",
@@ -57,6 +57,7 @@ export default function ClientStories() {
             'Forty percent of the old "tax bomb" is already defused, their prepaid taxes now sit inside the policy\'s cash value, and projections show income lasting well past age 100—even under conservative assumptions. As David put it, "Tax season doesn\'t scare us anymore, and living to 100 sounds exciting—not expensive."',
         },
       ],
+      disclaimer: "*Hypothetical for illustration; dividends, loan rates, and tax law may change.",
     },
   ]
 

@@ -10,7 +10,7 @@ export default function ToolsServices() {
     },
     {
       concern: "Liquidity without the bank",
-      tool: "Becoming Your Own Banker",
+      tool: "Infinite Banking Concept™",
     },
     {
       concern: "Protect & pass assets",
