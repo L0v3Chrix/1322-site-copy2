@@ -70,11 +70,11 @@ export default function ClientStories() {
         </div>
 
         <Tabs defaultValue="story1" value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="story1" className="text-lg py-3">
+          <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8">
+            <TabsTrigger value="story1" className="text-sm sm:text-lg py-2 sm:py-3">
               Bryan & Carol
             </TabsTrigger>
-            <TabsTrigger value="story2" className="text-lg py-3">
+            <TabsTrigger value="story2" className="text-sm sm:text-lg py-2 sm:py-3">
               David & Linda
             </TabsTrigger>
           </TabsList>
@@ -82,12 +82,12 @@ export default function ClientStories() {
           {stories.map((story) => (
             <TabsContent key={story.id} value={story.id} className="mt-6">
               <motion.div
-                className="bg-cream p-8 rounded-lg border border-navy/10"
+                className="bg-cream p-4 sm:p-8 rounded-lg border border-navy/10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <h3 className="text-2xl md:text-3xl font-bold mb-2 text-navy">{story.title}</h3>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-navy">{story.title}</h3>
                 <p className="text-lg text-copper mb-6">{story.subtitle}</p>
 
                 <div className="mb-8">

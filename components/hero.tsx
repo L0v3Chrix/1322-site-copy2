@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useRef } from "react"
-import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 import { motion } from "framer-motion"
+import OptimizedImage from "./optimized-image"
 
 interface HeroProps {
   title: string
@@ -35,9 +35,10 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
           transition={{ duration: 1.5 }}
           className="absolute inset-0"
         >
-          <Image
+          <OptimizedImage
             src={backgroundImage || "/placeholder.svg"}
             alt="Hero background"
+            type="hero"
             fill
             priority
             className="object-cover"
@@ -46,7 +47,7 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
         </motion.div>
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="flex flex-col justify-center text-4xl md:text-5xl lg:text-6xl font-normal mb-6 leading-tight tracking-tight text-white">
+          <h1 className="flex flex-col justify-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal mb-4 sm:mb-6 leading-tight tracking-tight text-white">
             {typeof title === "string" ? (
               <motion.span
                 className="inline-block text-white"
@@ -59,12 +60,20 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
             ) : (
               React.Children.map(title.props.children, (child, index) => {
                 if (React.isValidElement(child)) {
+                  // Check if child is a Fragment
+                  const isFragment = child.type === React.Fragment
+
+                  // Only add className if not a Fragment
+                  const props = isFragment
+                    ? { key: index }
+                    : {
+                        className: `${(child as React.ReactElement).props.className || ""} mb-2`,
+                        key: index,
+                      }
+
                   return React.cloneElement(
                     child as React.ReactElement,
-                    {
-                      className: `${(child as React.ReactElement).props.className || ""} mb-2`,
-                      key: index,
-                    },
+                    props,
                     <motion.span
                       className="inline-block text-white"
                       initial={{ opacity: 0, y: 20 }}
@@ -82,7 +91,7 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
 
           {subtitle && (
             <motion.p
-              className="text-lg md:text-xl text-white mb-10 max-w-3xl mx-auto"
+              className="text-base sm:text-lg md:text-xl text-white mb-6 sm:mb-10 max-w-3xl mx-auto px-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}

@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import Layout from "@/components/layout"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModalProvider } from "@/context/modal-context"
 import { VideoProvider } from "@/context/video-context"
@@ -10,6 +9,8 @@ import FloatingVideoPlayer from "@/components/floating-video-player"
 import { useModal } from "@/context/modal-context"
 import { usePathname } from "next/navigation"
 import MotionConfigWrapper from "@/components/motion-config"
+import Header from "@/components/header"
+import Footer from "@/components/footer"
 
 function ContactFormModalWrapper() {
   const { isContactModalOpen, closeContactModal, modalTitle, modalDescription } = useModal()
@@ -37,7 +38,11 @@ export default function ClientLayout({
       <MotionConfigWrapper>
         <VideoProvider>
           <ModalProvider>
-            <Layout isBlogPage={isBlogPage}>{children}</Layout>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
             <ContactFormModalWrapper />
             <FloatingVideoPlayer />
           </ModalProvider>

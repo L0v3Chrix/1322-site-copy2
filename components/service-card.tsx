@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { motion } from "framer-motion"
+import OptimizedImage from "./optimized-image"
 
 interface ServiceCardProps {
   title: string
@@ -26,13 +26,13 @@ export default function ServiceCard({ title, image, slug, index, description }: 
       }}
     >
       <Link href={`/services/${slug}`} className="block h-full">
-        <div className="relative">
-          <Image
+        <div className="relative aspect-[4/3] w-full">
+          <OptimizedImage
             src={image || "/placeholder.svg"}
             alt={title}
-            width={600}
-            height={450}
-            className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105 rounded-t-lg"
+            type="medium"
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105 rounded-t-lg"
           />
           <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 flex items-center justify-center group-hover:opacity-100 rounded-t-lg">
             <div className="text-center px-4">
@@ -41,8 +41,8 @@ export default function ServiceCard({ title, image, slug, index, description }: 
           </div>
         </div>
         <div className="bg-cream p-6 flex-grow rounded-b-lg">
-          <h3 className="text-xl font-bold mb-2 text-navy">{title}</h3>
-          {description && <p className="text-navy/80">{description}</p>}
+          <h3 className="text-lg sm:text-xl font-bold mb-2 text-navy">{title}</h3>
+          {description && <p className="text-sm sm:text-base text-navy/80">{description}</p>}
         </div>
       </Link>
     </motion.div>

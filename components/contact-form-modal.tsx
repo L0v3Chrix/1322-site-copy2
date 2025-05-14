@@ -80,7 +80,7 @@ export default function ContactFormModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="sm:max-w-[500px] bg-cream">
+      <DialogContent className="w-[calc(100%-2rem)] sm:max-w-[500px] bg-cream max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-2xl font-bold text-navy">{title}</DialogTitle>
@@ -95,7 +95,7 @@ export default function ContactFormModal({
           {!submitted ? (
             <motion.form
               onSubmit={handleSubmit}
-              className="space-y-6 mt-4"
+              className="space-y-4 sm:space-y-6 mt-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

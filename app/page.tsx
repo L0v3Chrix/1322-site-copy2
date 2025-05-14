@@ -101,10 +101,10 @@ export default function Home() {
       <Hero
         id="home"
         title={
-          <>
+          <div>
             <span className="block">Control Your Capital.</span>
             <span className="block">Build Your Legacy.</span>
-          </>
+          </div>
         }
         subtitle={
           <>

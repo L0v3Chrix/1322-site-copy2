@@ -1,17 +1,18 @@
 "use client"
 
 import { useRef, useEffect, useState } from "react"
-import Image from "next/image"
 import { motion } from "framer-motion"
+import OptimizedImage from "./optimized-image"
 
 interface ParallaxImageProps {
   src: string
   alt: string
   className?: string
   speed?: number
+  type?: "hero" | "medium" | "small" | "profile" | "logo"
 }
 
-export default function ParallaxImage({ src, alt, className = "", speed = 0.2 }: ParallaxImageProps) {
+export default function ParallaxImage({ src, alt, className = "", speed = 0.2, type = "medium" }: ParallaxImageProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [offset, setOffset] = useState(0)
 
@@ -51,10 +52,11 @@ export default function ParallaxImage({ src, alt, className = "", speed = 0.2 }:
           transform: `translateY(${offset}px)`,
           height: "calc(100% + 200px)",
           marginTop: "-100px",
+          position: "absolute",
+          inset: 0,
         }}
-        className="absolute inset-0"
       >
-        <Image src={src || "/placeholder.svg"} alt={alt} fill className="object-cover" />
+        <OptimizedImage src={src} alt={alt} type={type} fill className="object-cover" />
       </div>
     </motion.div>
   )

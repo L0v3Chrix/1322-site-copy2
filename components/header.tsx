@@ -5,9 +5,8 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
-import ContactButton from "@/components/contact-button"
 import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
+import OptimizedImage from "./optimized-image"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -81,23 +80,21 @@ const Header = () => {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center">
-            <motion.div className="relative h-10 w-10 mr-3" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-              <Image
-                src="/images/shield-logo.jpeg"
-                alt="1322 Legacy Strategies Logo"
-                width={40}
+            <motion.div
+              className="relative h-10 w-auto flex items-center -ml-3"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <OptimizedImage
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13%3B22-header-logo-wQ4XkXwQPSQI3hjC9Dx3e5qXuhrkR5.png"
+                alt="1322 Legacy Strategies"
+                type="logo"
+                width={180}
                 height={40}
                 className="object-contain"
+                style={{ marginTop: "-4px" }}
               />
             </motion.div>
-            <motion.span
-              className={`text-2xl font-playfair font-bold ${logoTextColor} transition-colors duration-300`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              13:22 Legacy Strategies
-            </motion.span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -125,7 +122,18 @@ const Header = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              <ContactButton variant={scrolled ? "primary" : "secondary"}>Start Here</ContactButton>
+              <Link
+                href="https://webinar.1322legacystrategies.com/webinar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border ${
+                  scrolled
+                    ? "border-navy text-navy hover:bg-navy hover:text-white"
+                    : "border-white text-white hover:bg-white hover:text-navy"
+                }`}
+              >
+                Webinar
+              </Link>
             </motion.div>
           </nav>
 
@@ -154,7 +162,7 @@ const Header = () => {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <nav className="container mx-auto px-4 py-6 flex flex-col space-y-6">
+            <nav className="container mx-auto px-4 py-4 sm:py-6 flex flex-col space-y-4 sm:space-y-6">
               {navItems.map((item, index) => (
                 <motion.div
                   key={item.path}
@@ -174,7 +182,14 @@ const Header = () => {
                 </motion.div>
               ))}
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-                <ContactButton className="inline-block text-center w-full">Start Here</ContactButton>
+                <Link
+                  href="https://webinar.1322legacystrategies.com/webinar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-center w-full px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-navy text-navy hover:bg-navy hover:text-white"
+                >
+                  Webinar
+                </Link>
               </motion.div>
             </nav>
           </motion.div>

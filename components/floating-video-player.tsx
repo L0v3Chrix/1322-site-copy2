@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Minimize2, Play, Volume2 } from "lucide-react"
 import { useVideo } from "@/context/video-context"
-import Image from "next/image"
+import OptimizedImage from "./optimized-image"
 
 export default function FloatingVideoPlayer() {
   const { videoState, openVideo, minimizeVideo } = useVideo()
@@ -28,19 +28,27 @@ export default function FloatingVideoPlayer() {
       {videoState === "open" && (
         <motion.div
           className="fixed z-50 bg-navy/90 rounded-lg shadow-xl overflow-hidden"
-          initial={{ opacity: 0, y: 50, right: "2rem", bottom: "2rem", width: "440px" }}
+          initial={{ opacity: 0, y: 50 }}
+          style={{
+            position: "fixed",
+            right: "1rem",
+            bottom: "1rem",
+            width: "min(90vw, 440px)",
+            maxWidth: "100%",
+          }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
           transition={{ duration: 0.3 }}
         >
           <div className="relative">
             {/* Video Placeholder */}
-            <div ref={videoRef} className="relative aspect-video bg-navy overflow-hidden">
+            <div ref={videoRef} className="relative aspect-video bg-navy overflow-hidden w-full">
               <div className="absolute inset-0">
                 <div className="relative w-full h-full">
-                  <Image
+                  <OptimizedImage
                     src="/images/1322-welcome.png"
                     alt="Welcome to 1322 Legacy Strategies"
+                    type="medium"
                     fill
                     className="object-contain object-top scale-[1.3] -translate-y-[5%]"
                     priority
@@ -58,9 +66,9 @@ export default function FloatingVideoPlayer() {
             </div>
 
             {/* Controls */}
-            <div className="p-4 bg-navy text-cream">
+            <div className="p-3 sm:p-4 bg-navy text-cream">
               <div className="flex justify-between items-center mb-3">
-                <h3 className="font-bold text-lg">A Message from Brad</h3>
+                <h3 className="font-bold text-base sm:text-lg">A Message from Brad</h3>
                 <div className="flex space-x-2">
                   <button
                     onClick={minimizeVideo}
@@ -72,7 +80,7 @@ export default function FloatingVideoPlayer() {
                 </div>
               </div>
 
-              <p className="text-sm text-cream/80 mb-3">
+              <p className="text-xs sm:text-sm text-cream/80 mb-2 sm:mb-3">
                 Welcome to 13:22 Legacy Strategies. I'd like to share how we can help you build a legacy that lasts for
                 generations.
               </p>
@@ -103,6 +111,7 @@ export default function FloatingVideoPlayer() {
       {videoState === "minimized" && (
         <motion.div
           className="fixed z-50 bottom-6 right-6 bg-navy rounded-full shadow-lg cursor-pointer overflow-hidden"
+          style={{ maxWidth: "100%" }}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
@@ -115,7 +124,13 @@ export default function FloatingVideoPlayer() {
             <div className="absolute inset-0 bg-gold/20 flex items-center justify-center">
               <Play className="h-6 w-6 text-cream" />
             </div>
-            <Image src="/images/brad-headshot.jpeg" alt="Brad Raschke" fill className="object-cover opacity-80" />
+            <OptimizedImage
+              src="/images/brad-headshot.jpeg"
+              alt="Brad Raschke"
+              type="profile"
+              fill
+              className="object-cover opacity-80"
+            />
           </div>
         </motion.div>
       )}

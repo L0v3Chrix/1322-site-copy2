@@ -2,7 +2,7 @@
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
 import FooterContactLink from "@/components/footer-contact-link"
 import { motion } from "framer-motion"
-import Image from "next/image"
+import OptimizedImage from "./optimized-image"
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -28,17 +28,18 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="bg-cream text-navy py-16 border-t border-cream/30"
+      className="bg-cream text-navy py-10 sm:py-16 border-t border-cream/30"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
     >
-      <div className="container mx-auto px-4 md:px-8 text-center">
+      <div className="container mx-auto px-3 sm:px-4 md:px-8 text-center">
         <motion.div className="max-w-md mx-auto mb-8" variants={fadeInUpVariants} custom={0}>
           <motion.div className="flex justify-center mb-4" whileHover={{ scale: 1.05 }}>
-            <Image
-              src="/images/shield-logo.jpeg"
+            <OptimizedImage
+              src="/images/footer-logo.png"
               alt="1322 Legacy Strategies Logo"
+              type="logo"
               width={60}
               height={60}
               className="object-contain"
@@ -52,7 +53,11 @@ const Footer = () => {
           </motion.p>
         </motion.div>
 
-        <motion.div className="flex justify-center space-x-6 mb-8" variants={fadeInUpVariants} custom={3}>
+        <motion.div
+          className="flex justify-center space-x-4 sm:space-x-6 mb-6 sm:mb-8"
+          variants={fadeInUpVariants}
+          custom={3}
+        >
           {[
             { icon: Facebook, label: "Facebook" },
             { icon: Twitter, label: "Twitter" },
@@ -77,7 +82,7 @@ const Footer = () => {
         </motion.div>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-8 text-sm uppercase tracking-wider"
+          className="flex flex-wrap justify-center gap-x-4 sm:gap-x-8 gap-y-2 mb-6 sm:mb-8 text-xs sm:text-sm uppercase tracking-wider"
           variants={fadeInUpVariants}
           custom={4}
         >
