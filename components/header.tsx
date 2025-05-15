@@ -123,9 +123,7 @@ const Header = () => {
               transition={{ delay: 0.5, duration: 0.5 }}
             >
               <Link
-                href="https://webinar.1322legacystrategies.com/webinar"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/webinar"
                 className={`inline-flex items-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border ${
                   scrolled
                     ? "border-navy text-navy hover:bg-navy hover:text-white"
@@ -183,9 +181,7 @@ const Header = () => {
               ))}
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
                 <Link
-                  href="https://webinar.1322legacystrategies.com/webinar"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/webinar"
                   className="inline-block text-center w-full px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-navy text-navy hover:bg-navy hover:text-white"
                 >
                   Webinar

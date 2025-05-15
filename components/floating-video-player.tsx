@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Minimize2, Play, Volume2 } from "lucide-react"
+import { Minimize2, Play, Volume2, X } from "lucide-react"
 import { useVideo } from "@/context/video-context"
 import OptimizedImage from "./optimized-image"
 
@@ -41,6 +41,15 @@ export default function FloatingVideoPlayer() {
           transition={{ duration: 0.3 }}
         >
           <div className="relative">
+            {/* Close button in top-right corner */}
+            <button
+              onClick={minimizeVideo}
+              className="absolute top-2 right-2 z-10 bg-navy/70 hover:bg-navy text-cream rounded-full p-1.5 transition-colors"
+              aria-label="Close video"
+            >
+              <X className="h-4 w-4" />
+            </button>
+
             {/* Video Placeholder */}
             <div ref={videoRef} className="relative aspect-video bg-navy overflow-hidden w-full">
               <div className="absolute inset-0">

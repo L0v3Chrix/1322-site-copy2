@@ -27,14 +27,19 @@ export function VideoProvider({ children }: { children: ReactNode }) {
         // Check if we've already shown the video in this session
         const hasSeenVideo = sessionStorage.getItem("hasSeenVideo") === "true"
 
+        // Check if we're on a mobile device
+        const isMobile = window.innerWidth < 768
+
         if (hasSeenVideo) {
           setHasBeenSeen(true)
-          setVideoState("minimized") // Instead of closed, set to minimized
+          // On mobile, keep it minimized by default after seen once
+          setVideoState(isMobile ? "minimized" : "minimized")
           return
         }
 
         const timer = setTimeout(() => {
-          setVideoState("open")
+          // On first visit, open the video on desktop, but keep minimized on mobile
+          setVideoState(isMobile ? "minimized" : "open")
           setHasBeenSeen(true)
           // Store in session storage to remember during this session
           sessionStorage.setItem("hasSeenVideo", "true")
