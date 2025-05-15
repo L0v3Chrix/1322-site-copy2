@@ -11,6 +11,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [post, setPost] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [tableOfContents, setTableOfContents] = useState<{ id: string; text: string }[]>([])
+  const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
     // Find the post in either posts or caseStudies
@@ -18,6 +19,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     const foundPost = allPosts.find((p) => p.slug === params.slug)
     setPost(foundPost || null)
     setLoading(false)
+
+    // Reset image error state when post changes
+    setImageError(false)
 
     // Extract headings for table of contents
     if (foundPost) {
@@ -71,6 +75,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   // Determine if this is the "How to Build Your Own Bank" article
   const isHowToBuildYourOwnBank = post.slug === "how-to-build-your-own-bank"
 
+  // Fallback image if the author image fails to load
+  const authorImage = imageError ? "/images/brad-headshot.jpeg" : post.authorImage || "/images/brad-headshot.jpeg"
+
   return (
     <div className={`blog-modern-layout ${isHowToBuildYourOwnBank ? "blog-post-how-to-build-your-own-bank" : ""}`}>
       {/* Hero Section with Featured Image */}
@@ -88,11 +95,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <div className="blog-author">
               <div className="blog-author-image">
                 <Image
-                  src={post.authorImage || "/placeholder.svg"}
+                  src={authorImage || "/placeholder.svg"}
                   alt={post.author}
                   width={40}
                   height={40}
                   className="object-cover rounded-full"
+                  onError={() => setImageError(true)}
                 />
               </div>
               <div className="blog-author-name">{post.author}</div>
@@ -160,11 +168,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           <div className="blog-author-bio">
             <div className="blog-author-bio-image">
               <Image
-                src={post.authorImage || "/placeholder.svg"}
+                src={authorImage || "/placeholder.svg"}
                 alt={post.author}
                 width={80}
                 height={80}
                 className="object-cover rounded-full"
+                onError={() => setImageError(true)}
               />
             </div>
             <div className="blog-author-bio-content">
