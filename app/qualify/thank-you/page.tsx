@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function ThankYouPage() {
   return (
-    <div className="min-h-screen bg-[#F5F0E6] py-16">
+    <div className="min-h-screen bg-[#F5F0E6] pt-20 pb-16 flex flex-col items-center justify-center">
       <div className="container max-w-lg mx-auto px-4">
         <div className="bg-white rounded-lg shadow-md p-8 text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
