@@ -1,12 +1,9 @@
 "use client"
 
 import type React from "react"
-
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModalProvider } from "@/context/modal-context"
 import { VideoProvider } from "@/context/video-context"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
 import ContactFormModal from "@/components/contact-form-modal"
 import { useModal } from "@/context/modal-context"
 import MotionConfigWrapper from "@/components/motion-config"
@@ -25,38 +22,25 @@ function ContactFormModalWrapper() {
   )
 }
 
-export default function ClientLayout({
+export default function WebinarLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // Check if the current path is part of the webinar funnel
-  const isWebinarFunnel = (pathname: string) => {
-    return pathname.startsWith("/webinar") || pathname.startsWith("/qualify") || pathname.startsWith("/schedule-call")
-  }
-
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-      <ModalProvider>
+      <MotionConfigWrapper>
         <VideoProvider>
-          <MotionConfigWrapper>
+          <ModalProvider>
             <div className="flex flex-col min-h-screen">
-              {/* Conditionally render header based on path */}
-              {typeof window !== "undefined" && !isWebinarFunnel(window.location.pathname) && <Header />}
-
+              {/* No header here */}
               <main className="flex-grow">{children}</main>
-
-              {/* Conditionally render footer based on path */}
-              {typeof window !== "undefined" && isWebinarFunnel(window.location.pathname) ? (
-                <MinimalFooter />
-              ) : (
-                <Footer />
-              )}
+              <MinimalFooter />
             </div>
             <ContactFormModalWrapper />
-          </MotionConfigWrapper>
+          </ModalProvider>
         </VideoProvider>
-      </ModalProvider>
+      </MotionConfigWrapper>
     </ThemeProvider>
   )
 }
