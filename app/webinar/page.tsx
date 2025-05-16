@@ -2,9 +2,8 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { registerForWebinar } from "../actions/webinar-registration"
-import Image from "next/image"
 import Link from "next/link"
 
 export default function WebinarPage() {
@@ -13,10 +12,49 @@ export default function WebinarPage() {
   const [isRegistered, setIsRegistered] = useState(false)
   const [countdown, setCountdown] = useState({
     days: 0,
-    hours: 18,
-    minutes: 14,
-    seconds: 41,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   })
+
+  // Calculate time until next Wednesday at 7pm CST
+  useEffect(() => {
+    const calculateTimeUntilNextWednesday = () => {
+      const now = new Date()
+
+      // Get the next Wednesday
+      const nextWednesday = new Date(now)
+      nextWednesday.setDate(now.getDate() + ((3 + 7 - now.getDay()) % 7))
+
+      // Set to 7pm CST (which is UTC-6)
+      nextWednesday.setHours(19, 0, 0, 0)
+
+      // If it's already past 7pm on Wednesday, go to next week
+      if (now > nextWednesday) {
+        nextWednesday.setDate(nextWednesday.getDate() + 7)
+      }
+
+      // Calculate the difference
+      const diff = nextWednesday.getTime() - now.getTime()
+
+      // Convert to days, hours, minutes, seconds
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+      setCountdown({ days, hours, minutes, seconds })
+    }
+
+    // Calculate immediately
+    calculateTimeUntilNextWednesday()
+
+    // Update every second
+    const interval = setInterval(calculateTimeUntilNextWednesday, 1000)
+
+    // Clean up
+    return () => clearInterval(interval)
+  }, [])
 
   // Handle form submission
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -42,50 +80,21 @@ export default function WebinarPage() {
       <div className="min-h-screen bg-[#F5F0E6] pt-20 pb-16 flex items-center justify-center">
         <div className="max-w-3xl w-full mx-auto px-4">
           <div className="bg-navy text-white p-8 rounded-t-lg text-center">
-            <h1 className="text-3xl font-bold mb-4">You're Registered. Well Done.</h1>
+            <h1 className="text-3xl font-bold mb-4">Thank You for Registering!</h1>
             <p className="text-lg">
               Your seat is confirmed for the upcoming 1322 Stewardship Webinar — Wednesday at 7:00 p.m. CST.
             </p>
           </div>
 
           <div className="relative bg-[#F5F0E6] aspect-video w-full">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wheat-field-sunset-1322-Rl9Yd9Iy9Yd9Iy9Yd9Iy.jpg"
-              alt="Wheat field at sunset with 1322 logo"
-              fill
-              className="object-cover"
+            <video
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Thank%20You%20Webinar-UxSFfgpbsWu5xvEoVFt76tJvVIlTdW.mp4"
+              className="w-full h-full object-cover"
+              controls
+              autoPlay
+              muted
+              playsInline
             />
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <Image
-                src="/images/footer-logo.png"
-                alt="1322 Legacy Strategies"
-                width={80}
-                height={80}
-                className="mb-4"
-              />
-              <div className="text-navy text-4xl font-bold mb-2">1322</div>
-              <div className="text-navy text-xl mb-8">LEGACY STRATEGIES</div>
-
-              <button
-                className="bg-navy/80 hover:bg-navy text-white rounded-full p-4 transition-colors"
-                aria-label="Play video"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-              </button>
-              <p className="text-navy mt-4">Brad thanking you for registering</p>
-            </div>
           </div>
 
           <div className="bg-white p-8 text-center">
@@ -178,19 +187,21 @@ export default function WebinarPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] pt-20 pb-16">
+    <div className="min-h-screen bg-[#F5F0E6] py-16">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid md:grid-cols-2 gap-8">
           {/* Left Column - Video and Description */}
           <div>
             <div className="relative rounded-lg overflow-hidden mb-6 aspect-video">
-              <iframe
-                src="https://www.youtube.com/embed/gaTHe7bD8VI?rel=0&autoplay=1&mute=1"
+              <video
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Welcome-AbnYBNpB3TvkIqn2k4waIwkijWTxah.mp4"
                 title="Brad introduces the webinar"
-                className="absolute top-0 left-0 w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+                className="absolute top-0 left-0 w-full h-full object-cover"
+                autoPlay
+                muted
+                playsInline
+                controls
+              />
             </div>
 
             <h1 className="text-3xl md:text-4xl font-bold text-navy mb-4">

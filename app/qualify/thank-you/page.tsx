@@ -1,8 +1,10 @@
 import Link from "next/link"
+import WebinarHeader from "@/components/webinar-header"
 
 export default function ThankYouPage() {
   return (
-    <div className="min-h-screen bg-[#F5F0E6] pt-20 pb-16 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#F5F0E6] py-16">
+      <WebinarHeader />
       <div className="container max-w-lg mx-auto px-4">
         <div className="bg-white rounded-lg shadow-md p-8 text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -87,10 +89,10 @@ export default function ThankYouPage() {
 
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              href="/"
+              href="https://www.1322legacystrategies.com/"
               className="bg-navy hover:bg-navy/90 text-white py-3 px-6 rounded font-medium transition-colors"
             >
-              Return to Homepage
+              Visit Main Site
             </Link>
             <Link
               href="/webinar"

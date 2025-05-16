@@ -9,6 +9,7 @@ import ParallaxImage from "@/components/parallax-image"
 import { ArrowRight, Check } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
 // Import the new components at the top of the file
 import AnimatedText from "@/components/animated-text"
@@ -18,6 +19,8 @@ import ClientStories from "@/components/client-stories"
 import ToolsServices from "@/components/tools-services"
 
 export default function Home() {
+  redirect("/webinar")
+
   // Services data
   const services = [
     {
