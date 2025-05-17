@@ -1,115 +1,58 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
-import { ArrowRight, Calendar } from "lucide-react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { Calendar, Clock, ArrowLeft } from "lucide-react"
+import blogData from "@/data/blog-posts.json"
+import "../blog.css"
 
-// Sample blog data - in a real app, this would come from your CMS or API
-const blogData = {
-  "stewardship-vs-management": {
-    title: "The Difference Between Stewardship and Management",
-    excerpt:
-      "Discover why stewardship is a higher calling than mere management, and how this shift in perspective transforms your relationship with wealth.",
-    date: "June 15, 2023",
-    image: "/images/blog-post-1-new.png",
-    content: `
-      <p>In a world that urges you to "accumulate more," we invite you to something higher: faithful stewardship.</p>
-      
-      <p>Management focuses on maximizing returns and minimizing risks. It's about control, efficiency, and optimization. While these aren't inherently negative, they often center on self-interest and short-term gains.</p>
-      
-      <p>Stewardship, however, recognizes that we don't truly own anything—we are temporary caretakers of blessings entrusted to us. This perspective transforms how we view wealth:</p>
-      
-      <h3>Stewardship Recognizes the Source</h3>
-      <p>While management asks "How can I get more?", stewardship asks "How can I honor the One who provided this?"</p>
-      
-      <h3>Stewardship Embraces Responsibility</h3>
-      <p>Management seeks to maximize personal benefit. Stewardship seeks to maximize faithful impact.</p>
-      
-      <h3>Stewardship Extends Beyond Lifetimes</h3>
-      <p>Management often ends at retirement or death. Stewardship thinks generationally.</p>
-      
-      <p>At 13:22 Legacy Strategies, we help families shift from wealth management to wealth stewardship—a perspective that transforms not just portfolios, but purpose.</p>
-    `,
-  },
-  "teaching-children-legacy-value": {
-    title: "Teaching Your Children the Value of Legacy",
-    excerpt: "How to prepare the next generation to receive not just wealth, but wisdom.",
-    date: "July 22, 2023",
-    image: "/images/blog-post-2.png",
-    content: `
-      <p>The greatest inheritance you can leave your children isn't found in your bank account—it's found in your values, your wisdom, and your vision for their future.</p>
-      
-      <p>Many families focus exclusively on the financial aspects of inheritance, neglecting the more important transfer of values, wisdom, and purpose. This oversight often leads to what we call "shirtsleeves to shirtsleeves in three generations"—where wealth built by one generation is lost by the third.</p>
-      
-      <h3>Start Early, Start Intentionally</h3>
-      <p>Legacy education begins long before estate planning. It starts with daily conversations about values, purpose, and stewardship.</p>
-      
-      <h3>Create Family Mission Statements</h3>
-      <p>Work together to articulate what your family stands for, what you value, and what impact you hope to have on the world.</p>
-      
-      <h3>Practice Stewardship Together</h3>
-      <p>Involve children in giving decisions, business discussions (age-appropriately), and financial planning conversations.</p>
-      
-      <p>At 13:22 Legacy Strategies, we help families create intentional plans for transferring not just assets, but the wisdom needed to steward those assets faithfully.</p>
-    `,
-  },
-  "infinite-banking-concept": {
-    title: "Infinite Banking: Becoming Your Own Source of Financing",
-    excerpt: "How to take control of your capital and break free from traditional banking dependencies.",
-    date: "August 10, 2023",
-    image: "/images/blog-post-3.png",
-    content: `
-      <p>What if you could be your own bank? What if, instead of paying interest to financial institutions, you could recapture that capital and direct it toward your family's legacy?</p>
-      
-      <p>The Infinite Banking Concept (IBC) is a financial strategy that allows you to create your own banking system using dividend-paying whole life insurance. This approach puts you in control of your capital and allows you to finance purchases while still growing your wealth.</p>
-      
-      <h3>The Problem with Traditional Banking</h3>
-      <p>When you finance purchases through traditional banks, you enrich the bank's shareholders, not your family. Every dollar of interest paid is a dollar that could have grown your legacy.</p>
-      
-      <h3>The Power of Becoming Your Own Banker</h3>
-      <p>By creating your own banking system, you recapture the interest you would have paid to others, you maintain liquidity and control of your capital, and you create a legacy asset that grows tax-advantaged.</p>
-      
-      <h3>Beyond Just Numbers</h3>
-      <p>The Infinite Banking Concept isn't just about financial efficiency—it's about taking control of your capital so you can direct it according to your values and vision.</p>
-      
-      <p>At 13:22 Legacy Strategies, we help families implement personalized Infinite Banking strategies that align with their unique legacy goals.</p>
-    `,
-  },
-}
-
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [post, setPost] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [tableOfContents, setTableOfContents] = useState<{ id: string; text: string }[]>([])
+  const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
-    // In a real app, you would fetch this data from your API or CMS
-    const fetchPost = async () => {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 300))
+    // Find the post in either posts or caseStudies
+    const allPosts = [...blogData.posts, ...blogData.caseStudies]
+    const foundPost = allPosts.find((p) => p.slug === params.slug)
+    setPost(foundPost || null)
+    setLoading(false)
 
-      const postData = blogData[params.slug as keyof typeof blogData]
-      setPost(postData || null)
-      setLoading(false)
+    // Reset image error state when post changes
+    setImageError(false)
+
+    // Extract headings for table of contents
+    if (foundPost) {
+      const headingRegex = /<h([23])>(.*?)<\/h[23]>/g
+      const content = foundPost.content
+      const headings: { id: string; text: string }[] = []
+
+      let match
+      while ((match = headingRegex.exec(content)) !== null) {
+        const text = match[2].replace(/<.*?>/g, "")
+        const id = text.toLowerCase().replace(/[^\w]+/g, "-")
+        headings.push({ id, text })
+      }
+
+      setTableOfContents(headings)
     }
-
-    fetchPost()
   }, [params.slug])
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-24 flex items-center justify-center">
-        <div className="animate-pulse text-navy">Loading...</div>
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <div className="animate-pulse text-cream">Loading...</div>
       </div>
     )
   }
 
   if (!post) {
     return (
-      <div className="min-h-screen pt-24 flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold mb-4">Post Not Found</h1>
-        <p className="mb-6">The blog post you're looking for doesn't exist.</p>
+      <div className="text-center py-12">
+        <h1 className="text-2xl font-bold mb-4 text-cream">Post Not Found</h1>
+        <p className="mb-6 text-cream/80">The blog post you're looking for doesn't exist.</p>
         <Link href="/blog" className="btn-primary">
           Return to Blog
         </Link>
@@ -117,44 +60,141 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     )
   }
 
+  // Process content to add IDs to headings for table of contents
+  const processedContent = post.content.replace(
+    /<h([23])>(.*?)<\/h([23])>/g,
+    (match: string, level: string, content: string) => {
+      const id = content
+        .toLowerCase()
+        .replace(/<.*?>/g, "")
+        .replace(/[^\w]+/g, "-")
+      return `<h${level} id="${id}">${content}</h${level}>`
+    },
+  )
+
+  // Determine if this is the "How to Build Your Own Bank" article
+  const isHowToBuildYourOwnBank = post.slug === "how-to-build-your-own-bank"
+
+  // Fallback image if the author image fails to load
+  const authorImage = imageError ? "/images/brad-headshot.jpeg" : post.authorImage || "/images/brad-headshot.jpeg"
+
   return (
-    <div className="pt-20">
-      <section className="bg-cream py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-center mb-4 text-copper">
-              <Calendar className="mr-2 h-5 w-5" />
+    <div className={`blog-modern-layout ${isHowToBuildYourOwnBank ? "blog-post-how-to-build-your-own-bank" : ""}`}>
+      {/* Hero Section with Featured Image */}
+      <div className="blog-hero">
+        <div className="blog-hero-image">
+          <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" priority />
+          <div className="blog-hero-overlay"></div>
+        </div>
+
+        <div className="blog-hero-content">
+          <div className="blog-category">{post.category}</div>
+          <h1 className="blog-title">{post.title}</h1>
+
+          <div className="blog-meta">
+            <div className="blog-author">
+              <div className="blog-author-image">
+                <Image
+                  src={authorImage || "/placeholder.svg"}
+                  alt={post.author}
+                  width={40}
+                  height={40}
+                  className="object-cover rounded-full"
+                  onError={() => setImageError(true)}
+                />
+              </div>
+              <div className="blog-author-name">{post.author}</div>
+            </div>
+
+            <div className="blog-date">
+              <Calendar size={16} className="blog-meta-icon" />
               <span>{post.date}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-navy mb-6 leading-tight text-center">{post.title}</h1>
-          </div>
-        </div>
-      </section>
 
-      <section className="bg-cream/70 py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="relative h-[400px] rounded-lg overflow-hidden mb-12">
-              <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
-            </div>
-
-            <motion.div
-              className="prose prose-lg max-w-none"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
-
-            <div className="mt-12 pt-8 border-t border-navy/10">
-              <Link href="/blog" className="text-copper font-medium hover:underline inline-flex items-center">
-                <ArrowRight className="mr-2 h-4 w-4 rotate-180" />
-                Back to Blog
-              </Link>
+            <div className="blog-read-time">
+              <Clock size={16} className="blog-meta-icon" />
+              <span>{post.readTime}</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      <div className="blog-content-wrapper">
+        {/* Table of Contents */}
+        {tableOfContents.length > 0 && (
+          <div className="blog-toc">
+            <h3 className="blog-toc-title">Table of Contents</h3>
+            <ul className="blog-toc-list">
+              {tableOfContents.map((heading, index) => (
+                <li key={index} className="blog-toc-item">
+                  <a href={`#${heading.id}`} className="blog-toc-link">
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Main Content */}
+        <div className="blog-main-content">
+          <div className="blog-content" dangerouslySetInnerHTML={{ __html: processedContent }} />
+
+          {/* Related Posts */}
+          {post.relatedPosts && post.relatedPosts.length > 0 && (
+            <div className="blog-related-posts">
+              <h2 className="blog-related-title">Related Articles</h2>
+              <div className="blog-related-grid">
+                {post.relatedPosts.map((relatedPost: any) => (
+                  <Link href={`/blog/${relatedPost.slug}`} key={relatedPost.slug} className="blog-related-card">
+                    <div className="blog-related-image">
+                      <Image
+                        src={relatedPost.image || "/placeholder.svg"}
+                        alt={relatedPost.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="blog-related-content">
+                      <h3 className="blog-related-card-title">{relatedPost.title}</h3>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Author Bio */}
+          <div className="blog-author-bio">
+            <div className="blog-author-bio-image">
+              <Image
+                src={authorImage || "/placeholder.svg"}
+                alt={post.author}
+                width={80}
+                height={80}
+                className="object-cover rounded-full"
+                onError={() => setImageError(true)}
+              />
+            </div>
+            <div className="blog-author-bio-content">
+              <h3 className="blog-author-bio-name">{post.author}</h3>
+              <p className="blog-author-bio-title">{post.authorTitle}</p>
+              <p className="blog-author-bio-description">
+                Founder and Steward of Strategy at 1322 Legacy Strategies, helping families build lasting legacies
+                through strategic planning and faithful stewardship.
+              </p>
+            </div>
+          </div>
+
+          {/* Back to Blog */}
+          <div className="blog-navigation">
+            <Link href="/blog" className="blog-back-link">
+              <ArrowLeft className="blog-back-icon" />
+              <span>Back to Blog</span>
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

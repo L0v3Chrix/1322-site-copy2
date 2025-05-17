@@ -1,100 +1,119 @@
 "use client"
 
-import Hero from "@/components/hero"
-import Section from "@/components/section"
-import SectionTitle from "@/components/section-title"
-import BlogCard from "@/components/blog-card"
-import AnimatedText from "@/components/animated-text"
-import { ArrowRight } from "lucide-react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import Image from "next/image"
+import { Search, ArrowLeft } from "lucide-react"
+import blogData from "@/data/blog-posts.json"
 
 export default function BlogPage() {
-  const blogCategories = [
-    "Stewardship vs. Management",
-    "Capitalization vs. Accumulation",
-    "Preparing Your Children for Inheritance",
-    'Insights from "Becoming Your Own Banker"',
-    "Harvest Principles: Wealth that Lasts",
-  ]
+  const [posts, setPosts] = useState([...blogData.posts, ...blogData.caseStudies])
+  const [filteredPosts, setFilteredPosts] = useState(posts)
+  const [activeCategory, setActiveCategory] = useState("All")
+  const [searchQuery, setSearchQuery] = useState("")
 
-  const featuredPosts = [
-    {
-      title: "The Difference Between Stewardship and Management",
-      slug: "stewardship-vs-management",
-      image: "/images/blog-post-1-new.png",
-    },
-    {
-      title: "Teaching Your Children the Value of Legacy",
-      slug: "teaching-children-legacy-value",
-      image: "/images/blog-post-2.png",
-    },
-    {
-      title: "Infinite Banking: Becoming Your Own Source of Financing",
-      slug: "infinite-banking-concept",
-      image: "/images/blog-post-3.png",
-    },
-  ]
+  // Add "All" to categories
+  const categories = ["All", ...blogData.categories]
+
+  useEffect(() => {
+    let result = posts
+
+    // Filter by category
+    if (activeCategory !== "All") {
+      result = result.filter((post) => post.category === activeCategory)
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      result = result.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.excerpt.toLowerCase().includes(query) ||
+          post.category.toLowerCase().includes(query),
+      )
+    }
+
+    setFilteredPosts(result)
+  }, [activeCategory, searchQuery, posts])
 
   return (
-    <>
-      <Hero
-        title="Field Notes for Faithful Stewards"
-        subtitle="Wisdom, stories, and strategies to help you steward your blessings, control your capital, and build a lasting legacy."
-        backgroundImage="/images/wheat-field.png"
-      />
+    <div className="blog-modern-layout">
+      {/* Navigation back to main site */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <Link href="/" className="inline-flex items-center text-cream hover:text-copper transition-colors">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Main Site
+        </Link>
+      </div>
 
-      <Section className="bg-cream/70">
-        <motion.div
-          className="flex flex-wrap justify-center gap-3 mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          {blogCategories.map((category, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                href={`/blog/category/${category.toLowerCase().replace(/\s+/g, "-")}`}
-                className="bg-cream px-4 py-2 text-sm uppercase tracking-wider text-navy hover:bg-navy hover:text-white transition-colors"
+      {/* Blog Index Hero */}
+      <div className="blog-index-hero">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          <h1 className="text-4xl md:text-5xl font-bold text-cream mb-6">Field Notes for Faithful Stewards</h1>
+          <p className="text-lg text-cream/80 max-w-3xl">
+            Wisdom, stories, and strategies to help you steward your blessings, control your capital, and build a
+            lasting legacy.
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        {/* Search and filter */}
+        <div className="mb-12">
+          <div className="search-container mb-6">
+            <div className="relative max-w-md">
+              <input
+                type="text"
+                placeholder="Search articles..."
+                className="search-input pl-10 w-full py-3"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cream/40" size={18} />
+            </div>
+          </div>
+
+          <div className="category-filter">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`category-button ${activeCategory === category ? "active" : ""}`}
+                onClick={() => setActiveCategory(category)}
               >
                 {category}
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <SectionTitle>
-          <AnimatedText>Latest Insights</AnimatedText>
-        </SectionTitle>
-
-        <div className="card-grid">
-          {featuredPosts.map((post, index) => (
-            <BlogCard key={index} title={post.title} image={post.image} slug={post.slug} index={index} />
-          ))}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          <Link href="/blog/archive" className="btn-primary inline-flex items-center">
-            View All Articles
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </motion.div>
-      </Section>
-    </>
+        {/* Blog posts grid */}
+        {filteredPosts.length > 0 ? (
+          <div className="blog-grid">
+            {filteredPosts.map((post) => (
+              <Link href={`/blog/${post.slug}`} key={post.slug} className="blog-card">
+                <div className="blog-card-image">
+                  <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
+                </div>
+                <div className="blog-card-content">
+                  <div className="blog-card-category">{post.category}</div>
+                  <h2 className="blog-card-title">{post.title}</h2>
+                  <p className="blog-card-excerpt">{post.excerpt}</p>
+                  <div className="blog-card-meta">
+                    <div>{post.date}</div>
+                    <div>{post.readTime}</div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 bg-[#232330] rounded-lg">
+            <h3 className="text-xl font-bold mb-2 text-cream">No articles found</h3>
+            <p className="text-cream/70">Try adjusting your search or filter criteria</p>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }

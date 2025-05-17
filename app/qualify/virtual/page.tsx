@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -16,28 +17,8 @@ export default function QualifyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] py-16">
+    <div className="min-h-screen bg-[#F5F0E6] pt-20 pb-16 flex flex-col items-center justify-center">
       <div className="container max-w-4xl mx-auto px-4">
-        <div className="mb-8">
-          <Link href="/qualify" className="text-navy/60 hover:text-navy transition-colors flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2"
-            >
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Back to Qualification
-          </Link>
-        </div>
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-navy mb-4">Let's See If It's a Fit.</h1>
           <p className="text-lg text-navy/80 max-w-2xl mx-auto mb-2">
@@ -49,14 +30,59 @@ export default function QualifyPage() {
         </div>
 
         <div className="relative bg-[#F5F0E6] aspect-video w-full mb-8 rounded-lg overflow-hidden">
-          <video
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4%20-%20Path%20Explanation-pW7n0PIpMbREVPLQBQdIAZSo4gW8Iw.mp4"
-            className="w-full h-full object-cover"
-            controls
-            autoPlay
-            muted
-            playsInline
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wheat-field-sunset-1322-Rl9Yd9Iy9Yd9Iy9Yd9Iy.jpg"
+            alt="Wheat field at sunset with 1322 logo"
+            fill
+            className="object-cover"
           />
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <Image src="/images/footer-logo.png" alt="1322 Legacy Strategies" width={80} height={80} className="mb-4" />
+            <div className="text-navy text-4xl font-bold mb-2">1322</div>
+            <div className="text-navy text-xl mb-8">LEGACY STRATEGIES</div>
+
+            <button
+              className="bg-navy/80 hover:bg-navy text-white rounded-full p-4 transition-colors"
+              aria-label="Play video"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+            <p className="text-navy mt-4">Brad explaining how we protect your time</p>
+          </div>
+
+          {/* Audio control button in top right */}
+          <button
+            className="absolute top-2 right-2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70"
+            aria-label="Toggle audio"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </button>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -185,7 +211,7 @@ function CallNowForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] py-16 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#F5F0E6] pt-20 pb-16 flex flex-col items-center justify-center">
       <div className="container max-w-lg mx-auto px-4">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-navy p-6 text-white text-center">

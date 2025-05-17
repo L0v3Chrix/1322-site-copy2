@@ -2,16 +2,67 @@
 
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 
 export default function QualifyLandingPage() {
   const router = useRouter()
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] py-16">
+    <div className="min-h-screen bg-[#F5F0E6] pt-20 pb-16">
       <div className="container mx-auto px-4 max-w-3xl">
-        <div className="mb-8">
-          <Link href="/webinar" className="text-navy/60 hover:text-navy transition-colors flex items-center">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-navy mb-6">Some Families Need More Than a Webinar.</h1>
+        </div>
+
+        {/* Video section */}
+        <div className="relative aspect-video w-full mb-8 rounded-lg overflow-hidden">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wheat-field-sunset-1322-Rl9Yd9Iy9Yd9Iy9Yd9Iy.jpg"
+            alt="Wheat field at sunset"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <Image
+              src="/images/footer-logo.png"
+              alt="1322 Legacy Strategies"
+              width={100}
+              height={100}
+              className="mb-4"
+            />
+          </div>
+
+          {/* Play button */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <button
+              className="bg-white/80 hover:bg-white text-navy rounded-full p-4 transition-colors"
+              aria-label="Play video"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+          </div>
+
+          {/* Caption */}
+          <div className="absolute bottom-4 left-0 right-0 text-center text-white">
+            Brad explaining The Steward's Table
+          </div>
+
+          {/* Audio control */}
+          <button
+            className="absolute top-2 right-2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70"
+            aria-label="Toggle audio"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -22,28 +73,12 @@ export default function QualifyLandingPage() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="mr-2"
             >
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
             </svg>
-            Back to Webinar
-          </Link>
-        </div>
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-navy mb-6">Some Families Need More Than a Webinar.</h1>
-        </div>
-
-        {/* Video section - Fixed with direct file path */}
-        <div className="relative aspect-video w-full mb-8 rounded-lg overflow-hidden">
-          <video
-            src="/videos/stewards-table-invitation.mp4"
-            className="w-full h-full object-cover"
-            controls
-            autoPlay
-            muted
-            playsInline
-          />
+          </button>
         </div>
 
         {/* Description */}
@@ -141,7 +176,7 @@ export default function QualifyLandingPage() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="relative h-[300px] rounded-lg overflow-hidden">
               <Image
-                src="/images/dinner.png"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G840Pyaagj2CJuXnnABgZkpitpQ8v7.png"
                 alt="Two couples enjoying dinner together"
                 fill
                 className="object-cover"
