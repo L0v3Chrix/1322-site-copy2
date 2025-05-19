@@ -6,13 +6,14 @@ import { motion } from "framer-motion"
 import OptimizedImage from "./optimized-image"
 
 interface HeroProps {
-  title: string
-  subtitle?: string
+  title: string | React.ReactNode
+  subtitle?: string | React.ReactNode
   backgroundImage: string
   id?: string
+  compact?: boolean
 }
 
-const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
+const Hero = ({ title, subtitle, backgroundImage, id, compact }: HeroProps) => {
   const contentRef = useRef<HTMLDivElement>(null)
 
   const scrollToContent = () => {
@@ -28,7 +29,10 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
 
   return (
     <>
-      <section className="relative min-h-screen flex items-center justify-center" id={id}>
+      <section
+        className={`relative ${compact ? "min-h-[50vh]" : "min-h-screen"} flex items-center justify-center`}
+        id={id}
+      >
         <motion.div
           initial={{ scale: 1.1, opacity: 0.8 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -46,7 +50,7 @@ const Hero = ({ title, subtitle, backgroundImage, id }: HeroProps) => {
           <div className="absolute inset-0 bg-black/30" />
         </motion.div>
 
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <div className={`relative z-10 text-center px-4 max-w-4xl mx-auto ${compact ? "py-12" : ""}`}>
           <h1 className="flex flex-col justify-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal mb-4 sm:mb-6 leading-tight tracking-tight text-white">
             {typeof title === "string" ? (
               <motion.span

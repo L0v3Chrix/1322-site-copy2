@@ -105,6 +105,9 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0)
+
     // In a real app, you would fetch this data from your API or CMS
     const fetchService = async () => {
       // Simulate API call
