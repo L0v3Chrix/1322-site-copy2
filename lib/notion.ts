@@ -29,8 +29,6 @@ export interface NotionPost {
 
 export async function getBlogPosts(): Promise<NotionPost[]> {
   try {
-    console.log("Fetching posts from database:", NOTION_DATABASE_ID)
-
     const response = await notion.databases.query({
       database_id: NOTION_DATABASE_ID,
       filter: {
@@ -47,40 +45,28 @@ export async function getBlogPosts(): Promise<NotionPost[]> {
       ],
     })
 
-    console.log("Found posts:", response.results.length)
-
-    // Process posts WITHOUT fetching content for list view
+    // Process posts without fetching full content for the list view
     const posts = response.results.map((page: any) => {
-      console.log("Processing page:", page.id)
-      console.log("Page properties:", Object.keys(page.properties))
-
-      const featuredImage = getImageUrl(page.properties["Featured Image"])
-      const authorImage = getImageUrl(page.properties["Author Image"])
-
-      console.log("Featured image URL:", featuredImage)
-      console.log("Author image URL:", authorImage)
-
       return {
         id: page.id,
         title: page.properties.Title?.title?.[0]?.plain_text || "Untitled",
         slug: page.properties.Slug?.rich_text?.[0]?.plain_text || "",
         excerpt: page.properties.Excerpt?.rich_text?.[0]?.plain_text || "",
-        content: "", // Empty for list view - don't fetch content here
+        content: "", // Don't fetch content for list view
         date: page.properties.Date?.date?.start || new Date().toISOString(),
         readTime: page.properties["Read Time"]?.rich_text?.[0]?.plain_text || "5 min read",
         author: page.properties.Author?.rich_text?.[0]?.plain_text || "Brad Raschke",
-        authorImage: authorImage || "/images/brad-headshot.jpeg",
+        authorImage: getImageUrl(page.properties["Author Image"]) || "/images/brad-headshot.jpeg",
         authorTitle: page.properties["Author Title"]?.rich_text?.[0]?.plain_text || "Founder & Steward of Strategy",
-        image: featuredImage || "/placeholder.svg?height=400&width=600&query=blog post featured image",
+        image:
+          getImageUrl(page.properties["Featured Image"]) ||
+          "/placeholder.svg?height=400&width=600&query=blog post featured image",
         category: page.properties.Category?.select?.name || "Uncategorized",
         published: page.properties.Published?.checkbox || false,
       }
     })
 
-    const filteredPosts = posts.filter((post) => post.published && post.slug)
-    console.log("Filtered posts:", filteredPosts.length)
-
-    return filteredPosts
+    return posts.filter((post) => post.published && post.slug)
   } catch (error) {
     console.error("Error fetching blog posts:", error)
     return []
@@ -89,8 +75,6 @@ export async function getBlogPosts(): Promise<NotionPost[]> {
 
 export async function getBlogPost(slug: string): Promise<NotionPost | null> {
   try {
-    console.log("Fetching individual post:", slug)
-
     const response = await notion.databases.query({
       database_id: NOTION_DATABASE_ID,
       filter: {
@@ -112,18 +96,13 @@ export async function getBlogPost(slug: string): Promise<NotionPost | null> {
     })
 
     if (response.results.length === 0) {
-      console.log("No post found with slug:", slug)
       return null
     }
 
     const page = response.results[0] as any
-    console.log("Found post, fetching content...")
 
     // Only fetch content for individual post view
     const content = await getPageContent(page.id)
-
-    const featuredImage = getImageUrl(page.properties["Featured Image"])
-    const authorImage = getImageUrl(page.properties["Author Image"])
 
     return {
       id: page.id,
@@ -134,9 +113,11 @@ export async function getBlogPost(slug: string): Promise<NotionPost | null> {
       date: page.properties.Date?.date?.start || new Date().toISOString(),
       readTime: page.properties["Read Time"]?.rich_text?.[0]?.plain_text || "5 min read",
       author: page.properties.Author?.rich_text?.[0]?.plain_text || "Brad Raschke",
-      authorImage: authorImage || "/images/brad-headshot.jpeg",
+      authorImage: getImageUrl(page.properties["Author Image"]) || "/images/brad-headshot.jpeg",
       authorTitle: page.properties["Author Title"]?.rich_text?.[0]?.plain_text || "Founder & Steward of Strategy",
-      image: featuredImage || "/placeholder.svg?height=400&width=600&query=blog post featured image",
+      image:
+        getImageUrl(page.properties["Featured Image"]) ||
+        "/placeholder.svg?height=400&width=600&query=blog post featured image",
       category: page.properties.Category?.select?.name || "Uncategorized",
       published: page.properties.Published?.checkbox || false,
     }
@@ -147,38 +128,24 @@ export async function getBlogPost(slug: string): Promise<NotionPost | null> {
 }
 
 function getImageUrl(imageProperty: any): string | null {
-  console.log("Processing image property:", imageProperty)
-
-  if (!imageProperty?.files?.length) {
-    console.log("No files found in image property")
-    return null
-  }
+  if (!imageProperty?.files?.length) return null
 
   const file = imageProperty.files[0]
-  console.log("File type:", file.type)
-
   if (file.type === "file") {
-    console.log("File URL:", file.file.url)
     return file.file.url
   } else if (file.type === "external") {
-    console.log("External URL:", file.external.url)
     return file.external.url
   }
 
-  console.log("Unknown file type")
   return null
 }
 
 async function getPageContent(pageId: string): Promise<string> {
   try {
-    console.log("Fetching content for page:", pageId)
-
     const response = await notion.blocks.children.list({
       block_id: pageId,
       page_size: 100,
     })
-
-    console.log("Found blocks:", response.results.length)
 
     let content = ""
     let listItems: string[] = []
@@ -222,8 +189,7 @@ async function getPageContent(pageId: string): Promise<string> {
       content += `<${currentListType}>${listItems.join("")}</${currentListType}>`
     }
 
-    console.log("Generated content length:", content.length)
-    return content || "<p>No content available.</p>"
+    return content
   } catch (error) {
     console.error("Error fetching page content:", error)
     return "<p>Content could not be loaded.</p>"
