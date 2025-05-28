@@ -6,5 +6,6 @@ export const revalidate = 0
 
 export default async function BlogPage() {
   const posts = await getBlogPosts()
+
   return <BlogClient posts={posts} />
 }

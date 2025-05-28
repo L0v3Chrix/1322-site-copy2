@@ -12,14 +12,6 @@ interface BlogClientProps {
 export function BlogClient({ posts }: BlogClientProps) {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
-  const [visibleCount, setVisibleCount] = useState(6)
-  const [isLoading, setIsLoading] = useState(true)
-
-  // Simulate initial load completion
-  useMemo(() => {
-    const timer = setTimeout(() => setIsLoading(false), 100)
-    return () => clearTimeout(timer)
-  }, [])
 
   // Get unique categories from posts
   const categories = useMemo(() => {
@@ -37,39 +29,6 @@ export function BlogClient({ posts }: BlogClientProps) {
       return matchesSearch && matchesCategory
     })
   }, [posts, searchTerm, selectedCategory])
-
-  // Reset visible count when filters change
-  useMemo(() => {
-    setVisibleCount(6)
-  }, [searchTerm, selectedCategory])
-
-  // Get visible posts
-  const visiblePosts = filteredPosts.slice(0, visibleCount)
-  const hasMorePosts = visibleCount < filteredPosts.length
-
-  // Load more posts
-  const loadMore = () => {
-    setVisibleCount((prev) => Math.min(prev + 6, filteredPosts.length))
-  }
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#F5F0E6] text-[#1E1E2A]">
-        <div className="container mx-auto px-4 py-12">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[#1E1E2A]">Field Notes for Faithful Stewards</h1>
-            <p className="text-xl text-[#1E1E2A]/80 max-w-3xl mx-auto">
-              Wisdom, stories, and strategies to help you steward your blessings, control your capital, and build a
-              lasting legacy.
-            </p>
-          </div>
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4AF37]"></div>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-[#1E1E2A]">
@@ -116,32 +75,18 @@ export function BlogClient({ posts }: BlogClientProps) {
 
         {/* Blog Posts Grid */}
         {filteredPosts.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {visiblePosts.map((post, index) => (
-                <BlogCard
-                  key={post.id}
-                  title={post.title}
-                  image={post.image}
-                  slug={post.slug}
-                  index={index}
-                  category={post.category}
-                />
-              ))}
-            </div>
-
-            {/* Load More Button */}
-            {hasMorePosts && (
-              <div className="mt-12 text-center">
-                <button
-                  onClick={loadMore}
-                  className="px-8 py-3 bg-[#D4AF37] text-black rounded-lg font-medium hover:bg-[#C4A027] transition-colors"
-                >
-                  Load More Articles
-                </button>
-              </div>
-            )}
-          </>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post, index) => (
+              <BlogCard
+                key={post.id}
+                title={post.title}
+                image={post.image}
+                slug={post.slug}
+                index={index}
+                category={post.category}
+              />
+            ))}
+          </div>
         ) : (
           <div className="text-center py-12">
             <h3 className="text-2xl font-bold mb-4 text-[#1E1E2A]">No articles found</h3>
