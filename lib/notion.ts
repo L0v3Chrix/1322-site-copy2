@@ -61,7 +61,7 @@ export async function getBlogPosts(): Promise<NotionPost[]> {
         published: extractPublished(page.properties),
       }
 
-      console.log("Processed post:", post.title, "Published:", post.published)
+      console.log("Processed post:", post.title, "Category:", post.category, "Published:", post.published)
       return post
     })
 
@@ -193,11 +193,24 @@ function extractFeaturedImage(properties: any): string {
 function extractCategory(properties: any): string {
   // Try common category property names
   const categoryProps = ["Category", "category", "Tag", "tag", "Type", "type"]
+
   for (const prop of categoryProps) {
+    // Check for select type
     if (properties[prop]?.select?.name) {
       return properties[prop].select.name
     }
+
+    // Check for multi-select type (take first value)
+    if (properties[prop]?.multi_select?.length > 0) {
+      return properties[prop].multi_select[0].name
+    }
+
+    // Check for rich text type
+    if (properties[prop]?.rich_text?.[0]?.plain_text) {
+      return properties[prop].rich_text[0].plain_text
+    }
   }
+
   return "Uncategorized"
 }
 

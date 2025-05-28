@@ -1,4 +1,4 @@
-import { getBlogPost, getBlogPosts, NOTION_DATABASE_ID } from "@/lib/notion"
+import { getBlogPost, getBlogPosts } from "@/lib/notion"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
@@ -14,8 +14,6 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  // Add a cache-busting timestamp to ensure we get fresh data
-  const timestamp = Date.now()
   const post = await getBlogPost(params.slug)
 
   if (!post) {
@@ -40,15 +38,17 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">{post.title}</h1>
             <div className="flex items-center mb-6">
-              <div className="relative h-12 w-12 rounded-full overflow-hidden mr-4">
+              <div className="relative h-12 w-12 rounded-full overflow-hidden mr-4 bg-gray-700">
                 <Image
-                  src={post.authorImage || "/placeholder.svg"}
+                  src={post.authorImage || "/images/brad-headshot.jpeg"}
                   alt={post.author}
                   fill
                   sizes="48px"
                   className="object-cover"
+                  quality={80}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                   onError={(e) => {
-                    // Fallback to placeholder if image fails to load
                     e.currentTarget.src = "/images/brad-headshot.jpeg"
                   }}
                 />
@@ -70,16 +70,18 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </div>
           </div>
 
-          <div className="relative h-[400px] w-full mb-10 rounded-lg overflow-hidden">
+          <div className="relative h-[400px] w-full mb-10 rounded-lg overflow-hidden bg-gray-800">
             <Image
-              src={post.image || "/placeholder.svg"}
+              src={post.image || "/placeholder.svg?height=400&width=800&query=blog post"}
               alt={post.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 768px, 1024px"
               className="object-cover"
               priority
+              quality={85}
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
               onError={(e) => {
-                // Fallback to placeholder if image fails to load
                 e.currentTarget.src = "/placeholder.svg?height=400&width=800&query=blog post"
               }}
             />
@@ -161,14 +163,6 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 </svg>
               </button>
             </div>
-          </div>
-
-          <div className="mt-8 text-center text-sm text-gray-500">
-            <p>
-              Database ID: {NOTION_DATABASE_ID}
-              <br />
-              Cache timestamp: {timestamp}
-            </p>
           </div>
         </div>
       </div>

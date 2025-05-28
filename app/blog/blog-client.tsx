@@ -1,100 +1,112 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Search, ArrowLeft } from "lucide-react"
+import { useState, useMemo } from "react"
+import { Search } from "lucide-react"
+import BlogCard from "@/components/blog-card"
 import type { NotionPost } from "@/lib/notion"
 
 interface BlogClientProps {
   posts: NotionPost[]
 }
 
-export default function BlogClient({ posts }: BlogClientProps) {
-  const [filteredPosts, setFilteredPosts] = useState(posts)
-  const [activeCategory, setActiveCategory] = useState("All")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
+export function BlogClient({ posts }: BlogClientProps) {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [visibleCount, setVisibleCount] = useState(6)
+  const [isLoading, setIsLoading] = useState(true)
 
-  // Extract unique categories from posts
-  const categories = ["All", ...Array.from(new Set(posts.map((post) => post.category)))]
+  // Simulate initial load completion
+  useMemo(() => {
+    const timer = setTimeout(() => setIsLoading(false), 100)
+    return () => clearTimeout(timer)
+  }, [])
 
-  useEffect(() => {
-    let result = posts
+  // Get unique categories from posts
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(new Set(posts.map((post) => post.category).filter(Boolean)))
+    return ["All", ...uniqueCategories]
+  }, [posts])
 
-    // Filter by category
-    if (activeCategory !== "All") {
-      result = result.filter((post) => post.category === activeCategory)
-    }
+  // Filter posts based on search term and category
+  const filteredPosts = useMemo(() => {
+    return posts.filter((post) => {
+      const matchesSearch =
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesCategory = selectedCategory === "All" || post.category === selectedCategory
+      return matchesSearch && matchesCategory
+    })
+  }, [posts, searchTerm, selectedCategory])
 
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase()
-      result = result.filter(
-        (post) =>
-          post.title.toLowerCase().includes(query) ||
-          post.excerpt.toLowerCase().includes(query) ||
-          post.category.toLowerCase().includes(query),
-      )
-    }
+  // Reset visible count when filters change
+  useMemo(() => {
+    setVisibleCount(6)
+  }, [searchTerm, selectedCategory])
 
-    setFilteredPosts(result)
-  }, [activeCategory, searchQuery, posts])
+  // Get visible posts
+  const visiblePosts = filteredPosts.slice(0, visibleCount)
+  const hasMorePosts = visibleCount < filteredPosts.length
 
-  const handleImageError = (postId: string) => {
-    setImageErrors((prev) => new Set(prev).add(postId))
+  // Load more posts
+  const loadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 6, filteredPosts.length))
   }
 
-  const getImageSrc = (post: NotionPost) => {
-    if (imageErrors.has(post.id)) {
-      return "/placeholder.svg?height=400&width=600&query=blog post featured image"
-    }
-    return post.image || "/placeholder.svg?height=400&width=600&query=blog post featured image"
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F5F0E6] text-[#1E1E2A]">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[#1E1E2A]">Field Notes for Faithful Stewards</h1>
+            <p className="text-xl text-[#1E1E2A]/80 max-w-3xl mx-auto">
+              Wisdom, stories, and strategies to help you steward your blessings, control your capital, and build a
+              lasting legacy.
+            </p>
+          </div>
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4AF37]"></div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="blog-modern-layout">
-      {/* Navigation back to main site */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link href="/" className="inline-flex items-center text-cream hover:text-copper transition-colors">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Main Site
-        </Link>
-      </div>
-
-      {/* Blog Index Hero */}
-      <div className="blog-index-hero">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-          <h1 className="text-4xl md:text-5xl font-bold text-cream mb-6">Field Notes for Faithful Stewards</h1>
-          <p className="text-lg text-cream/80 max-w-3xl">
+    <div className="min-h-screen bg-[#F5F0E6] text-[#1E1E2A]">
+      <div className="container mx-auto px-4 py-12">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[#1E1E2A]">Field Notes for Faithful Stewards</h1>
+          <p className="text-xl text-[#1E1E2A]/80 max-w-3xl mx-auto">
             Wisdom, stories, and strategies to help you steward your blessings, control your capital, and build a
             lasting legacy.
           </p>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        {/* Search and filter */}
+        {/* Search and Filters */}
         <div className="mb-12">
-          <div className="search-container mb-6">
-            <div className="relative max-w-md">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                className="search-input pl-10 w-full py-3"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cream/40" size={18} />
-            </div>
+          <div className="relative max-w-md mx-auto mb-8">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-5 w-5" />
+            <input
+              type="text"
+              placeholder="Search articles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
+            />
           </div>
 
-          <div className="category-filter">
+          {/* Category Filters */}
+          <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category) => (
               <button
                 key={category}
-                className={`category-button ${activeCategory === category ? "active" : ""}`}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  selectedCategory === category
+                    ? "bg-[#D4AF37] text-black shadow-lg"
+                    : "bg-white text-[#1E1E2A] hover:bg-[#D4AF37]/10 border border-gray-300"
+                }`}
               >
                 {category}
               </button>
@@ -102,44 +114,43 @@ export default function BlogClient({ posts }: BlogClientProps) {
           </div>
         </div>
 
-        {/* Blog posts grid */}
+        {/* Blog Posts Grid */}
         {filteredPosts.length > 0 ? (
-          <div className="blog-grid">
-            {filteredPosts.map((post) => (
-              <Link href={`/blog/${post.slug}`} key={post.slug} className="blog-card">
-                <div className="blog-card-image">
-                  <Image
-                    src={getImageSrc(post) || "/placeholder.svg"}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                    onError={() => handleImageError(post.id)}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <div className="blog-card-content">
-                  <div className="blog-card-category">{post.category}</div>
-                  <h2 className="blog-card-title">{post.title}</h2>
-                  <p className="blog-card-excerpt">{post.excerpt}</p>
-                  <div className="blog-card-meta">
-                    <div>{new Date(post.date).toLocaleDateString()}</div>
-                    <div>{post.readTime}</div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {visiblePosts.map((post, index) => (
+                <BlogCard
+                  key={post.id}
+                  title={post.title}
+                  image={post.image}
+                  slug={post.slug}
+                  index={index}
+                  category={post.category}
+                />
+              ))}
+            </div>
+
+            {/* Load More Button */}
+            {hasMorePosts && (
+              <div className="mt-12 text-center">
+                <button
+                  onClick={loadMore}
+                  className="px-8 py-3 bg-[#D4AF37] text-black rounded-lg font-medium hover:bg-[#C4A027] transition-colors"
+                >
+                  Load More Articles
+                </button>
+              </div>
+            )}
+          </>
         ) : (
-          <div className="text-center py-12 bg-[#232330] rounded-lg">
-            <h3 className="text-xl font-bold mb-2 text-cream">No articles found</h3>
-            <p className="text-cream/70">
-              {posts.length === 0
-                ? "No published posts found. Make sure you have posts with the 'Published' checkbox checked in your Notion database."
-                : "Try adjusting your search or filter criteria"}
-            </p>
+          <div className="text-center py-12">
+            <h3 className="text-2xl font-bold mb-4 text-[#1E1E2A]">No articles found</h3>
+            <p className="text-[#1E1E2A]/60">Try adjusting your search or filter criteria</p>
           </div>
         )}
       </div>
     </div>
   )
 }
+
+export default BlogClient
