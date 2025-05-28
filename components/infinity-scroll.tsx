@@ -6,13 +6,10 @@ import ExpandableFounderBioMobile from "./expandable-founder-bio-mobile"
 import LegacyStrategy from "./legacy-strategy"
 import Values from "./values"
 import Contact from "./contact"
-import { usePathname } from "next/navigation"
 
 export default function InfinityScroll() {
   const [activeSection, setActiveSection] = useState(0)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
-  const pathname = usePathname()
-  const initialLoad = useRef(true)
 
   // Define sections for the infinity scroll
   const sectionsConfig = [
@@ -22,32 +19,8 @@ export default function InfinityScroll() {
     { id: "contact", label: "Contact Us" },
   ]
 
-  // Force scroll to top on initial load
-  useEffect(() => {
-    if (initialLoad.current) {
-      window.scrollTo(0, 0)
-      initialLoad.current = false
-    }
-  }, [])
-
-  // Handle URL-based section activation without scrolling on initial load
-  useEffect(() => {
-    if (pathname === "/about/founder") {
-      setActiveSection(0) // Always set to first section (founder)
-    } else if (pathname === "/about/strategy") {
-      setActiveSection(1)
-    } else if (pathname === "/about/values") {
-      setActiveSection(2)
-    } else if (pathname === "/about/contact") {
-      setActiveSection(3)
-    }
-  }, [pathname])
-
   useEffect(() => {
     const handleScroll = () => {
-      // Don't update during initial load
-      if (initialLoad.current) return
-
       const scrollPosition = window.scrollY + window.innerHeight / 2
 
       sectionRefs.current.forEach((section, index) => {
@@ -59,12 +32,10 @@ export default function InfinityScroll() {
         if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
           setActiveSection(index)
 
-          // Update URL without page reload, but don't do this on initial load
-          if (!initialLoad.current) {
-            const sectionId = sectionsConfig[index].id
-            if (window.location.pathname !== `/about/${sectionId}`) {
-              window.history.pushState({}, "", `/about/${sectionId}`)
-            }
+          // Update URL without page reload
+          const sectionId = sectionsConfig[index].id
+          if (window.location.pathname !== `/about/${sectionId}`) {
+            window.history.pushState({}, "", `/about/${sectionId}`)
           }
         }
       })

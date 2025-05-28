@@ -7,14 +7,11 @@ import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import OptimizedImage from "./optimized-image"
-import { usePathname } from "next/navigation"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
-  const pathname = usePathname()
-  const isFounderPage = pathname === "/about/founder"
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -56,15 +53,9 @@ const Header = () => {
     { name: "Blog", path: "/blog" },
   ]
 
-  // Special handling for founder page
-  const headerClasses = isFounderPage
-    ? "header-solid bg-cream shadow-md"
-    : scrolled
-      ? "header-solid"
-      : "header-transparent"
-
-  const logoTextColor = scrolled || isFounderPage ? "text-navy" : "text-cream"
-  const navLinkColor = scrolled || isFounderPage ? "text-navy hover:text-copper" : "text-cream hover:text-white"
+  const headerClasses = scrolled ? "header-solid" : "header-transparent"
+  const logoTextColor = scrolled ? "text-navy" : "text-cream"
+  const navLinkColor = scrolled ? "text-navy hover:text-copper" : "text-cream hover:text-white"
 
   const scrollToSection = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault()
@@ -88,23 +79,14 @@ const Header = () => {
     >
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link
-            href="/"
-            className="flex items-center z-10"
-            onClick={(e) => {
-              if (window.location.pathname === "/") {
-                e.preventDefault()
-                window.scrollTo({ top: 0, behavior: "smooth" })
-              }
-            }}
-          >
+          <Link href="/" className="flex items-center">
             <motion.div
               className="relative h-10 w-auto flex items-center -ml-3"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
               <OptimizedImage
-                src="/images/1322-header-logo.png"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13%3B22-header-logo-wQ4XkXwQPSQI3hjC9Dx3e5qXuhrkR5.png"
                 alt="1322 Legacy Strategies"
                 type="logo"
                 width={180}
@@ -140,24 +122,22 @@ const Header = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              <a
-                href="https://webinar.1322legacystrategies.com"
+              <Link
+                href="/webinar"
                 className={`inline-flex items-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border ${
-                  scrolled || isFounderPage
+                  scrolled
                     ? "border-navy text-navy hover:bg-navy hover:text-white"
                     : "border-white text-white hover:bg-white hover:text-navy"
                 }`}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Webinar
-              </a>
+              </Link>
             </motion.div>
           </nav>
 
           {/* Mobile Menu Button */}
           <motion.button
-            className={`md:hidden ${scrolled || isFounderPage ? "text-navy" : "text-white"}`}
+            className={`md:hidden ${scrolled ? "text-navy" : "text-white"}`}
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             whileTap={{ scale: 0.95 }}
@@ -200,14 +180,12 @@ const Header = () => {
                 </motion.div>
               ))}
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-                <a
-                  href="https://webinar.1322legacystrategies.com"
+                <Link
+                  href="/webinar"
                   className="inline-block text-center w-full px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-navy text-navy hover:bg-navy hover:text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   Webinar
-                </a>
+                </Link>
               </motion.div>
             </nav>
           </motion.div>

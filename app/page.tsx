@@ -332,7 +332,11 @@ export default function Home() {
 
       {/* Why Choose Us Section */}
       <Section className="bg-navy text-cream" id="why-choose">
-        <h2 className="text-white text-3xl md:text-4xl font-bold text-center mb-12">Why Families Choose 1322</h2>
+        <SectionTitle className="text-gold">
+          <AnimatedText type="character" delay={0.05}>
+            WHY FAMILIES CHOOSE 1322
+          </AnimatedText>
+        </SectionTitle>
 
         <div className="max-w-3xl mx-auto mb-12">
           <ul className="space-y-4">
