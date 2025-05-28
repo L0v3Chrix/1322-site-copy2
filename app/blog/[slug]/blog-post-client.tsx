@@ -6,7 +6,6 @@ import Link from "next/link"
 import { Calendar, Clock, ArrowLeft } from "lucide-react"
 import type { NotionPost } from "@/lib/notion"
 import "../blog.css"
-import "../notion.css" // Import the Notion styles
 
 interface BlogPostClientProps {
   post: NotionPost
@@ -18,20 +17,31 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
   useEffect(() => {
     // Extract headings for table of contents
-    const headingRegex = /<h([123]).*?id="(.*?)".*?>(.*?)<\/h[123]>/g
+    const headingRegex = /<h([23])>(.*?)<\/h[23]>/g
     const content = post.content
     const headings: { id: string; text: string }[] = []
 
     let match
     while ((match = headingRegex.exec(content)) !== null) {
-      const id = match[2]
-      // Remove HTML tags from heading text
-      const text = match[3].replace(/<.*?>/g, "")
+      const text = match[2].replace(/<.*?>/g, "")
+      const id = text.toLowerCase().replace(/[^\w]+/g, "-")
       headings.push({ id, text })
     }
 
     setTableOfContents(headings)
   }, [post.content])
+
+  // Process content to add IDs to headings for table of contents
+  const processedContent = post.content.replace(
+    /<h([23])>(.*?)<\/h([23])>/g,
+    (match: string, level: string, content: string) => {
+      const id = content
+        .toLowerCase()
+        .replace(/<.*?>/g, "")
+        .replace(/[^\w]+/g, "-")
+      return `<h${level} id="${id}">${content}</h${level}>`
+    },
+  )
 
   const authorImage = imageError ? "/images/brad-headshot.jpeg" : post.authorImage
 
@@ -40,14 +50,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
       {/* Hero Section with Featured Image */}
       <div className="blog-hero">
         <div className="blog-hero-image">
-          <Image
-            src={post.image || "/placeholder.svg"}
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" priority />
           <div className="blog-hero-overlay"></div>
         </div>
 
@@ -102,7 +105,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
         {/* Main Content */}
         <div className="blog-main-content">
-          <div className="notion-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div className="blog-content" dangerouslySetInnerHTML={{ __html: processedContent }} />
 
           {/* Author Bio */}
           <div className="blog-author-bio">
