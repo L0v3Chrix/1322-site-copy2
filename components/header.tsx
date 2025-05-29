@@ -7,11 +7,16 @@ import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import OptimizedImage from "./optimized-image"
+import { usePathname } from "next/navigation"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
+  const pathname = usePathname()
+
+  // Check if we're on the founder page
+  const isFounderPage = pathname === "/about/founder"
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -53,9 +58,22 @@ const Header = () => {
     { name: "Blog", path: "/blog" },
   ]
 
-  const headerClasses = scrolled ? "header-solid" : "header-transparent"
-  const logoTextColor = scrolled ? "text-navy" : "text-cream"
-  const navLinkColor = scrolled ? "text-navy hover:text-copper" : "text-cream hover:text-white"
+  // Determine header classes based on page and scroll state
+  let headerClasses = scrolled ? "header-solid" : "header-transparent"
+
+  // Force solid header on founder page
+  if (isFounderPage && !scrolled) {
+    headerClasses = "bg-navy text-white"
+  }
+
+  const logoTextColor = isFounderPage && !scrolled ? "text-cream" : scrolled ? "text-navy" : "text-cream"
+
+  const navLinkColor =
+    isFounderPage && !scrolled
+      ? "text-cream hover:text-white"
+      : scrolled
+        ? "text-navy hover:text-copper"
+        : "text-cream hover:text-white"
 
   const scrollToSection = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault()
@@ -125,9 +143,9 @@ const Header = () => {
               <Link
                 href="/webinar"
                 className={`inline-flex items-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border ${
-                  scrolled
-                    ? "border-navy text-navy hover:bg-navy hover:text-white"
-                    : "border-white text-white hover:bg-white hover:text-navy"
+                  (isFounderPage && !scrolled) || !scrolled
+                    ? "border-white text-white hover:bg-white hover:text-navy"
+                    : "border-navy text-navy hover:bg-navy hover:text-white"
                 }`}
               >
                 Webinar
@@ -137,7 +155,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className={`md:hidden ${scrolled ? "text-navy" : "text-white"}`}
+            className={`md:hidden ${(isFounderPage && !scrolled) || !scrolled ? "text-white" : "text-navy"}`}
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             whileTap={{ scale: 0.95 }}

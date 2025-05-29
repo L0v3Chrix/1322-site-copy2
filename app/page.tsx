@@ -134,6 +134,54 @@ export default function Home() {
         </motion.div>
       </Section>
 
+      {/* Services Section */}
+      <Section className="bg-cream" id="services">
+        <SectionTitle>The 1322 Stewardship Process</SectionTitle>
+
+        <AnimatedText className="text-center max-w-prose-normal mx-auto mb-8" delay={0.2}>
+          Services Designed for Generational Blessing
+        </AnimatedText>
+
+        <div className="max-w-3xl mx-auto mb-12 text-center">
+          <AnimatedText delay={0.3}>
+            At 1322 Legacy Strategies, stewardship is more than financial. It is <HighlightText>faithful</HighlightText>
+            , <HighlightText>relational</HighlightText>, and <HighlightText>generational</HighlightText>.
+          </AnimatedText>
+
+          <AnimatedText delay={0.4}>
+            We serve faith-first families who desire more than accumulation — they desire{" "}
+            <HighlightText>control</HighlightText>, <HighlightText>clarity</HighlightText>, and a{" "}
+            <HighlightText>legacy</HighlightText> worthy of remembrance. That is why we offer an integrated suite of
+            services under one roof, where every hand is working in harmony to protect, grow, and pass on the blessings
+            entrusted to you.
+          </AnimatedText>
+        </div>
+
+        <div className="card-grid">
+          {services.map((service, index) => (
+            <ServiceCard
+              key={index}
+              title={service.title}
+              image={service.image}
+              slug={service.slug}
+              index={index}
+              description={service.description}
+            />
+          ))}
+        </div>
+
+        <div className="text-center mt-16">
+          <ContactButton
+            title="Build Your Legacy Strategy"
+            description="Let's craft a custom stewardship strategy for your family."
+            className="inline-flex items-center"
+          >
+            Build Your Legacy Strategy
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </ContactButton>
+        </div>
+      </Section>
+
       {/* About Section */}
       <Section className="bg-cream" id="about">
         <SectionTitle>Legacy by Design, Not by Default</SectionTitle>
@@ -222,54 +270,6 @@ export default function Home() {
           <p className="italic text-navy/80">
             <em>Plain-English promise:</em> You'll understand every step well enough to explain it at the dinner table.
           </p>
-        </div>
-      </Section>
-
-      {/* Services Section */}
-      <Section className="bg-cream" id="services">
-        <SectionTitle>The 1322 Stewardship Process</SectionTitle>
-
-        <AnimatedText className="text-center max-w-prose-normal mx-auto mb-8" delay={0.2}>
-          Services Designed for Generational Blessing
-        </AnimatedText>
-
-        <div className="max-w-3xl mx-auto mb-12 text-center">
-          <AnimatedText delay={0.3}>
-            At 1322 Legacy Strategies, stewardship is more than financial. It is <HighlightText>faithful</HighlightText>
-            , <HighlightText>relational</HighlightText>, and <HighlightText>generational</HighlightText>.
-          </AnimatedText>
-
-          <AnimatedText delay={0.4}>
-            We serve faith-first families who desire more than accumulation — they desire{" "}
-            <HighlightText>control</HighlightText>, <HighlightText>clarity</HighlightText>, and a{" "}
-            <HighlightText>legacy</HighlightText> worthy of remembrance. That is why we offer an integrated suite of
-            services under one roof, where every hand is working in harmony to protect, grow, and pass on the blessings
-            entrusted to you.
-          </AnimatedText>
-        </div>
-
-        <div className="card-grid">
-          {services.map((service, index) => (
-            <ServiceCard
-              key={index}
-              title={service.title}
-              image={service.image}
-              slug={service.slug}
-              index={index}
-              description={service.description}
-            />
-          ))}
-        </div>
-
-        <div className="text-center mt-16">
-          <ContactButton
-            title="Build Your Legacy Strategy"
-            description="Let's craft a custom stewardship strategy for your family."
-            className="inline-flex items-center"
-          >
-            Build Your Legacy Strategy
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </ContactButton>
         </div>
       </Section>
 

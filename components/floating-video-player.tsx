@@ -33,7 +33,7 @@ export default function FloatingVideoPlayer() {
             position: "fixed",
             right: "1rem",
             bottom: "1rem",
-            width: "min(90vw, 440px)",
+            width: "min(80vw, 320px)",
             maxWidth: "100%",
           }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export default function FloatingVideoPlayer() {
               className="absolute top-2 right-2 z-10 bg-navy/70 hover:bg-navy text-cream rounded-full p-1.5 transition-colors"
               aria-label="Close video"
             >
-              <X className="h-4 w-4" />
+              <X className="h-3 w-3" />
             </button>
 
             {/* Video Placeholder */}
@@ -75,9 +75,9 @@ export default function FloatingVideoPlayer() {
             </div>
 
             {/* Controls */}
-            <div className="p-3 sm:p-4 bg-navy text-cream">
-              <div className="flex justify-between items-center mb-3">
-                <h3 className="font-bold text-base sm:text-lg">A Message from Brad</h3>
+            <div className="p-2 sm:p-3 bg-navy text-cream">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="font-bold text-sm">A Message from Brad</h3>
                 <div className="flex space-x-2">
                   <button
                     onClick={minimizeVideo}
@@ -89,7 +89,7 @@ export default function FloatingVideoPlayer() {
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-cream/80 mb-2 sm:mb-3">
+              <p className="text-xs text-cream/80 mb-2">
                 Welcome to 13:22 Legacy Strategies. I'd like to share how we can help you build a legacy that lasts for
                 generations.
               </p>
@@ -101,14 +101,14 @@ export default function FloatingVideoPlayer() {
                     className="text-cream/80 hover:text-cream transition-colors"
                     aria-label="Play"
                   >
-                    <Play className="h-5 w-5" />
+                    <Play className="h-4 w-4" />
                   </button>
                   <button
                     className="text-cream/80 hover:text-cream transition-colors opacity-50 cursor-not-allowed"
                     aria-label={isMuted ? "Unmute" : "Mute"}
                     disabled
                   >
-                    <Volume2 className="h-5 w-5" />
+                    <Volume2 className="h-4 w-4" />
                   </button>
                 </div>
               </div>
@@ -129,9 +129,9 @@ export default function FloatingVideoPlayer() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <div className="relative w-16 h-16 rounded-full overflow-hidden">
+          <div className="relative w-12 h-12 rounded-full overflow-hidden">
             <div className="absolute inset-0 bg-gold/20 flex items-center justify-center">
-              <Play className="h-6 w-6 text-cream" />
+              <Play className="h-4 w-4 text-cream" />
             </div>
             <OptimizedImage
               src="/images/brad-headshot.jpeg"

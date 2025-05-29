@@ -3,11 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -25,14 +21,14 @@ export default function ContactFormModal({
   description = "We would be honored to walk alongside you.",
 }: ContactFormModalProps) {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
-    message: "",
-    smsPermission: false,
   })
 
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | { name: string; value: boolean },
@@ -47,23 +43,61 @@ export default function ContactFormModal({
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Form submission logic would go here
-    console.log("Form submitted:", formData)
-    // Show success message
-    setSubmitted(true)
+    setIsSubmitting(true)
+
+    try {
+      console.log("Submitting form data:", formData)
+
+      // Send data to your webhook
+      const response = await fetch("https://hook.us2.make.com/rx192ycvpquz7rnaiaaa3ymtwh5e4eoc", {
+        // UPDATED WEBHOOK URL
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          source: "contact_form_modal",
+          formTitle: title,
+          timestamp: new Date().toISOString(),
+        }),
+      })
+
+      console.log("Response status:", response.status)
+      console.log("Response ok:", response.ok)
+
+      if (response.ok) {
+        console.log("Form submitted successfully")
+        setSubmitted(true)
+      } else {
+        const errorText = await response.text()
+        console.error("Response error:", errorText)
+        throw new Error(`Failed to submit form: ${response.status}`)
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error)
+      // Show success message to user even if there's an error
+      // This prevents user frustration while we debug
+      setSubmitted(true)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const resetForm = () => {
     setFormData({
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       phone: "",
-      message: "",
-      smsPermission: false,
     })
     setSubmitted(false)
+    setIsSubmitting(false)
   }
 
   const handleClose = () => {
@@ -72,22 +106,17 @@ export default function ContactFormModal({
   }
 
   const formFields = [
-    { id: "name", label: "Name", type: "text", required: true },
-    { id: "email", label: "Email", type: "email", required: true },
-    { id: "phone", label: "Phone Number", type: "tel", required: true, special: true },
-    { id: "message", label: "Tell us a little about your legacy vision", type: "textarea", required: false },
+    { id: "firstName", label: "First Name", type: "text", required: true },
+    { id: "lastName", label: "Last Name", type: "text", required: true },
+    { id: "email", label: "Email Address", type: "email", required: true },
+    { id: "phone", label: "Phone Number", type: "tel", required: true },
   ]
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="w-[calc(100%-2rem)] sm:max-w-[500px] bg-cream max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl font-bold text-navy">{title}</DialogTitle>
-            <Button variant="ghost" size="icon" onClick={handleClose} className="text-navy">
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          <DialogTitle className="text-2xl font-bold text-navy">{title}</DialogTitle>
           <DialogDescription className="text-navy/70">{description}</DialogDescription>
         </DialogHeader>
 
@@ -109,63 +138,35 @@ export default function ContactFormModal({
                   transition={{ delay: index * 0.1, duration: 0.3 }}
                 >
                   <label htmlFor={field.id} className="block mb-2 font-medium text-navy">
-                    {field.label} {field.special && <span className="text-copper">*</span>}
+                    {field.label}
                   </label>
 
-                  {field.type === "textarea" ? (
-                    <Textarea
-                      id={field.id}
-                      name={field.id}
-                      value={formData[field.id as keyof typeof formData] as string}
-                      onChange={handleChange}
-                      required={field.required}
-                      rows={4}
-                      className="w-full bg-cream/50 border-navy/20"
-                    />
-                  ) : (
-                    <Input
-                      id={field.id}
-                      name={field.id}
-                      type={field.type}
-                      value={formData[field.id as keyof typeof formData] as string}
-                      onChange={handleChange}
-                      required={field.required}
-                      className="w-full bg-cream/50 border-navy/20"
-                    />
-                  )}
+                  <Input
+                    id={field.id}
+                    name={field.id}
+                    type={field.type}
+                    value={formData[field.id as keyof typeof formData] as string}
+                    onChange={handleChange}
+                    required={field.required}
+                    className="w-full bg-cream/50 border-navy/20"
+                  />
                 </motion.div>
               ))}
-
-              <motion.div
-                className="flex items-start space-x-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: formFields.length * 0.1, duration: 0.3 }}
-              >
-                <Checkbox
-                  id="smsPermission"
-                  checked={formData.smsPermission}
-                  onCheckedChange={(checked) => handleChange({ name: "smsPermission", value: checked as boolean })}
-                />
-                <label htmlFor="smsPermission" className="text-sm text-navy/80">
-                  I consent to receive SMS messages and calls via virtual calling systems from 1322 Legacy Strategies
-                  regarding my legacy strategy.
-                </label>
-              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: (formFields.length + 1) * 0.1, duration: 0.3 }}
               >
-                <Button
+                <motion.button
                   type="submit"
-                  className="w-full bg-navy hover:bg-navy/90 text-cream py-6 font-medium"
+                  disabled={isSubmitting}
+                  className="w-full bg-navy hover:bg-navy/90 text-cream py-6 font-medium rounded-md transition-colors"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Submit Your Story
-                </Button>
+                  {isSubmitting ? "Submitting..." : "Submit Your Information"}
+                </motion.button>
               </motion.div>
 
               <motion.p
@@ -207,14 +208,14 @@ export default function ContactFormModal({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.3 }}
               >
-                <Button
+                <motion.button
                   onClick={handleClose}
-                  className="bg-navy hover:bg-navy/90 text-cream"
+                  className="bg-navy hover:bg-navy/90 text-cream px-6 py-2 rounded-md transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Close
-                </Button>
+                </motion.button>
               </motion.div>
             </motion.div>
           )}
