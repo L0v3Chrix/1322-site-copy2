@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link" // Import Link
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
 import FooterContactLink from "@/components/footer-contact-link"
 import { motion } from "framer-motion"
@@ -87,12 +88,12 @@ const Footer = () => {
           custom={4}
         >
           {[
-            { name: "Home", path: "#home" },
-            { name: "About", path: "#about" },
-            { name: "Strategy", path: "#strategy" },
-            { name: "Services", path: "#services" },
-            { name: "Stories", path: "#client-stories" },
-            { name: "Tools", path: "#tools" },
+            { name: "Home", path: "/" }, // Changed to / for home
+            { name: "About", path: "/about" }, // Changed to /about
+            { name: "Strategy", path: "/strategy" }, // Changed to /strategy
+            { name: "Services", path: "/services" }, // Changed to /services
+            { name: "Stories", path: "/client-stories" }, // Assuming this is a page
+            { name: "Tools", path: "/resources" }, // Assuming tools are on resources page
             { name: "Contact", component: FooterContactLink },
             { name: "Blog", path: "/blog" },
           ].map((item, index) =>
@@ -101,9 +102,9 @@ const Footer = () => {
                 <FooterContactLink />
               </motion.div>
             ) : (
-              <motion.a
+              <motion.a // Changed to Link for internal navigation
                 key={item.name}
-                href={item.path}
+                href={item.path} // Use href for external or direct links
                 className="text-navy/80 hover:text-navy transition-colors"
                 variants={fadeInUpVariants}
                 custom={index + 5}
@@ -117,6 +118,21 @@ const Footer = () => {
 
         <motion.div className="text-navy/60 text-sm" variants={fadeInUpVariants} custom={11}>
           <p>&copy; {currentYear} 13:22 Legacy Strategies. All rights reserved.</p>
+          <div className="mt-2 text-xs">
+            <Link
+              href="/legal/privacy-policy"
+              className="text-navy/70 hover:text-navy hover:underline transition-colors mx-2"
+            >
+              Privacy Policy
+            </Link>
+            |
+            <Link
+              href="/legal/terms-and-conditions"
+              className="text-navy/70 hover:text-navy hover:underline transition-colors mx-2"
+            >
+              Terms & Conditions
+            </Link>
+          </div>
         </motion.div>
       </div>
     </motion.footer>

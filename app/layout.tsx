@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Playfair_Display, Lato } from "next/font/google"
+import Script from "next/script" // Import the Script component
 import "./globals.css"
 import ClientLayout from "./client-layout"
 
@@ -36,6 +37,21 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${playfair.variable} ${lato.variable} font-sans bg-cream`}>
         <ClientLayout>{children}</ClientLayout>
+
+        {/* Google Tag Manager Scripts */}
+        <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=AW-17079193267" />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17079193267');
+            `,
+          }}
+        />
       </body>
     </html>
   )
