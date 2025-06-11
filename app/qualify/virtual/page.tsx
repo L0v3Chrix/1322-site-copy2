@@ -168,25 +168,57 @@ function CallNowForm() {
     setResult(null)
 
     try {
-      // Send data to make.com webhook
-      const response = await fetch("https://hook.us2.make.com/erjikwvn6upynhjgd3igaewtwmuz8d58", {
+      // GoHighLevel API configuration
+      const GHL_API_KEY =
+        process.env.GHL_API_KEY ||
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IjB1cENDOFBLNzV2WjlQVkY4elFtIiwidmVyc2lvbiI6MSwiaWF0IjoxNzQ3Njg4NjM5NjkwLCJzdWIiOiJZc3hFM3duSW93eFpRa21QUjJCVCJ9.VxAQfLHKLDkV7vSFAKyXOcSS27tDeotWJabLuU6MMEg"
+
+      // Prepare contact data for GHL
+      const contactData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phoneNumber,
+        email: `${formData.firstName.toLowerCase()}.${formData.lastName.toLowerCase()}@callrequest.1322legacy.com`, // Placeholder email
+        source: "call_me_now",
+        tags: ["call-me-now", "urgent-lead", "qualification-page"],
+        customFields: [
+          {
+            key: "request_type",
+            value: "call_me_now",
+          },
+          {
+            key: "submission_source",
+            value: "qualification_page",
+          },
+          {
+            key: "request_date",
+            value: new Date().toISOString(),
+          },
+        ],
+      }
+
+      console.log("Sending call request to GHL:", contactData)
+
+      // Send data to GoHighLevel API
+      const response = await fetch(`https://services.leadconnectorhq.com/contacts/`, {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${GHL_API_KEY}`,
           "Content-Type": "application/json",
+          Version: "2021-07-28",
         },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          phoneNumber: formData.phoneNumber,
-          requestType: "call_me_now",
-          source: "qualification_page",
-          timestamp: new Date().toISOString(),
-        }),
+        body: JSON.stringify(contactData),
       })
 
+      const responseData = await response.json()
+      console.log("GHL Response:", response.status, responseData)
+
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`)
+        console.error("GHL API Error:", responseData)
+        throw new Error(`GHL API Error: ${response.status} - ${responseData.message || "Unknown error"}`)
       }
+
+      console.log("Successfully created call request in GHL:", responseData.contact?.id)
 
       setResult({
         success: true,
@@ -194,8 +226,7 @@ function CallNowForm() {
       })
       setSubmitted(true)
 
-      // In a real implementation, you might redirect to a thank you page
-      // or show a success message
+      // Redirect to thank you page after 3 seconds
       setTimeout(() => {
         router.push("/qualify/thank-you")
       }, 3000)

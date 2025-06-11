@@ -58,9 +58,8 @@ export async function getBlogPosts(): Promise<NotionPost[]> {
         author: page.properties.Author?.rich_text?.[0]?.plain_text || "Brad Raschke",
         authorImage: getImageUrl(page.properties["Author Image"]) || "/images/brad-headshot.jpeg",
         authorTitle: page.properties["Author Title"]?.rich_text?.[0]?.plain_text || "Founder & Steward of Strategy",
-        image:
-          getImageUrl(page.properties["Featured Image"]) ||
-          "/placeholder.svg?height=400&width=600&query=blog post featured image",
+        // Updated image logic with fallback hierarchy
+        image: getBlogPostImage(page),
         category: page.properties.Category?.select?.name || "Uncategorized",
         published: page.properties.Published?.checkbox || false,
       }
@@ -115,9 +114,8 @@ export async function getBlogPost(slug: string): Promise<NotionPost | null> {
       author: page.properties.Author?.rich_text?.[0]?.plain_text || "Brad Raschke",
       authorImage: getImageUrl(page.properties["Author Image"]) || "/images/brad-headshot.jpeg",
       authorTitle: page.properties["Author Title"]?.rich_text?.[0]?.plain_text || "Founder & Steward of Strategy",
-      image:
-        getImageUrl(page.properties["Featured Image"]) ||
-        "/placeholder.svg?height=400&width=600&query=blog post featured image",
+      // Updated image logic with fallback hierarchy
+      image: getBlogPostImage(page),
       category: page.properties.Category?.select?.name || "Uncategorized",
       published: page.properties.Published?.checkbox || false,
     }
@@ -127,6 +125,93 @@ export async function getBlogPost(slug: string): Promise<NotionPost | null> {
   }
 }
 
+/**
+ * Get blog post image with fallback hierarchy:
+ * 1. "Featured Image" property (Files & media)
+ * 2. "Image URL" property (URL or Text)
+ * 3. Notion page cover photo
+ * 4. Placeholder image
+ */
+function getBlogPostImage(page: any): string {
+  // 1. Try "Featured Image" property (Files & media)
+  const featuredImage = getImageUrl(page.properties["Featured Image"])
+  if (featuredImage) {
+    console.log(`Using Featured Image for post: ${page.properties.Title?.title?.[0]?.plain_text}`)
+    return featuredImage
+  }
+
+  // 2. Try "Image URL" property (URL or Text)
+  const imageUrl = getImageUrlFromProperty(page.properties["Image URL"])
+  if (imageUrl) {
+    console.log(`Using Image URL for post: ${page.properties.Title?.title?.[0]?.plain_text}`)
+    return imageUrl
+  }
+
+  // 3. Try Notion page cover photo
+  const coverImage = getPageCoverImage(page.cover)
+  if (coverImage) {
+    console.log(`Using page cover for post: ${page.properties.Title?.title?.[0]?.plain_text}`)
+    return coverImage
+  }
+
+  // 4. Fallback to placeholder
+  console.log(`Using placeholder for post: ${page.properties.Title?.title?.[0]?.plain_text}`)
+  return "/placeholder.svg?height=400&width=600"
+}
+
+/**
+ * Extract image URL from "Image URL" property (URL or Text type)
+ */
+function getImageUrlFromProperty(imageUrlProperty: any): string | null {
+  if (!imageUrlProperty) return null
+
+  // Handle URL property type
+  if (imageUrlProperty.url) {
+    return imageUrlProperty.url
+  }
+
+  // Handle Text/Rich Text property type
+  if (imageUrlProperty.rich_text && imageUrlProperty.rich_text.length > 0) {
+    const url = imageUrlProperty.rich_text[0].plain_text
+    // Basic URL validation
+    if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
+      return url
+    }
+  }
+
+  // Handle plain text property type
+  if (imageUrlProperty.plain_text) {
+    const url = imageUrlProperty.plain_text
+    if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
+      return url
+    }
+  }
+
+  return null
+}
+
+/**
+ * Extract image URL from Notion page cover
+ */
+function getPageCoverImage(cover: any): string | null {
+  if (!cover) return null
+
+  // Handle external cover image
+  if (cover.type === "external" && cover.external?.url) {
+    return cover.external.url
+  }
+
+  // Handle file cover image
+  if (cover.type === "file" && cover.file?.url) {
+    return cover.file.url
+  }
+
+  return null
+}
+
+/**
+ * Extract image URL from Files & media property (existing function, enhanced with logging)
+ */
 function getImageUrl(imageProperty: any): string | null {
   if (!imageProperty?.files?.length) return null
 

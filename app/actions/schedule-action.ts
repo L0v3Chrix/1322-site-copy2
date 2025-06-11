@@ -14,30 +14,74 @@ export async function scheduleCall(formData: FormData) {
       return { success: false, message: "Please fill in all required fields" }
     }
 
-    // Send data to make.com webhook for GoHighLevel
-    const response = await fetch("https://hook.us2.make.com/1278hy4xslfrtnjy4ohzov14lxwyv4y2", {
+    // GoHighLevel API configuration
+    const GHL_API_KEY =
+      process.env.GHL_API_KEY ||
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IjB1cENDOFBLNzV2WjlQVkY4elFtIiwidmVyc2lvbiI6MSwiaWF0IjoxNzQ3Njg4NjM5NjkwLCJzdWIiOiJZc3hFM3duSW93eFpRa21QUjJCVCJ9.VxAQfLHKLDkV7vSFAKyXOcSS27tDeotWJabLuU6MMEg"
+
+    // Prepare contact data for GHL
+    const contactData = {
+      firstName: "Call", // We'll need to get this from somewhere else or make it optional
+      lastName: "Scheduled",
+      email: "scheduled@1322legacy.com", // Placeholder - you might want to collect email separately
+      phone: preferredPhone,
+      source: "call_scheduling",
+      tags: ["call-scheduled", "appointment-booked"],
+      customFields: [
+        {
+          key: "appointment_day",
+          value: day,
+        },
+        {
+          key: "appointment_date",
+          value: date,
+        },
+        {
+          key: "appointment_time",
+          value: time,
+        },
+        {
+          key: "preferred_phone",
+          value: preferredPhone,
+        },
+        {
+          key: "questions",
+          value: questions || "No specific questions",
+        },
+        {
+          key: "scheduling_date",
+          value: new Date().toISOString(),
+        },
+      ],
+    }
+
+    console.log("Sending call scheduling data to GHL:", contactData)
+
+    // Send data to GoHighLevel API
+    const response = await fetch(`https://services.leadconnectorhq.com/contacts/`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${GHL_API_KEY}`,
         "Content-Type": "application/json",
+        Version: "2021-07-28",
       },
-      body: JSON.stringify({
-        appointmentDay: day,
-        appointmentDate: date,
-        appointmentTime: time,
-        preferredPhone,
-        questions,
-        source: "schedule_call_page",
-        timestamp: new Date().toISOString(),
-      }),
+      body: JSON.stringify(contactData),
     })
 
+    const responseData = await response.json()
+    console.log("GHL Response:", response.status, responseData)
+
     if (!response.ok) {
-      throw new Error(`Error: ${response.status}`)
+      console.error("GHL API Error:", responseData)
+      throw new Error(`GHL API Error: ${response.status} - ${responseData.message || "Unknown error"}`)
     }
+
+    console.log("Successfully created call scheduling contact in GHL:", responseData.contact?.id)
 
     return {
       success: true,
       message: "Your call has been scheduled successfully!",
+      contactId: responseData.contact?.id,
     }
   } catch (error) {
     console.error("Scheduling error:", error)

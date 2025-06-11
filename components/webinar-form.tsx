@@ -38,8 +38,8 @@ export default function WebinarForm() {
     setSubmitStatus(null)
 
     try {
-      // Send data to make.com webhook
-      const response = await fetch("https://hook.us2.make.com/dbvufdv3fsx6on12ihqoanl31v1vpzl6", {
+      // Send data to our API route
+      const response = await fetch("/api/webinar-registration", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,10 +54,12 @@ export default function WebinarForm() {
         }),
       })
 
-      if (response.ok) {
+      const result = await response.json()
+
+      if (response.ok && result.success) {
         setSubmitStatus({
           success: true,
-          message: "Thank you for registering! You'll receive webinar details shortly.",
+          message: result.message || "Thank you for registering! You'll receive webinar details shortly.",
         })
         // Reset form
         setFormData({
@@ -68,7 +70,7 @@ export default function WebinarForm() {
           agreeToTerms: false,
         })
       } else {
-        throw new Error("Failed to submit form")
+        throw new Error(result.message || "Failed to submit form")
       }
     } catch (error) {
       console.error("Error submitting form:", error)

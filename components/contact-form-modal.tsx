@@ -50,9 +50,8 @@ export default function ContactFormModal({
     try {
       console.log("Submitting form data:", formData)
 
-      // Send data to your webhook
-      const response = await fetch("https://hook.us2.make.com/rx192ycvpquz7rnaiaaa3ymtwh5e4eoc", {
-        // UPDATED WEBHOOK URL
+      // Send data to your internal API route (which uses GHL)
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,11 +71,12 @@ export default function ContactFormModal({
       console.log("Response ok:", response.ok)
 
       if (response.ok) {
-        console.log("Form submitted successfully")
+        const result = await response.json()
+        console.log("Form submitted successfully:", result)
         setSubmitted(true)
       } else {
-        const errorText = await response.text()
-        console.error("Response error:", errorText)
+        const errorData = await response.json()
+        console.error("Response error:", errorData)
         throw new Error(`Failed to submit form: ${response.status}`)
       }
     } catch (error) {
