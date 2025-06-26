@@ -19,7 +19,7 @@ export async function qualifyForSession(formData: FormData) {
     // GoHighLevel API configuration
     const GHL_API_KEY =
       process.env.GHL_API_KEY ||
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IjB1cENDOFBLNzV2WjlQVkY4elFtIiwidmVyc2lvbiI6MSwiaWF0IjoxNzQ3Njg4NjM5NjkwLCJzdWIiOiJZc3hFM3duSW93eFpRa21QUjJCVCJ9.VxAQfLHKLDkV7vSFAKyXOcSS27tDeotWJabLuU6MMEg"
+      "ec12c208-bd75-4c45-a2f0-1b42265f38b4"
 
     // Simple qualification logic
     const qualified =

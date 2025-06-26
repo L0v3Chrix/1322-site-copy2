@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       phone,
       locationId: GHL_LOCATION_ID,
       source: "Website Contact Form",
-      tags: ["website-lead", "contact-form"],
+      tags: ["website-lead", "contact-form", "main_website_form"],
       // Custom fields - replace these IDs with actual ones from your GHL account
       customFields: [
         {

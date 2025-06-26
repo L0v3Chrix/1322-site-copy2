@@ -1,14 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
+  let requestBody: any = {} // Initialize requestBody to safely access it in catch block
   try {
-    const body = await request.json()
+    requestBody = await request.json() // Parse JSON body
 
     // Validate required fields
-    const { firstName, lastName, email, phone, source, formTitle } = body
+    const { firstName, lastName, email, phone, source, formTitle } = requestBody
 
     if (!firstName || !lastName || !email || !phone) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+      return NextResponse.json({ success: false, error: "Missing required fields" }, { status: 400 })
     }
 
     // GoHighLevel API configuration - use environment variables
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: true,
-          message: "Form submitted successfully",
+          message: "Form submitted successfully (GHL not configured)",
         },
         { status: 200 },
       )
@@ -48,7 +49,7 @@ export async function POST(request: NextRequest) {
       phone,
       locationId: GHL_LOCATION_ID,
       source: source || "Website Contact Form",
-      tags: ["website-lead", "contact-form"],
+      tags: ["main_website_form"], // Added main_website_form tag
       customFields: [
         {
           id: "form_title_field_id", // Replace with actual custom field ID from GHL
@@ -91,12 +92,12 @@ export async function POST(request: NextRequest) {
         error: ghlData,
       })
 
-      // Still return success to user to prevent frustration
+      // Still return success to user to prevent frustration, but indicate GHL failure
       return NextResponse.json(
         {
           success: true,
-          message: "Form submitted successfully",
-          note: "Contact logged locally",
+          message: "Form submitted successfully (GHL integration failed)",
+          ghlError: ghlData, // Include GHL error for debugging
         },
         { status: 200 },
       )
@@ -116,19 +117,23 @@ export async function POST(request: NextRequest) {
     console.error("Contact form submission error:", error)
 
     // Log the error details for debugging
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorStack = error instanceof Error ? error.stack : undefined
+
     console.error("Error details:", {
-      message: error instanceof Error ? error.message : "Unknown error",
-      stack: error instanceof Error ? error.stack : undefined,
+      message: errorMessage,
+      stack: errorStack,
+      requestBody: requestBody, // Log the parsed body if available
     })
 
-    // Always return success to user to prevent frustration
+    // Always return a valid JSON response, even on unexpected errors
     return NextResponse.json(
       {
-        success: true,
-        message: "Form submitted successfully",
-        note: "Contact logged locally",
+        success: false, // Indicate failure to the client
+        message: "Internal server error during form submission",
+        error: errorMessage,
       },
-      { status: 200 },
+      { status: 500 },
     )
   }
 }

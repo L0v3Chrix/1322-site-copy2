@@ -1,149 +1,61 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json()
+    const body = await req.json()
+    const { email, firstName, lastName, company, jobTitle } = body
 
-    // Validate required fields
-    const { firstName, lastName, email, phone, webinarDate, webinarTime } = body
-
-    if (!firstName || !lastName || !email || !phone) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    if (!email || !firstName || !lastName || !company || !jobTitle) {
+      return new NextResponse("Missing required fields", { status: 400 })
     }
 
-    // GoHighLevel API configuration - use environment variables only
-    const GHL_API_KEY = process.env.GHL_API_KEY
-    const SUBACCOUNT_ID = process.env.GHL_SUBACCOUNT_ID
+    // Klaviyo API endpoint for adding a list
+    const klaviyoApiUrl = `https://a.klaviyo.com/api/v2/list/${process.env.KLAVIYO_LIST_ID}/members`
 
-    if (!GHL_API_KEY || !SUBACCOUNT_ID) {
-      console.error("Missing GHL API credentials")
-      // Still log the submission for backup
-      console.log("Webinar registration (no GHL):", {
-        firstName,
-        lastName,
-        email,
-        phone,
-        webinarDate,
-        webinarTime,
-        timestamp: new Date().toISOString(),
-      })
+    // Klaviyo API key (Private API Key)
+    const klaviyoApiKey = process.env.KLAVIYO_PRIVATE_API_KEY
 
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Registration submitted successfully",
-        },
-        { status: 200 },
-      )
+    if (!klaviyoApiKey) {
+      console.error("Klaviyo API key is missing.")
+      return new NextResponse("Klaviyo API key is missing", { status: 500 })
     }
 
-    // Prepare contact data for GHL
     const contactData = {
-      firstName,
-      lastName,
-      email,
-      phone,
-      source: "webinar_registration",
-      tags: ["webinar-registrant", "website-lead"],
-      customFields: [
+      profiles: [
         {
-          key: "webinar_date",
-          field_value: webinarDate || "Not specified",
-        },
-        {
-          key: "webinar_time",
-          field_value: webinarTime || "Not specified",
-        },
-        {
-          key: "registration_date",
-          field_value: new Date().toISOString(),
+          email: email,
+          first_name: firstName,
+          last_name: lastName,
+          organization: company,
+          title: jobTitle,
+          $consent: "web",
+          tags: ["webinar-registrant", "website-lead", "main_website_form"],
         },
       ],
     }
 
-    console.log("Sending webinar registration to GHL:", contactData)
-
-    // Send data to GoHighLevel API
-    const response = await fetch(`https://services.leadconnectorhq.com/contacts/`, {
+    const response = await fetch(klaviyoApiUrl, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${GHL_API_KEY}`,
         "Content-Type": "application/json",
-        Version: "2021-07-28",
+        Authorization: `Klaviyo-API-Key ${klaviyoApiKey}`,
       },
       body: JSON.stringify(contactData),
     })
 
-    const responseData = await response.json()
-    console.log("GHL Response:", response.status, responseData)
-
     if (!response.ok) {
-      console.error("GHL API Error:", responseData)
-      // Still return success to user but log the error
-      console.log("Fallback: Webinar registration logged:", {
-        firstName,
-        lastName,
-        email,
-        phone,
-        webinarDate,
-        webinarTime,
-        timestamp: new Date().toISOString(),
-        ghlError: responseData,
+      const errorData = await response.json()
+      console.error("Klaviyo API error:", errorData)
+      return new NextResponse(`Failed to subscribe to Klaviyo list: ${response.statusText}`, {
+        status: response.status,
       })
-
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Registration submitted successfully",
-        },
-        { status: 200 },
-      )
     }
 
-    console.log("Successfully created webinar registrant in GHL:", responseData.contact?.id)
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Registration submitted successfully",
-        contactId: responseData.contact?.id,
-      },
-      { status: 200 },
-    )
-  } catch (error) {
-    console.error("Webinar registration error:", error)
-
-    // Log the submission as backup even if GHL fails
-    console.log("Fallback webinar registration:", {
-      firstName: body?.firstName,
-      lastName: body?.lastName,
-      email: body?.email,
-      phone: body?.phone,
-      webinarDate: body?.webinarDate,
-      webinarTime: body?.webinarTime,
-      timestamp: new Date().toISOString(),
-      error: error.message,
+    return NextResponse.json({ message: "Successfully subscribed!" })
+  } catch (error: any) {
+    console.error("Error subscribing to Klaviyo list:", error)
+    return new NextResponse(error.message || "An error occurred", {
+      status: 500,
     })
-
-    // Return success to user to prevent frustration
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Registration submitted successfully",
-      },
-      { status: 200 },
-    )
   }
-}
-
-// Handle preflight requests for CORS
-export async function OPTIONS(request: NextRequest) {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  })
 }

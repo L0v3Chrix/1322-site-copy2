@@ -16,8 +16,8 @@ export async function registerForWebinar(formData: FormData) {
     // GoHighLevel API configuration
     const GHL_API_KEY =
       process.env.GHL_API_KEY ||
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IjB1cENDOFBLNzV2WjlQVkY4elFtIiwidmVyc2lvbiI6MSwiaWF0IjoxNzQ3Njg4NjM5NjkwLCJzdWIiOiJZc3hFM3duSW93eFpRa21QUjJCVCJ9.VxAQfLHKLDkV7vSFAKyXOcSS27tDeotWJabLuU6MMEg"
-    const SUBACCOUNT_ID = process.env.GHL_SUBACCOUNT_ID || "0upCC8PK75vZ9PVF8zQm"
+      "ec12c208-bd75-4c45-a2f0-1b42265f38b4"
+    const SUBACCOUNT_ID = process.env.GHL_SUBACCOUNT_ID || "3RwjmxyXjBsFtHEqxsuJ"
 
     // Prepare contact data for GHL
     const contactData = {
@@ -26,11 +26,11 @@ export async function registerForWebinar(formData: FormData) {
       email,
       phone,
       source: "webinar_registration",
-      tags: ["webinar-registrant", "website-lead"],
+      tags: ["main_website_form"],
       customFields: [
         {
           key: "registration_source",
-          value: "website_webinar_form",
+          value: "main_website_form",
         },
         {
           key: "registration_date",
