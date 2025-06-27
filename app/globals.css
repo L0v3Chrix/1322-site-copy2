@@ -2,165 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --navy: 44 62 80;
-  --gold: 196 154 108;
-  --cream: 245 240 230; /* This is #F5F0E6 */
-  --copper: 182 110 65;
-  --olive: 125 143 105;
-}
-
-@layer base {
-  html {
-    @apply scroll-smooth;
-  }
-
-  body {
-    @apply bg-cream text-navy font-lato leading-relaxed;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-playfair font-normal leading-tight tracking-tight;
-  }
-
-  h1 {
-    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
-  }
-
-  h2 {
-    @apply text-2xl sm:text-3xl md:text-4xl;
-  }
-
-  h3 {
-    @apply text-xl sm:text-2xl md:text-3xl;
-  }
-
-  p {
-    @apply mb-6 max-w-prose-normal;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-navy text-navy hover:bg-navy hover:text-white;
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-white text-white hover:bg-white hover:text-navy;
-  }
-
-  .section-title {
-    @apply text-2xl sm:text-3xl md:text-4xl font-normal text-navy mb-6 sm:mb-8 text-center tracking-tight;
-  }
-
-  .section-subtitle {
-    @apply text-xl md:text-2xl text-copper mb-8 font-playfair text-center;
-  }
-
-  .container-custom {
-    @apply container mx-auto px-4 md:px-8 py-16 md:py-24;
-  }
-
-  .header-transparent {
-    @apply bg-transparent text-white;
-  }
-
-  .header-solid {
-    @apply bg-cream text-navy shadow-sm;
-  }
-
-  .hero-section {
-    @apply relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat text-white;
-  }
-
-  .hero-content {
-    @apply max-w-4xl mx-auto text-center px-4;
-  }
-
-  .hero-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-normal mb-6 leading-tight tracking-tight text-white;
-  }
-
-  .hero-subtitle {
-    @apply text-lg md:text-xl mb-8 max-w-prose-normal mx-auto text-white;
-  }
-
-  .scroll-indicator {
-    @apply absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-scroll-hint cursor-pointer;
-  }
-
-  .card-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
-  }
-
-  .card {
-    @apply relative overflow-hidden;
-  }
-
-  .card-image {
-    @apply w-full aspect-[4/3] object-cover transition-transform duration-700;
-  }
-
-  .card-overlay {
-    @apply absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 flex items-center justify-center;
-  }
-
-  .card-title {
-    @apply text-white text-xl md:text-2xl font-normal tracking-tight;
-  }
-
-  .section-container {
-    min-height: 100vh;
-    scroll-margin-top: 80px; /* Adjust based on your header height */
-  }
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
 
-  .infinity-scroll {
-    scroll-behavior: smooth;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  .responsive-container {
-    width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
+}
 
-  .responsive-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
+@layer base {
+  * {
+    @apply border-border;
   }
-
-  @media (min-width: 640px) {
-    .responsive-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-
-    .responsive-padding {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .responsive-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-
-    .responsive-padding {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
+  body {
+    @apply bg-background text-foreground;
   }
 }
