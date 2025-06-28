@@ -4,7 +4,6 @@ import Hero from "@/components/hero"
 import Section from "@/components/section"
 import SectionTitle from "@/components/section-title"
 import ContactButton from "@/components/contact-button"
-import ServiceCard from "@/components/service-card"
 import ParallaxImage from "@/components/parallax-image"
 import { ArrowRight, Check } from "lucide-react"
 import { motion } from "framer-motion"
@@ -12,55 +11,13 @@ import Link from "next/link"
 
 // Import the new components at the top of the file
 import AnimatedText from "@/components/animated-text"
-import HighlightText from "@/components/highlight-text"
 import AnimatedQuote from "@/components/animated-quote"
 import ClientStories from "@/components/client-stories"
 import ToolsServices from "@/components/tools-services"
+import ClientTestimonials from "@/components/client-testimonials"
+import FloatingVideoPlayer from "@/components/floating-video-player"
 
 export default function Home() {
-  // Services data
-  const services = [
-    {
-      title: "Discovery & Values-Based Planning",
-      description:
-        "It all starts with your story. We begin with listening to understand your values, vision, and family dynamics.",
-      image: "/images/discovery-new.png",
-      slug: "discovery",
-    },
-    {
-      title: "Custom Stewardship Strategy",
-      description: "Where vision becomes strategy. We design and implement custom Whole Life insurance-based systems.",
-      image: "/images/strategy-design-new.png",
-      slug: "stewardship-strategy",
-    },
-    {
-      title: "Trust & Estate Planning",
-      description:
-        "Protect what matters. Preserve what endures. We partner with families to design trusts that honor your values.",
-      image: "/images/legacy-preparation-new.png",
-      slug: "trust-estate-planning",
-    },
-    {
-      title: "Tax Planning & Preparation",
-      description: "Reduce burdens. Release blessings. Tax efficiency is not about loopholes — it is about wisdom.",
-      image: "/images/financial-planning.png",
-      slug: "tax-planning",
-    },
-    {
-      title: "Ongoing Stewardship Partnership",
-      description:
-        "Stewardship is not a set-and-forget responsibility. We walk beside you through annual Legacy Reviews.",
-      image: "/images/stewardship-partnership-new.png",
-      slug: "stewardship-partnership",
-    },
-    {
-      title: "Generational Legacy Planning",
-      description: "Pass more than wealth. Pass wisdom. Our family stewardship services prepare the next generation.",
-      image: "/images/family-generations.png",
-      slug: "generational-planning",
-    },
-  ]
-
   // Journey steps data
   const journeySteps = [
     {
@@ -96,7 +53,7 @@ export default function Home() {
   ]
 
   return (
-    <>
+    <div className="min-h-screen" style={{ backgroundColor: "#F5F0E6" }}>
       {/* Home Section */}
       <Hero
         id="home"
@@ -132,54 +89,6 @@ export default function Home() {
 
           <p>Stewardship = ownership, liquidity, and a generational mindset.</p>
         </motion.div>
-      </Section>
-
-      {/* Services Section */}
-      <Section className="bg-cream" id="services">
-        <SectionTitle>The 1322 Stewardship Process</SectionTitle>
-
-        <AnimatedText className="text-center max-w-prose-normal mx-auto mb-8" delay={0.2}>
-          Services Designed for Generational Blessing
-        </AnimatedText>
-
-        <div className="max-w-3xl mx-auto mb-12 text-center">
-          <AnimatedText delay={0.3}>
-            At 1322 Legacy Strategies, stewardship is more than financial. It is <HighlightText>faithful</HighlightText>
-            , <HighlightText>relational</HighlightText>, and <HighlightText>generational</HighlightText>.
-          </AnimatedText>
-
-          <AnimatedText delay={0.4}>
-            We serve faith-first families who desire more than accumulation — they desire{" "}
-            <HighlightText>control</HighlightText>, <HighlightText>clarity</HighlightText>, and a{" "}
-            <HighlightText>legacy</HighlightText> worthy of remembrance. That is why we offer an integrated suite of
-            services under one roof, where every hand is working in harmony to protect, grow, and pass on the blessings
-            entrusted to you.
-          </AnimatedText>
-        </div>
-
-        <div className="card-grid">
-          {services.map((service, index) => (
-            <ServiceCard
-              key={index}
-              title={service.title}
-              image={service.image}
-              slug={service.slug}
-              index={index}
-              description={service.description}
-            />
-          ))}
-        </div>
-
-        <div className="text-center mt-16">
-          <ContactButton
-            title="Build Your Legacy Strategy"
-            description="Let's craft a custom stewardship strategy for your family."
-            className="inline-flex items-center"
-          >
-            Build Your Legacy Strategy
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </ContactButton>
-        </div>
       </Section>
 
       {/* About Section */}
@@ -224,7 +133,155 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Strategy Section */}
+      {/* Journey Section - Updated with improved layout */}
+      <Section className="bg-cream" id="journey">
+        <SectionTitle>What to Expect: Your Journey of Stewardship</SectionTitle>
+
+        <p className="text-center max-w-prose-normal mx-auto mb-8">
+          Faithful stewardship is not an event. It is a lifelong calling.
+        </p>
+
+        <div className="max-w-5xl mx-auto space-y-12">
+          {journeySteps.map((step, index) => (
+            <motion.div
+              key={index}
+              className="grid md:grid-cols-2 gap-6 items-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <div className={`${index % 2 === 1 ? "order-2" : "order-1"} md:order-1`}>
+                <div className="flex items-start gap-4">
+                  <div className="bg-gold/20 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="font-playfair font-bold text-lg text-copper">{step.number}</span>
+                  </div>
+
+                  <div className="flex-1">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-navy">{step.title}</h3>
+                    <p className="text-base mb-3 text-navy/80 leading-relaxed">{step.description}</p>
+                    <p className="text-base italic text-copper">{step.emphasis}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className={`relative h-[200px] md:h-[240px] rounded-lg overflow-hidden ${
+                  index % 2 === 1 ? "order-1" : "order-2"
+                } md:order-2`}
+              >
+                <ParallaxImage
+                  src={step.image}
+                  alt={`Step ${step.number}: ${step.title}`}
+                  className="h-full object-cover"
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <ContactButton
+            title="Walk the Journey"
+            description="Begin your legacy stewardship journey with us."
+            className="inline-flex items-center"
+          >
+            Walk the Journey
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </ContactButton>
+        </div>
+      </Section>
+
+      {/* Client Stories Section */}
+      <ClientStories />
+
+      {/* Client Testimonials Section */}
+      <ClientTestimonials />
+
+      {/* Tools & Services Section */}
+      <ToolsServices />
+
+      {/* Why Choose Us Section */}
+      <Section className="bg-navy text-cream" id="why-choose">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gold mb-6 leading-tight tracking-wide">
+            WHY FAMILIES CHOOSE 1322
+          </h2>
+        </div>
+
+        <div className="max-w-3xl mx-auto mb-12">
+          <ul className="space-y-6">
+            <motion.li
+              className="flex items-start"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Check className="text-gold mr-4 mt-1 flex-shrink-0" />
+              <p className="text-cream text-lg">
+                Everything under one roof—legal, tax, insurance, income. No finger-pointing between advisors.
+              </p>
+            </motion.li>
+
+            <motion.li
+              className="flex items-start"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Check className="text-gold mr-4 mt-1 flex-shrink-0" />
+              <p className="text-cream text-lg">Boutique attention—fewer clients, deeper relationships.</p>
+            </motion.li>
+
+            <motion.li
+              className="flex items-start"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Check className="text-gold mr-4 mt-1 flex-shrink-0" />
+              <p className="text-cream text-lg">Faith-anchored wisdom without the preachiness.</p>
+            </motion.li>
+
+            <motion.li
+              className="flex items-start"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <Check className="text-gold mr-4 mt-1 flex-shrink-0" />
+              <p className="text-cream text-lg">Over 70% of new families come from referrals.</p>
+            </motion.li>
+
+            <motion.li
+              className="flex items-start"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <Check className="text-gold mr-4 mt-1 flex-shrink-0" />
+              <p className="text-cream text-lg">
+                Supported by a team of CERTIFIED FINANCIAL PLANNERS and Chartered Life Underwriters.
+              </p>
+            </motion.li>
+          </ul>
+
+          <AnimatedQuote author="Proverbs 13:22" className="my-8">
+            A good man leaves an inheritance to his children's children.
+          </AnimatedQuote>
+
+          <AnimatedText className="mt-4 text-center text-cream" delay={0.8}>
+            At 1322 Legacy Strategies, we help you do just that.
+          </AnimatedText>
+        </div>
+      </Section>
+
+      {/* Strategy Section - Moved below Why Choose Us */}
       <Section className="bg-cream" id="strategy">
         <SectionTitle>HOW IT WORKS</SectionTitle>
 
@@ -273,139 +330,6 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Journey Section */}
-      <Section className="bg-cream" id="journey">
-        <SectionTitle>What to Expect: Your Journey of Stewardship</SectionTitle>
-
-        <p className="text-center max-w-prose-normal mx-auto mb-12">
-          Faithful stewardship is not an event. It is a lifelong calling.
-        </p>
-
-        <div className="space-y-24">
-          {journeySteps.map((step, index) => (
-            <div key={index} className="grid md:grid-cols-2 gap-12 items-center">
-              <motion.div
-                className={`${index % 2 === 1 ? "order-2" : "order-1"} md:order-1`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="bg-gold/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                  <span className="font-playfair font-bold text-2xl text-copper">{step.number}</span>
-                </div>
-
-                <h3 className="text-2xl md:text-3xl font-normal mb-4 text-navy">{step.title}</h3>
-                <p className="text-lg mb-6 text-navy/80">{step.description}</p>
-
-                <p className="text-lg italic text-copper">{step.emphasis}</p>
-              </motion.div>
-
-              <div
-                className={`relative h-[300px] md:h-[400px] rounded-lg overflow-hidden ${
-                  index % 2 === 1 ? "order-1" : "order-2"
-                } md:order-2`}
-              >
-                <ParallaxImage src={step.image} alt={`Step ${step.number}: ${step.title}`} className="h-full" />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-16">
-          <ContactButton
-            title="Walk the Journey"
-            description="Begin your legacy stewardship journey with us."
-            className="inline-flex items-center"
-          >
-            Walk the Journey
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </ContactButton>
-        </div>
-      </Section>
-
-      {/* Client Stories Section */}
-      <ClientStories />
-
-      {/* Tools & Services Section */}
-      <ToolsServices />
-
-      {/* Why Choose Us Section */}
-      <Section className="bg-navy text-cream" id="why-choose">
-        <SectionTitle className="text-gold">
-          <AnimatedText type="character" delay={0.05}>
-            WHY FAMILIES CHOOSE 1322
-          </AnimatedText>
-        </SectionTitle>
-
-        <div className="max-w-3xl mx-auto mb-12">
-          <ul className="space-y-4">
-            <motion.li
-              className="flex items-start"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
-              <p>Everything under one roof—legal, tax, insurance, income. No finger-pointing between advisors.</p>
-            </motion.li>
-
-            <motion.li
-              className="flex items-start"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
-              <p>Boutique attention—fewer clients, deeper relationships.</p>
-            </motion.li>
-
-            <motion.li
-              className="flex items-start"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
-              <p>Faith-anchored wisdom without the preachiness.</p>
-            </motion.li>
-
-            <motion.li
-              className="flex items-start"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
-              <p>Over 70% of new families come from referrals.</p>
-            </motion.li>
-
-            <motion.li
-              className="flex items-start"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
-              <p>Supported by a team of CERTIFIED FINANCIAL PLANNERS and Chartered Life Underwriters.</p>
-            </motion.li>
-          </ul>
-
-          <AnimatedQuote author="Proverbs 13:22" className="my-8">
-            A good man leaves an inheritance to his children's children.
-          </AnimatedQuote>
-
-          <AnimatedText className="mt-4 text-center" delay={0.8}>
-            At 1322 Legacy Strategies, we help you do just that.
-          </AnimatedText>
-        </div>
-      </Section>
-
       {/* CTA Section */}
       <Section className="bg-cream" id="cta">
         <SectionTitle>Ready for a conversation that puts you back in the driver's seat?</SectionTitle>
@@ -432,6 +356,8 @@ export default function Home() {
           </div>
         </motion.div>
       </Section>
-    </>
+
+      <FloatingVideoPlayer />
+    </div>
   )
 }
