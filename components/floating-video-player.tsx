@@ -1,17 +1,23 @@
 "use client"
 
-import { useRef } from "react"
+import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Play, X } from "lucide-react"
+import { Minimize2, Play, Volume2, X } from "lucide-react"
 import { useVideo } from "@/context/video-context"
 import OptimizedImage from "./optimized-image"
 
 export default function FloatingVideoPlayer() {
   const { videoState, openVideo, minimizeVideo } = useVideo()
+  const [isMuted] = useState(false)
   const videoRef = useRef<HTMLDivElement>(null)
 
-  const videoId = "apZKlq9S-NI"
-  const youtubeEmbedSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=${videoId}&mute=1`
+  // This is a placeholder function until a real video is implemented
+  const handlePlayClick = () => {
+    // In a real implementation, this would play the video
+    console.log("Play button clicked - video would play here")
+    // For now, we'll just show a message
+    alert("Video playback will be available when a real video is added.")
+  }
 
   if (videoState === "closed") {
     return null
@@ -22,52 +28,90 @@ export default function FloatingVideoPlayer() {
       {videoState === "open" && (
         <motion.div
           className="fixed z-50 bg-navy/90 rounded-lg shadow-xl overflow-hidden"
+          initial={{ opacity: 0, y: 50 }}
           style={{
             position: "fixed",
             right: "1rem",
             bottom: "1rem",
-            width: "min(80vw, 384px)", // Slightly wider for controls
+            width: "min(80vw, 320px)",
             maxWidth: "100%",
           }}
-          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
           transition={{ duration: 0.3 }}
         >
           <div className="relative">
+            {/* Close button in top-right corner */}
             <button
               onClick={minimizeVideo}
-              className="absolute top-2 right-2 z-20 bg-black/30 hover:bg-black/60 text-cream rounded-full p-1.5 transition-colors"
-              aria-label="Minimize video"
+              className="absolute top-2 right-2 z-10 bg-navy/70 hover:bg-navy text-cream rounded-full p-1.5 transition-colors"
+              aria-label="Close video"
             >
-              <X className="h-4 w-4" />
+              <X className="h-3 w-3" />
             </button>
 
+            {/* Video Placeholder */}
             <div ref={videoRef} className="relative aspect-video bg-navy overflow-hidden w-full">
-              <iframe
-                src={youtubeEmbedSrc}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="absolute top-0 left-0 w-full h-full"
-              ></iframe>
+              <div className="absolute inset-0">
+                <div className="relative w-full h-full">
+                  <OptimizedImage
+                    src="/images/1322-welcome.png"
+                    alt="Welcome to 1322 Legacy Strategies"
+                    type="medium"
+                    fill
+                    className="object-contain object-top scale-[1.3] -translate-y-[5%]"
+                    priority
+                  />
+                </div>
+                <div
+                  className="absolute inset-0 flex items-center justify-center bg-black/20 cursor-pointer"
+                  onClick={handlePlayClick}
+                >
+                  <div className="bg-cream/90 rounded-full p-3 hover:bg-cream transition-colors">
+                    <Play className="h-8 w-8 text-navy" />
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="p-3 bg-navy text-cream">
-              <h3 className="font-bold text-sm mb-2">A Message from Brad</h3>
-              <p className="text-xs text-cream/80">
+            {/* Controls */}
+            <div className="p-2 sm:p-3 bg-navy text-cream">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="font-bold text-sm">A Message from Brad</h3>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={minimizeVideo}
+                    className="text-cream/80 hover:text-cream transition-colors"
+                    aria-label="Minimize video"
+                  >
+                    <Minimize2 className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+
+              <p className="text-xs text-cream/80 mb-2">
                 Welcome to 13:22 Legacy Strategies. I'd like to share how we can help you build a legacy that lasts for
-                generations.{" "}
-                <a
-                  href="https://start.1322legacystrategies.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gold hover:underline font-semibold"
-                >
-                  Stewardship starts here.
-                </a>
+                generations.
               </p>
+
+              <div className="flex justify-between items-center">
+                <div className="flex space-x-3">
+                  <button
+                    onClick={handlePlayClick}
+                    className="text-cream/80 hover:text-cream transition-colors"
+                    aria-label="Play"
+                  >
+                    <Play className="h-4 w-4" />
+                  </button>
+                  <button
+                    className="text-cream/80 hover:text-cream transition-colors opacity-50 cursor-not-allowed"
+                    aria-label={isMuted ? "Unmute" : "Mute"}
+                    disabled
+                  >
+                    <Volume2 className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>

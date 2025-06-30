@@ -1,108 +1,122 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowRight, DollarSign, TrendingUp, Shield, Users } from "lucide-react"
+import { ChevronRight } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function ClientStories() {
+  const [activeTab, setActiveTab] = useState("story1")
+
   const stories = [
     {
-      icon: DollarSign,
-      title: "The Johnson Family",
-      subtitle: "From Debt to Dynasty",
-      description:
-        "Eliminated $180,000 in mortgage payments while building a $2.3M family bank that will fund their children's education and business ventures.",
-      result: "Created generational wealth in 7 years",
-      color: "text-gold",
-      bgColor: "bg-gold/10",
+      id: "story1",
+      title: "Bryan & Carol: Downsizing without Downsides",
+      subtitle: "Ages: 63",
+      challenge:
+        "Bryan and Carol, both 63, wanted to move closer to the grandkids. They dreamed of golfing mornings and grandkid sleepovers without a bank's permission. In our discovery call they voiced two fears: taking on a new mortgage in retirement and shrinking their kids' inheritance.",
+      solution: [
+        {
+          title: "Legacy Blueprint",
+          content:
+            'We showed them how to channel the $927,000 net proceeds from the sale into a properly structured whole-life policy—their personal "Family Bank."',
+        },
+        {
+          title: "Stewardship in Action",
+          content:
+            'Instead of paying cash for the new lake-home or borrowing from a traditional lender, Bryan and Carol "borrowed" from their policy. Each "mortgage" payment they now make goes back into their own system, repaying the loan and earning dividends.',
+        },
+        {
+          title: "Impact",
+          content:
+            "They enjoy a paid-off home by age 78, a projected six-figure tax-free dividend stream for travel, and a $6.6 million death benefit slated for their children and grandchildren—all without touching Wall Street or bankers.",
+        },
+      ],
+      disclaimer: "*Hypothetical for illustration; dividends, loan rates, and tax law may change.",
     },
     {
-      icon: TrendingUp,
-      title: "The Martinez Legacy",
-      subtitle: "Tax-Free Retirement",
-      description:
-        "Replaced their 401(k) strategy with infinite banking, creating $85,000 in annual tax-free income while preserving $1.2M for their heirs.",
-      result: "Zero taxes on retirement income",
-      color: "text-copper",
-      bgColor: "bg-copper/10",
-    },
-    {
-      icon: Shield,
-      title: "The Chen Enterprise",
-      subtitle: "Business & Family Protection",
-      description:
-        "Protected their $3M business with key-person insurance while funding expansion through policy loans, keeping 100% ownership.",
-      result: "Funded $500K expansion debt-free",
-      color: "text-navy",
-      bgColor: "bg-navy/10",
-    },
-    {
-      icon: Users,
-      title: "The Williams Dynasty",
-      subtitle: "Multi-Generational Planning",
-      description:
-        "Established a family banking system that will provide each grandchild with $250,000 at age 25, funded through strategic policy design.",
-      result: "Secured 3 generations of wealth",
-      color: "text-gold",
-      bgColor: "bg-gold/10",
+      id: "story2",
+      title: 'David & Linda: Defusing the "Tax Time-Bomb"',
+      subtitle: "Ages: 67 & 65",
+      challenge:
+        'David (67) and Linda (65) had nearly $1 million saved, but 85 percent sat in taxable accounts, leaving them anxious about three threats: longevity (outliving their money), taxes (ever-larger RMDs), and markets (another 2008 gut-punch). In our first conversation David called it "a ticking tax bomb."',
+      solution: [
+        {
+          title: "Legacy Blueprint",
+          content:
+            "Our tax strategists mapped a 10-year withdrawal plan: each year we shifted about $80,000 out of the brokerage account while markets were healthy, paid the tax at today's known rates, and redirected the after-tax dollars—roughly $60,000—into a specially structured whole-life policy, their new Family Bank.",
+        },
+        {
+          title: "Stewardship in Action",
+          content:
+            "• Liquidity Now: Cash value stayed accessible for emergencies or opportunities.\n• Tax Control Later: Growth and policy loans come out income-tax-free—no RMD shocks.\n• Longevity Buffer: A rising death benefit guarantees Linda—or their heirs—a multimillion-dollar, tax-free legacy even if they spend every liquid dollar while alive.",
+        },
+        {
+          title: "Five-Year Impact",
+          content:
+            'Forty percent of the old "tax bomb" is already defused, their prepaid taxes now sit inside the policy\'s cash value, and projections show income lasting well past age 100—even under conservative assumptions. As David put it, "Tax season doesn\'t scare us anymore, and living to 100 sounds exciting—not expensive."',
+        },
+      ],
+      disclaimer: "*Hypothetical for illustration; dividends, loan rates, and tax law may change.",
     },
   ]
 
   return (
-    <section className="py-16 md:py-24 bg-cream" id="client-stories">
+    <section className="bg-cream py-16 md:py-24" id="client-stories">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-navy">Stories of Stewardship</h2>
-          <p className="text-xl max-w-3xl mx-auto text-navy/80">
-            Real families who chose to control their capital and build lasting legacies
-          </p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Client Stories</h2>
+          <p className="text-xl max-w-3xl mx-auto text-navy/80">Real families, real solutions, real impact.</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {stories.map((story, index) => (
-            <motion.div
-              key={index}
-              className="bg-white rounded-lg p-8 shadow-lg border border-navy/10 hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <div className="flex items-start gap-4 mb-6">
-                <div className={`${story.bgColor} p-3 rounded-lg flex-shrink-0`}>
-                  <story.icon className={`w-6 h-6 ${story.color}`} />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-navy mb-1">{story.title}</h3>
-                  <p className="text-copper font-medium text-sm">{story.subtitle}</p>
-                </div>
-              </div>
+        <Tabs defaultValue="story1" value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8">
+            <TabsTrigger value="story1" className="text-sm sm:text-lg py-2 sm:py-3">
+              Bryan & Carol
+            </TabsTrigger>
+            <TabsTrigger value="story2" className="text-sm sm:text-lg py-2 sm:py-3">
+              David & Linda
+            </TabsTrigger>
+          </TabsList>
 
-              <p className="text-navy/80 leading-relaxed mb-6">{story.description}</p>
+          {stories.map((story) => (
+            <TabsContent key={story.id} value={story.id} className="mt-6">
+              <motion.div
+                className="bg-cream p-4 sm:p-8 rounded-lg border border-navy/10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-navy">{story.title}</h3>
+                <p className="text-lg text-copper mb-6">{story.subtitle}</p>
 
-              <div className="border-t border-navy/10 pt-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-gold">✓ {story.result}</span>
-                  <ArrowRight className="w-4 h-4 text-navy/40" />
+                <div className="mb-8">
+                  <p className="text-lg">{story.challenge}</p>
                 </div>
-              </div>
-            </motion.div>
+
+                <div className="space-y-8">
+                  {story.solution.map((step, index) => (
+                    <div key={index}>
+                      <h4 className="text-xl font-bold mb-3 text-navy flex items-center">
+                        <ChevronRight className="text-gold mr-2" />
+                        {step.title}
+                      </h4>
+                      <div className="pl-8">
+                        {step.content.split("\n").map((line, i) => (
+                          <p key={i} className="mb-3">
+                            {line}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {story.disclaimer && <p className="text-sm text-navy/60 italic mt-6">{story.disclaimer}</p>}
+              </motion.div>
+            </TabsContent>
           ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <p className="text-navy/80 mb-6 text-lg">Ready to write your own success story?</p>
-            <button className="bg-navy text-cream px-8 py-3 rounded-lg font-semibold hover:bg-navy/90 transition-colors duration-300 inline-flex items-center">
-              Start Your Journey
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </button>
-          </motion.div>
-        </div>
+        </Tabs>
       </div>
     </section>
   )
