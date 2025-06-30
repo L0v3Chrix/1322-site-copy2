@@ -55,7 +55,7 @@ export default function TestimonialCarousel() {
     <div className="bg-dark-blue text-cream py-24">
       <div className="container mx-auto px-4 md:px-8">
         <h2 className="section-title text-white">What Our Families Say</h2>
-        <p className="section-subtitle !text-cream/80">
+        <p className="section-subtitle !text-cream/80 text-right">
           Real results from families who chose stewardship over speculation
         </p>
 

@@ -178,7 +178,9 @@ export default function Home() {
 
       <Section id="journey">
         <h2 className="section-title">What to Expect: Your Journey of Stewardship</h2>
-        <p className="section-subtitle">Faithful stewardship is not an event. It is a lifelong calling.</p>
+        <p className="section-subtitle subtitle-center">
+          Faithful stewardship is not an event. It is a lifelong calling.
+        </p>
         <div className="space-y-16">
           {journeySteps.map((step, index) => (
             <div key={index} className="grid md:grid-cols-2 gap-12 items-center">
@@ -213,7 +215,9 @@ export default function Home() {
 
       <Section id="services">
         <h2 className="section-title">Stories of Stewardship</h2>
-        <p className="section-subtitle">Real families who chose to control their capital and build lasting legacies</p>
+        <p className="section-subtitle subtitle-center">
+          Real families who chose to control their capital and build lasting legacies
+        </p>
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {storyCards.map((card, index) => (
             <motion.div
@@ -247,7 +251,7 @@ export default function Home() {
 
       <Section id="tools">
         <h2 className="section-title">Tools & Services</h2>
-        <p className="section-subtitle">
+        <p className="section-subtitle subtitle-center">
           Each tool ties back to the four-step strategy—nothing "extra," everything coordinated.
         </p>
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
@@ -305,7 +309,7 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
-        <p className="text-center italic text-navy/80 mt-8 max-w-prose-normal mx-auto">
+        <p className="section-subtitle subtitle-center">
           Plain-English promise: You'll understand every step well enough to explain it at the dinner table.
         </p>
       </Section>
