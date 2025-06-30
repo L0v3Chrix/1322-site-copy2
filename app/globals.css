@@ -8,6 +8,7 @@
   --cream: 245 240 230; /* This is #F5F0E6 */
   --copper: 182 110 65;
   --olive: 125 143 105;
+  --dark-blue: #1f2d3d;
 }
 
 @layer base {
@@ -16,7 +17,7 @@
   }
 
   body {
-    @apply bg-cream text-navy font-lato leading-relaxed;
+    @apply bg-cream text-navy font-lato leading-relaxed text-[17px];
   }
 
   h1,
@@ -29,15 +30,15 @@
   }
 
   h1 {
-    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
   }
 
   h2 {
-    @apply text-2xl sm:text-3xl md:text-4xl;
+    @apply text-3xl sm:text-4xl md:text-5xl;
   }
 
   h3 {
-    @apply text-xl sm:text-2xl md:text-3xl;
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold tracking-[0.02em];
   }
 
   p {
@@ -47,120 +48,22 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-navy text-navy hover:bg-navy hover:text-white;
+    @apply inline-block px-8 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-navy text-navy hover:bg-navy hover:text-white;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-white text-white hover:bg-white hover:text-navy;
+    @apply inline-block px-8 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-white text-white hover:bg-white hover:text-navy;
+  }
+
+  .btn-outline {
+    @apply inline-block px-8 py-3 text-sm font-medium tracking-wider uppercase transition-colors border border-current;
   }
 
   .section-title {
-    @apply text-2xl sm:text-3xl md:text-4xl font-normal text-navy mb-6 sm:mb-8 text-center tracking-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl font-normal text-navy mb-4 text-center tracking-tight;
   }
 
   .section-subtitle {
-    @apply text-xl md:text-2xl text-copper mb-8 font-playfair text-center;
-  }
-
-  .container-custom {
-    @apply container mx-auto px-4 md:px-8 py-16 md:py-24;
-  }
-
-  .header-transparent {
-    @apply bg-transparent text-white;
-  }
-
-  .header-solid {
-    @apply bg-cream text-navy shadow-sm;
-  }
-
-  .hero-section {
-    @apply relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat text-white;
-  }
-
-  .hero-content {
-    @apply max-w-4xl mx-auto text-center px-4;
-  }
-
-  .hero-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-normal mb-6 leading-tight tracking-tight text-white;
-  }
-
-  .hero-subtitle {
-    @apply text-lg md:text-xl mb-8 max-w-prose-normal mx-auto text-white;
-  }
-
-  .scroll-indicator {
-    @apply absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-scroll-hint cursor-pointer;
-  }
-
-  .card-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
-  }
-
-  .card {
-    @apply relative overflow-hidden;
-  }
-
-  .card-image {
-    @apply w-full aspect-[4/3] object-cover transition-transform duration-700;
-  }
-
-  .card-overlay {
-    @apply absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 flex items-center justify-center;
-  }
-
-  .card-title {
-    @apply text-white text-xl md:text-2xl font-normal tracking-tight;
-  }
-
-  .section-container {
-    min-height: 100vh;
-    scroll-margin-top: 80px; /* Adjust based on your header height */
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .infinity-scroll {
-    scroll-behavior: smooth;
-  }
-
-  .responsive-container {
-    width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .responsive-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .responsive-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-
-    .responsive-padding {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .responsive-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-
-    .responsive-padding {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
+    @apply text-lg md:text-xl text-copper mb-12 font-lato text-center;
   }
 }

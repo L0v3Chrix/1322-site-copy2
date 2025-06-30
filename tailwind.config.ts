@@ -23,6 +23,7 @@ const config: Config = {
         cream: "rgb(var(--cream) / <alpha-value>)",
         copper: "rgb(var(--copper) / <alpha-value>)",
         olive: "rgb(var(--olive) / <alpha-value>)",
+        "dark-blue": "var(--dark-blue)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

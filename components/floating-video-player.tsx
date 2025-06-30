@@ -2,26 +2,31 @@
 
 import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Minimize2, Play, Volume2, X } from "lucide-react"
+import { Minimize2, Play, Volume2, VolumeX, X } from "lucide-react"
 import { useVideo } from "@/context/video-context"
 import OptimizedImage from "./optimized-image"
 
 export default function FloatingVideoPlayer() {
   const { videoState, openVideo, minimizeVideo } = useVideo()
-  const [isMuted] = useState(false)
-  const videoRef = useRef<HTMLDivElement>(null)
+  const [isMuted, setIsMuted] = useState(false) // Start unmuted as per user request and click interaction
+  const iframeRef = useRef<HTMLIFrameElement>(null) // Ref for the iframe
 
-  // This is a placeholder function until a real video is implemented
-  const handlePlayClick = () => {
-    // In a real implementation, this would play the video
-    console.log("Play button clicked - video would play here")
-    // For now, we'll just show a message
-    alert("Video playback will be available when a real video is added.")
+  const toggleMute = () => {
+    if (iframeRef.current) {
+      iframeRef.current.muted = !iframeRef.current.muted
+      setIsMuted(iframeRef.current.muted)
+    }
   }
 
   if (videoState === "closed") {
     return null
   }
+
+  // YouTube embed URL with parameters for autoplay, controls, and unmuted
+  // The 'mute=0' parameter attempts to unmute the video.
+  // Autoplay with sound is generally allowed if triggered by a user gesture (like clicking the minimized icon).
+  const youtubeEmbedSrc =
+    "https://www.youtube.com/embed/apZKlq9S-NI?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0&mute=0"
 
   return (
     <AnimatePresence>
@@ -50,28 +55,19 @@ export default function FloatingVideoPlayer() {
               <X className="h-3 w-3" />
             </button>
 
-            {/* Video Placeholder */}
-            <div ref={videoRef} className="relative aspect-video bg-navy overflow-hidden w-full">
-              <div className="absolute inset-0">
-                <div className="relative w-full h-full">
-                  <OptimizedImage
-                    src="/images/1322-welcome.png"
-                    alt="Welcome to 1322 Legacy Strategies"
-                    type="medium"
-                    fill
-                    className="object-contain object-top scale-[1.3] -translate-y-[5%]"
-                    priority
-                  />
-                </div>
-                <div
-                  className="absolute inset-0 flex items-center justify-center bg-black/20 cursor-pointer"
-                  onClick={handlePlayClick}
-                >
-                  <div className="bg-cream/90 rounded-full p-3 hover:bg-cream transition-colors">
-                    <Play className="h-8 w-8 text-navy" />
-                  </div>
-                </div>
-              </div>
+            {/* Video Player */}
+            <div className="relative aspect-video bg-navy overflow-hidden w-full">
+              <iframe
+                ref={iframeRef}
+                width="100%"
+                height="100%"
+                src={youtubeEmbedSrc}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
             </div>
 
             {/* Controls */}
@@ -94,21 +90,26 @@ export default function FloatingVideoPlayer() {
                 generations.
               </p>
 
+              <p className="text-xs text-cream/80 mb-2">
+                <a
+                  href="https://start.1322legacystrategies.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-gold transition-colors"
+                >
+                  Click here to start your path to stewardship
+                </a>
+              </p>
+
               <div className="flex justify-between items-center">
                 <div className="flex space-x-3">
+                  {/* Play button removed as video autoplays on open */}
                   <button
-                    onClick={handlePlayClick}
+                    onClick={toggleMute}
                     className="text-cream/80 hover:text-cream transition-colors"
-                    aria-label="Play"
-                  >
-                    <Play className="h-4 w-4" />
-                  </button>
-                  <button
-                    className="text-cream/80 hover:text-cream transition-colors opacity-50 cursor-not-allowed"
                     aria-label={isMuted ? "Unmute" : "Mute"}
-                    disabled
                   >
-                    <Volume2 className="h-4 w-4" />
+                    {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
                   </button>
                 </div>
               </div>
