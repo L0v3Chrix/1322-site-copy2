@@ -73,7 +73,7 @@ export default function Y1322() {
         </h2>
         <p>We’re built for detail-oriented households who:</p>
         <ul className="list-disc pl-6 space-y-2">
-          <li>Have $1 M – $10 M across IRAs, 401(k)s, brokerage, and real estate</li>
+          <li>Have $500k – $10 M across IRAs, 401(k)s, brokerage, and real estate</li>
           <li>Will begin—or have begun—Required Minimum Distributions within 10 yrs</li>
           <li>Value biblical stewardship & multi-generational impact over flashy speculation</li>
           <li>Prefer a single “general contractor” who quarterbacks CPAs, attorneys, and investment managers</li>
@@ -171,34 +171,19 @@ export default function Y1322() {
         </div>
       </section>
       {/* 6. Fees & Engagement Options */}
-      <section id="fees" className="space-y-6">
+      <section id="fees" className="space-y-6 flex flex-col items-center">
         <h2 className="text-2xl font-semibold flex items-center gap-2">
           <ShieldDollar className="w-6 h-6" /> Transparent Fees
         </h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>
-            <strong>Discovery Call:</strong> Complimentary 30-min fit check
-          </li>
-          <li>
-            <strong>“Retirement Tax Stress Test” Plan:</strong> Complementary our gift to your Family
-          </li>
-          <li>
-            <strong>Ongoing Advisory:</strong> Tiered AUM or retainer; capped at 1% and always fee-only fiduciary
-          </li>
-          <li>
-            <strong>Implementation Costs:</strong> Insurance or trust drafting fees disclosed <em>before</em>{" "}
-            commitment—no surprises
-          </li>
-        </ul>
+        <p className="text-xl text-muted-foreground text-center">Complementary. Our gift to your family.</p>
       </section>
       {/* 7. Vision & Stewardship */}
       <section id="vision" className="space-y-6">
         <h2 className="text-2xl font-semibold">Vision & Stewardship</h2>
         <p>
           Brad’s grandfather quietly funded nine grandchildren’s college educations through strategically designed
-          life-insurance policies. The lesson was simple: contractual cash beats speculative flash. Today Brad and his
-          wife Kalli manage a portfolio of cash-flowing real estate and private businesses in Central Texas while
-          teaching their four children the quiet power of a well-stewarded inheritance.
+          life-insurance policies. The lesson was simple: contractual cash beats speculative flash. Today Brad teaches
+          families the quiet power of a well-stewarded inheritance.
         </p>
         <ul className="list-disc pl-6 space-y-2">
           <li>
@@ -209,9 +194,9 @@ export default function Y1322() {
         </ul>
       </section>
       {/* 8. Next Steps */}
-      <section id="cta" className="space-y-6 text-center">
+      <section id="cta" className="space-y-6 flex flex-col items-center text-center">
         <h2 className="text-2xl font-semibold">Ready to Stress-Test Your Retirement?</h2>
-        <p>
+        <p className="max-w-2xl">
           Schedule a complimentary discovery call below. We’ll know within 15 minutes whether we’re the right steward
           for your capital.
         </p>
