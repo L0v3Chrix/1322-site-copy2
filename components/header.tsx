@@ -14,6 +14,7 @@ const navLinks = [
   { name: "Services", href: "/#services" },
   { name: "Tools", href: "/#tools" },
   { name: "Blog", href: "/blog" },
+  { name: "Y1322", href: "/y1322" },
 ]
 
 export default function Header() {
@@ -61,7 +62,9 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:block">
-          <ContactButton className="btn-outline text-sm">Start</ContactButton>
+          <ContactButton className="btn-outline text-sm" href="https://discovery.1322legacystrategies.com/">
+            Start
+          </ContactButton>
         </div>
 
         <div className="md:hidden">
@@ -91,7 +94,7 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="https://start.1322legacystrategies.com/"
+              href="https://discovery.1322legacystrategies.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline text-lg mt-4"

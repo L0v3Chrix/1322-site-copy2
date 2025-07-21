@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -10,6 +9,11 @@ import { useRouter } from "next/navigation"
 export default function QualifyPage() {
   const [showCallNowForm, setShowCallNowForm] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    // Redirect to the external URL
+    router.push("https://discovery.1322legacystrategies.com/")
+  }, [router])
 
   // If showing the call now form, render that instead
   if (showCallNowForm) {
@@ -169,9 +173,7 @@ function CallNowForm() {
 
     try {
       // GoHighLevel API configuration
-      const GHL_API_KEY =
-        process.env.GHL_API_KEY ||
-        "ec12c208-bd75-4c45-a2f0-1b42265f38b4"
+      const GHL_API_KEY = process.env.GHL_API_KEY || "ec12c208-bd75-4c45-a2f0-1b42265f38b4"
 
       // Prepare contact data for GHL
       const contactData = {

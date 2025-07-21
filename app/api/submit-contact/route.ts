@@ -1,139 +1,121 @@
 import { type NextRequest, NextResponse } from "next/server"
 
+// Helper: Search GHL by email
+async function findContactByEmail(email: string, apiKey: string) {
+  const response = await fetch("https://rest.gohighlevel.com/v1/contacts/search", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+  const data = await response.json();
+  if (data.contacts && data.contacts.length > 0) {
+    return data.contacts[0]; // Return the first found contact
+  }
+  return null;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    // Parse the request body
-    const body = await request.json()
-    console.log("📝 Contact form submission received:", body)
-
-    // Validate required fields
-    const { firstName, lastName, email, phone, subject, message, preferredContact } = body
+    // 1. Parse and validate request body
+    const body = await request.json();
+    const { firstName, lastName, email, phone, subject, message, preferredContact } = body;
 
     if (!firstName || !lastName || !email || !phone) {
-      console.log("❌ Missing required fields")
       return NextResponse.json(
-        {
-          success: false,
-          error: "Missing required fields: firstName, lastName, email, phone",
-        },
-        { status: 400 },
-      )
+        { success: false, error: "Missing required fields" },
+        { status: 400 }
+      );
     }
 
-    // Get environment variables for GoHighLevel API
-    const GHL_API_KEY = process.env.GHL_API_KEY
-    const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID
+    // 2. Env vars
+    const GHL_API_KEY = process.env.GHL_API_KEY!;
+    const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID!;
+    const NEW_TAGS = ["website-lead", "contact-form", "main_website_form"];
 
-    console.log("🔑 Checking GHL credentials:", {
-      hasApiKey: !!GHL_API_KEY,
-      hasLocationId: !!GHL_LOCATION_ID,
-    })
+    // 3. Find existing contact by email
+    let contactId: string | null = null;
+    let existingTags: string[] = [];
+    const existingContact = await findContactByEmail(email, GHL_API_KEY);
 
-    // Check if GHL credentials are available
-    if (!GHL_API_KEY || !GHL_LOCATION_ID) {
-      console.log("⚠️ GoHighLevel credentials not configured")
-      return NextResponse.json(
-        {
-          success: false,
-          error: "GoHighLevel API credentials not configured",
-        },
-        { status: 500 },
-      )
+    if (existingContact) {
+      contactId = existingContact.id;
+      existingTags = existingContact.tags || [];
     }
 
-    // Prepare contact data for GoHighLevel
-    const contactData = {
+    // 4. Merge tags (dedupe)
+    const allTags = Array.from(new Set([...(existingTags || []), ...NEW_TAGS]));
+
+    // 5. Prepare contact data
+    const contactData: any = {
       firstName,
       lastName,
       email,
       phone,
       locationId: GHL_LOCATION_ID,
       source: "Website Contact Form",
-      tags: ["website-lead", "contact-form", "main_website_form"],
-      // Custom fields - replace these IDs with actual ones from your GHL account
+      tags: allTags,
       customFields: [
         {
-          id: "subject_field_id", // Replace with actual custom field ID
+          id: "subject_field_id", // Replace with your actual field ID
           field_value: subject || "",
         },
         {
-          id: "message_field_id", // Replace with actual custom field ID
+          id: "message_field_id", // Replace with your actual field ID
           field_value: message || "",
         },
         {
-          id: "preferred_contact_field_id", // Replace with actual custom field ID
+          id: "preferred_contact_field_id", // Replace with your actual field ID
           field_value: preferredContact || "email",
         },
       ],
+    };
+
+    // 6. Create or Update contact
+    let apiUrl = "https://rest.gohighlevel.com/v1/contacts/";
+    let apiMethod: "POST" | "PATCH" = "POST";
+    if (contactId) {
+      apiUrl += contactId;
+      apiMethod = "PATCH";
     }
 
-    console.log("📤 Sending contact data to GoHighLevel:", contactData)
-
-    // Make API call to GoHighLevel
-    const ghlResponse = await fetch("https://rest.gohighlevel.com/v1/contacts/", {
-      method: "POST",
+    const ghlResponse = await fetch(apiUrl, {
+      method: apiMethod,
       headers: {
         Authorization: `Bearer ${GHL_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(contactData),
-    })
+    });
+    const ghlData = await ghlResponse.json();
 
-    // Parse the response from GoHighLevel
-    const ghlData = await ghlResponse.json()
-
-    console.log("📥 GoHighLevel API response:", {
-      status: ghlResponse.status,
-      statusText: ghlResponse.statusText,
-      data: ghlData,
-    })
-
-    // Check if the request was successful
     if (!ghlResponse.ok) {
-      console.log("❌ GoHighLevel API error:", ghlData)
       return NextResponse.json(
-        {
-          success: false,
-          error: "Failed to create contact in GoHighLevel",
-          details: ghlData,
-        },
-        { status: ghlResponse.status },
-      )
+        { success: false, error: "Failed to create/update contact", details: ghlData },
+        { status: ghlResponse.status }
+      );
     }
 
-    // Success! Contact created in GoHighLevel
-    console.log("✅ Contact successfully created in GoHighLevel:", ghlData.contact?.id)
-
+    // 7. Success response
     return NextResponse.json({
       success: true,
       message: "Contact submitted successfully",
       contactId: ghlData.contact?.id,
       ghlResponse: ghlData,
-    })
-  } catch (error) {
-    // Handle any unexpected errors
-    console.error("💥 Unexpected error in contact submission:", error)
+    });
 
+  } catch (error) {
+    // Handle errors
+    console.error("💥 Unexpected error in contact submission:", error);
     return NextResponse.json(
       {
         success: false,
         error: "Internal server error",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 },
-    )
+      { status: 500 }
+    );
   }
-}
-
-// Handle non-POST requests
-export async function GET() {
-  return NextResponse.json({ error: "Method not allowed. Use POST." }, { status: 405 })
-}
-
-export async function PUT() {
-  return NextResponse.json({ error: "Method not allowed. Use POST." }, { status: 405 })
-}
-
-export async function DELETE() {
-  return NextResponse.json({ error: "Method not allowed. Use POST." }, { status: 405 })
 }

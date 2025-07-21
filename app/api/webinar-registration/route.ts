@@ -9,36 +9,64 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Missing required fields", { status: 400 })
     }
 
-    // Klaviyo API endpoint for adding a list
-    const klaviyoApiUrl = `https://a.klaviyo.com/api/v2/list/${process.env.KLAVIYO_LIST_ID}/members`
-
     // Klaviyo API key (Private API Key)
     const klaviyoApiKey = process.env.KLAVIYO_PRIVATE_API_KEY
+    const listId = process.env.KLAVIYO_LIST_ID
 
-    if (!klaviyoApiKey) {
-      console.error("Klaviyo API key is missing.")
-      return new NextResponse("Klaviyo API key is missing", { status: 500 })
+    if (!klaviyoApiKey || !listId) {
+      console.error("Klaviyo API key or list ID is missing.")
+      return new NextResponse("Klaviyo API key or list ID is missing", { status: 500 })
     }
 
+    // 1. Fetch existing profile (if exists) to merge tags
+    let existingTags: string[] = []
+    let profileId: string | null = null
+    try {
+      const profileRes = await fetch(`https://a.klaviyo.com/api/v1/person/search?email=${encodeURIComponent(email)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Klaviyo-API-Key ${klaviyoApiKey}`,
+        },
+      })
+
+      if (profileRes.ok) {
+        const profileData = await profileRes.json()
+        if (profileData && profileData.id) {
+          profileId = profileData.id
+          existingTags = profileData.tags || []
+        }
+      }
+    } catch (e) {
+      // It’s OK if not found; we’re creating a new contact
+    }
+
+    // 2. Merge tags (dedupe)
+    const newTags = ["webinar-registrant", "website-lead", "main_website_form"]
+    const allTags = Array.from(new Set([...(existingTags || []), ...newTags]))
+
+    // 3. Prepare contact data
     const contactData = {
       profiles: [
         {
-          email: email,
+          email,
           first_name: firstName,
           last_name: lastName,
           organization: company,
           title: jobTitle,
           $consent: "web",
-          tags: ["webinar-registrant", "website-lead", "main_website_form"],
+          tags: allTags,
         },
       ],
     }
 
+    // 4. POST to Klaviyo List API
+    const klaviyoApiUrl = `https://a.klaviyo.com/api/v2/list/${listId}/members`
     const response = await fetch(klaviyoApiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Klaviyo-API-Key ${klaviyoApiKey}`,
+        "Authorization": `Klaviyo-API-Key ${klaviyoApiKey}`,
       },
       body: JSON.stringify(contactData),
     })
@@ -52,10 +80,9 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ message: "Successfully subscribed!" })
+
   } catch (error: any) {
     console.error("Error subscribing to Klaviyo list:", error)
-    return new NextResponse(error.message || "An error occurred", {
-      status: 500,
-    })
+    return new NextResponse(error.message || "An error occurred", { status: 500 })
   }
 }

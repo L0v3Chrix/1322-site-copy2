@@ -207,7 +207,7 @@ export default function Home() {
           ))}
         </div>
         <div className="text-center mt-16">
-          <ContactButton className="btn-outline">
+          <ContactButton className="btn-outline" href="https://discovery.1322legacystrategies.com/">
             Walk The Journey <ArrowRight className="inline ml-2 h-4 w-4" />
           </ContactButton>
         </div>
@@ -319,7 +319,7 @@ export default function Home() {
           Ready for a conversation that puts you back in the driver's seat?
         </h2>
         <p className="text-lg mb-8">Schedule Your Discovery Call and start controlling your capital.</p>
-        <ContactButton className="btn-outline text-lg">
+        <ContactButton className="btn-outline text-lg" href="https://discovery.1322legacystrategies.com/">
           Book My 90-Min Call <ArrowRight className="inline ml-2" />
         </ContactButton>
       </Section>
