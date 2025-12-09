@@ -2,18 +2,87 @@
 
 All notable changes to the 1322 Legacy Strategies educational platform.
 
-## [Unreleased]
+---
 
-### Phase 2 - Planned
-- [ ] Remaining 3 case study pages (David's Real Estate, Pastor James Ministry, Thomas Manufacturing)
-- [ ] Family Bank Projector calculator
-- [ ] Policy Estimator calculator
-- [ ] Opportunity Cost calculator
-- [ ] Foundations lessons 3 & 4 (Whole Life Explained, IBC Concept Explained)
-- [ ] Deep Dives track (6 lessons)
-- [ ] Video Library page
-- [ ] Office Hours archive page
-- [ ] Mastery track (4 lessons)
+## Project Master Task List
+
+### Phase 1: Foundation - COMPLETE
+
+- [x] Navigation with mega menus (`/components/header.tsx`)
+- [x] Footer rebuild - 4-column layout (`/components/footer.tsx`)
+- [x] Learning Center hub (`/app/learn/page.tsx`)
+- [x] Foundations track landing (`/app/learn/foundations/page.tsx`)
+- [x] Lesson 1: What is IBC (`/app/learn/foundations/what-is-ibc/page.tsx`)
+- [x] Lesson 2: The Banking Problem (`/app/learn/foundations/the-banking-problem/page.tsx`)
+- [x] Tools hub (`/app/tools/page.tsx`)
+- [x] Interest Bleed Calculator - interactive (`/app/tools/interest-bleed-calculator/page.tsx`)
+- [x] Case Studies hub (`/app/case-studies/page.tsx`)
+- [x] Case Study: Mike's HVAC (`/app/case-studies/mikes-hvac/page.tsx`)
+- [x] Case Study: Sarah's E-commerce (`/app/case-studies/sarahs-ecommerce/page.tsx`)
+- [x] Homepage learning pathways section (`/app/page.tsx`)
+- [x] Notion blog integration fix (`/lib/notion.ts`)
+- [x] pnpm lockfile sync for Vercel deployment
+
+### Phase 2: Content Expansion - NEXT PRIORITY
+
+- [ ] Lesson 3: Whole Life Explained (`/app/learn/foundations/whole-life-explained/page.tsx`)
+- [ ] Lesson 4: IBC Concept Explained (`/app/learn/foundations/ibc-concept-explained/page.tsx`)
+- [ ] Case Study: David's Real Estate ($1.2M, bridge financing)
+- [ ] Case Study: Pastor James Ministry ($600K, building fund)
+- [ ] Case Study: Thomas Manufacturing ($2.5M, equipment)
+- [ ] Family Bank Projector calculator (`/app/tools/family-bank-projector/page.tsx`)
+- [ ] Policy Estimator calculator (`/app/tools/policy-estimator/page.tsx`)
+
+### Phase 3: Deep Content - FUTURE
+
+- [ ] Deep Dives track landing (`/app/learn/deep-dives/page.tsx`)
+- [ ] Deep Dives lessons x6 (4,000 words each)
+- [ ] Mastery track landing (`/app/learn/mastery/page.tsx`)
+- [ ] Mastery lessons x4 (4,000 words each)
+- [ ] Opportunity Cost calculator (`/app/tools/opportunity-cost/page.tsx`)
+
+### Phase 4: Video & Academy - FUTURE
+
+- [ ] Video Library page (`/app/learn/videos/page.tsx`)
+- [ ] Office Hours archive (`/app/learn/office-hours/page.tsx`)
+- [ ] AMA banner component
+- [ ] Academy page enhancements
+
+### Technical Debt
+
+- [x] Notion SDK locked to v2.3.0 (v5.4.0 breaks `databases.query()`)
+- [x] Deleted `package-lock.json` (using pnpm only)
+- [ ] Replace placeholder images with actual photography
+- [ ] Mobile responsiveness audit
+- [ ] Accessibility audit (WCAG 2.1 AA)
+- [ ] Performance audit (Lighthouse 90+)
+
+---
+
+## [0.4.0] - 2025-12-09
+
+### Fixed - Critical Bug Fixes
+
+#### Notion Blog Integration
+- **Fixed:** `TypeError: Cannot read properties of undefined (reading 'replace')` in formatNotionId
+- **Fixed:** `notion.databases.query is not a function` - Notion SDK v5.4.0 breaking change
+- **Solution:** Downgraded to `@notionhq/client@2.3.0` which has the traditional API
+- **Result:** Blog now successfully fetches 49 posts from Notion database
+
+#### Vercel Deployment
+- **Fixed:** `ERR_PNPM_OUTDATED_LOCKFILE` - lockfile mismatch error
+- **Solution:** Regenerated `pnpm-lock.yaml`, deleted conflicting `package-lock.json`
+- **Package Manager:** Project now uses pnpm exclusively
+
+### Changed - Branch Reorganization
+- **main:** Now contains the revised educational platform
+- **old-site-backup-2025-12-09:** Backup of original site before repositioning
+- **feature/entrepreneur-repositioning:** Merged into main
+
+### Technical Details
+- Updated `lib/notion.ts` with lazy initialization pattern
+- Added null handling for environment variables
+- Notion client version: 2.3.0 (NOT 5.4.0)
 
 ---
 
@@ -94,3 +163,34 @@ All notable changes to the 1322 Legacy Strategies educational platform.
 - **Major (X.0.0)**: Complete phase completion or major feature sets
 - **Minor (0.X.0)**: New pages, features, or significant updates
 - **Patch (0.0.X)**: Bug fixes, copy changes, minor adjustments
+
+---
+
+## Resume Instructions
+
+When returning to this project:
+
+1. **Start Here:**
+   ```bash
+   cd /Users/chrixcolvard/projects/2025-11-1322-website-repositioning
+   pnpm install
+   pnpm dev
+   ```
+
+2. **Check Vercel Environment Variables:**
+   - NOTION_TOKEN
+   - NOTION_DATABASE_ID
+   - NEXT_PUBLIC_SITE_URL
+
+3. **Verify Blog Works:**
+   Visit http://localhost:3000/blog - should show 49 posts
+
+4. **Next Tasks (Priority Order):**
+   - Lesson 3: Whole Life Explained
+   - Lesson 4: IBC Concept Explained
+   - Remaining 3 case studies
+   - Additional calculators
+
+5. **Reference Files:**
+   - `/docs/2025-12-09-phase1-implementation.md`
+   - `/.claude/plans/atomic-doodling-scroll.md` (full project plan)
