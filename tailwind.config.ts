@@ -60,9 +60,13 @@ const config: Config = {
         "off-white": "rgb(245, 240, 230)",
       },
       fontFamily: {
-        sans: ["var(--font-lato)"],
-        playfair: ["var(--font-playfair)"],
-        lato: ["var(--font-lato)"],
+        sans: ["var(--font-body)"],
+        heading: ["var(--font-heading)"],
+        body: ["var(--font-body)"],
+        mono: ["var(--font-mono)"],
+        // Legacy support (can be removed after full migration)
+        playfair: ["var(--font-heading)"],
+        lato: ["var(--font-body)"],
       },
       letterSpacing: {
         tighter: "-0.05em",

@@ -130,13 +130,25 @@ export default function BlogClient({ posts }: BlogClientProps) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-[#232330] rounded-lg">
-            <h3 className="text-xl font-bold mb-2 text-cream">No articles found</h3>
-            <p className="text-cream/70">
+          <div className="text-center py-12 bg-[#232330] rounded-lg border-2 border-gold/20">
+            <h3 className="text-xl font-bold mb-2 text-cream">
+              {posts.length === 0 ? "Blog Coming Soon" : "No articles found"}
+            </h3>
+            <p className="text-cream/70 max-w-md mx-auto">
               {posts.length === 0
-                ? "No published posts found. Make sure you have posts with the 'Published' checkbox checked in your Notion database."
+                ? "We're working on publishing our latest insights. Check back soon for wisdom on building a lasting legacy."
                 : "Try adjusting your search or filter criteria"}
             </p>
+            {posts.length === 0 && (
+              <div className="mt-6">
+                <a
+                  href="/learn"
+                  className="inline-block bg-gold text-navy px-6 py-3 font-semibold hover:bg-copper transition-colors"
+                >
+                  Explore the Learning Center
+                </a>
+              </div>
+            )}
           </div>
         )}
       </div>

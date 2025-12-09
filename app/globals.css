@@ -17,7 +17,7 @@
   }
 
   body {
-    @apply bg-cream text-navy font-lato leading-relaxed text-[17px];
+    @apply bg-cream text-navy font-body leading-relaxed text-[17px];
   }
 
   h1,
@@ -26,7 +26,7 @@
   h4,
   h5,
   h6 {
-    @apply font-playfair font-normal leading-tight tracking-tight;
+    @apply font-heading font-normal leading-tight tracking-tight;
   }
 
   h1 {

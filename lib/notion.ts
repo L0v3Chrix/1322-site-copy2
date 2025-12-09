@@ -1,15 +1,30 @@
 import { Client } from "@notionhq/client"
 
-const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-})
+// Lazy initialization of Notion client to ensure env vars are loaded
+let notionClient: Client | null = null
 
-function formatNotionId(id: string): string {
+function getNotionClient(): Client | null {
+  if (notionClient) return notionClient
+
+  const token = process.env.NOTION_TOKEN
+  if (!token) return null
+
+  notionClient = new Client({ auth: token })
+  return notionClient
+}
+
+function formatNotionId(id: string | undefined): string {
+  if (!id) return ""
   const cleanId = id.replace(/-/g, "")
   return `${cleanId.slice(0, 8)}-${cleanId.slice(8, 12)}-${cleanId.slice(12, 16)}-${cleanId.slice(16, 20)}-${cleanId.slice(20, 32)}`
 }
 
-export const NOTION_DATABASE_ID = formatNotionId(process.env.NOTION_DATABASE_ID!)
+function getNotionDatabaseId(): string {
+  return formatNotionId(process.env.NOTION_DATABASE_ID)
+}
+
+// Keep export for backwards compatibility but use function internally
+export const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID ? formatNotionId(process.env.NOTION_DATABASE_ID) : ""
 
 export interface NotionPost {
   id: string
@@ -28,9 +43,18 @@ export interface NotionPost {
 }
 
 export async function getBlogPosts(): Promise<NotionPost[]> {
+  const notion = getNotionClient()
+  const databaseId = getNotionDatabaseId()
+
+  // Return empty array if Notion is not configured
+  if (!notion || !databaseId) {
+    console.warn("Notion is not configured. Set NOTION_TOKEN and NOTION_DATABASE_ID environment variables.")
+    return []
+  }
+
   try {
     const response = await notion.databases.query({
-      database_id: NOTION_DATABASE_ID,
+      database_id: databaseId,
       filter: {
         property: "Published",
         checkbox: {
@@ -73,9 +97,18 @@ export async function getBlogPosts(): Promise<NotionPost[]> {
 }
 
 export async function getBlogPost(slug: string): Promise<NotionPost | null> {
+  const notion = getNotionClient()
+  const databaseId = getNotionDatabaseId()
+
+  // Return null if Notion is not configured
+  if (!notion || !databaseId) {
+    console.warn("Notion is not configured. Set NOTION_TOKEN and NOTION_DATABASE_ID environment variables.")
+    return null
+  }
+
   try {
     const response = await notion.databases.query({
-      database_id: NOTION_DATABASE_ID,
+      database_id: databaseId,
       filter: {
         and: [
           {
@@ -226,6 +259,11 @@ function getImageUrl(imageProperty: any): string | null {
 }
 
 async function getPageContent(pageId: string): Promise<string> {
+  const notion = getNotionClient()
+  if (!notion) {
+    return "<p>Content could not be loaded.</p>"
+  }
+
   try {
     const response = await notion.blocks.children.list({
       block_id: pageId,

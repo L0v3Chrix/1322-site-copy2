@@ -1,20 +1,29 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Playfair_Display, Lato } from "next/font/google"
+import { Libre_Baskerville, Lora, IBM_Plex_Mono } from "next/font/google"
 import Script from "next/script" // Import the Script component
 import "./globals.css"
 import ClientLayout from "./client-layout"
 
-const playfair = Playfair_Display({
+// Principled Authority Typography System
+const libreBaskerville = Libre_Baskerville({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: ["400", "700"],
+  variable: "--font-heading",
   display: "swap",
 })
 
-const lato = Lato({
+const lora = Lora({
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  variable: "--font-lato",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
   display: "swap",
 })
 
@@ -35,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${playfair.variable} ${lato.variable} font-sans bg-cream`}>
+      <body className={`${libreBaskerville.variable} ${lora.variable} ${ibmPlexMono.variable} font-body bg-cream`}>
         <ClientLayout>{children}</ClientLayout>
 
         {/* Google Tag Manager Scripts */}

@@ -1,328 +1,614 @@
 "use client"
 
-import Hero from "@/components/hero"
-import Section from "@/components/section"
-import OptimizedImage from "@/components/optimized-image"
 import Link from "next/link"
-import { ArrowRight, Check, DollarSign, TrendingUp, Shield, Users } from "lucide-react"
-import { motion } from "framer-motion"
+import OptimizedImage from "@/components/optimized-image"
+import { ArrowRight, BookOpen, Calculator, Users, Play } from "lucide-react"
 import TestimonialCarousel from "@/components/testimonial-carousel"
-import ContactButton from "@/components/contact-button"
-
-const journeySteps = [
-  {
-    number: 1,
-    title: "Discovery",
-    description: "We listen deeply to your story, your values, your vision.",
-    emphasis: "You are seen. You are heard.",
-    image: "/images/family-legacy.png",
-  },
-  {
-    number: 2,
-    title: "Strategy Design",
-    description: "Together, we craft a stewardship strategy designed to serve your family for generations.",
-    emphasis: "You are the steward. We are your guide.",
-    image: "/images/financial-planning.png",
-  },
-  {
-    number: 3,
-    title: "Stewardship Walk",
-    description:
-      "Through relational, annual touchpoints, we refine your strategy, nurture your capital, and celebrate milestones.",
-    emphasis: "Stewardship is a living, breathing journey.",
-    image: "/images/wheat-field.png",
-  },
-  {
-    number: 4,
-    title: "Legacy Handoff",
-    description:
-      "When the time comes, we help ensure your blessings are passed intentionally — with wisdom, clarity, and love.",
-    emphasis: "Your legacy, faithfully prepared.",
-    image: "/images/legacy-handoff.png",
-  },
-]
-
-const storyCards = [
-  {
-    icon: DollarSign,
-    title: "The Johnson Family",
-    subtitle: "From Debt to Dynasty",
-    description:
-      "Eliminated $180,000 in mortgage payments while building a $2.3M family bank that will fund their children's education and business ventures.",
-    achievement: "Created generational wealth in 7 years",
-  },
-  {
-    icon: TrendingUp,
-    title: "The Martinez Legacy",
-    subtitle: "Tax-Free Retirement",
-    description:
-      "Replaced their 401(k) strategy with infinite banking, creating $85,000 in annual tax-free income while preserving $1.2M for their heirs.",
-    achievement: "Zero taxes on retirement income",
-  },
-  {
-    icon: Shield,
-    title: "The Chen Enterprise",
-    subtitle: "Business & Family Protection",
-    description:
-      "Protected their $3M business with key-person insurance while funding expansion through policy loans, keeping 100% ownership.",
-    achievement: "Grew business debt-free",
-  },
-  {
-    icon: Users,
-    title: "The Williams Dynasty",
-    subtitle: "Multi-Generational Planning",
-    description:
-      "Established a family banking system that will provide each grandchild with $250,000 at age 25, funded through strategic policy design.",
-    achievement: "Secured 3rd generation legacy",
-  },
-]
-
-const tools = [
-  { concern: "Quick clarity on where you stand", tool: "Legacy Insight™ Report" },
-  { concern: "Liquidity without the bank", tool: "Infinite Banking Concept™" },
-  { concern: "Keep more, give less to IRS", tool: "Tax Coordination with our Tax Strategists" },
-  { concern: "Teach the next generation", tool: "Annual Legacy Review" },
-]
-
-const howItWorksSteps = [
-  {
-    title: "Discovery Call (90 min)",
-    description: "Share your goals; we listen.",
-  },
-  {
-    title: "Legacy Blueprint",
-    description: "See exactly how your dollars can fund life now and bless heirs later.",
-  },
-  {
-    title: "Stewardship Implementation",
-    description: 'Tools like the "Infinite Banking Concept™", coordinated trusts, and tax-smart income streams.',
-  },
-  {
-    title: "Legacy Handoff",
-    description: "Coaching heirs so they inherit wisdom with the wealth.",
-  },
-]
-
-const whyChooseUsPoints = [
-  "Everything under one roof—legal, tax, insurance, income. No finger-pointing between advisors.",
-  "Boutique attention—fewer clients, deeper relationships.",
-  "Faith-anchored wisdom without the preachiness.",
-  "Over 70% of new families come from referrals.",
-  "Supported by a team of CERTIFIED FINANCIAL PLANNERS® and Chartered Life Underwriters®.",
-]
 
 export default function Home() {
   return (
-    <>
-      <Hero
-        id="home"
-        title={
-          <div>
-            <span className="block">Control Your Capital.</span>
-            <span className="block">Build Your Legacy.</span>
-          </div>
-        }
-        subtitle="Make sure your money outlives you—with purpose."
-        backgroundImage="/images/wheat-field.png"
-      />
-
-      <Section id="why-stewardship">
-        <h2 className="section-title">Why Stewardship?</h2>
-        <motion.div
-          className="max-w-prose-normal mx-auto text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <p>
-            Most advisors "manage" money for a fee. We show families how to <strong>steward</strong> their own
-            capital—with clarity, control, and purpose.
+    <div className="bg-cream">
+      {/* Hero Section - Classical */}
+      <section className="relative min-h-[600px] flex items-center justify-center bg-navy text-cream">
+        <div className="absolute inset-0 opacity-20">
+          <OptimizedImage
+            src="/images/classical-foundation.png"
+            alt="Classical foundation"
+            type="hero"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 py-32 text-center">
+          <h1 className="text-5xl md:text-7xl font-heading font-bold leading-tight mb-8">
+            Build on an Enduring Framework.
+            <br />
+            Not Shifting Sands.
+          </h1>
+          <p className="text-xl md:text-2xl mb-12 leading-relaxed">
+            Master a timeless financial framework designed for your family&apos;s lasting legacy.
+            <br />
+            Start your education for FREE.
           </p>
-          <p>Stewardship = ownership, liquidity, and a generational mindset.</p>
-        </motion.div>
-      </Section>
-
-      <Section id="mission">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden">
-            <OptimizedImage src="/images/family-generations.png" alt="Our mission" type="medium" className="h-full" />
-          </div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 className="text-3xl font-normal mb-6">Our Mission: Legacy by Design</h3>
-            <p>
-              To empower families to control their capital, steward their wealth faithfully, and build legacies that
-              bless generations.
-            </p>
-            <p>
-              Rooted in Proverbs 13:22, we believe wealth is not simply something to accumulate—it is something to
-              steward.
-            </p>
-            <p>
-              We don't believe in mass-market financial plans. We craft dynamic, relational strategies that honor your
-              story, your calling, and your vision for the generations to come.
-            </p>
-            <div className="mt-8">
-              <Link href="/about" className="btn-outline">
-                Meet Your Guide <ArrowRight className="inline ml-2 h-4 w-4" />
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      <Section id="journey">
-        <h2 className="section-title">What to Expect: Your Journey of Stewardship</h2>
-        <p className="section-subtitle subtitle-center">
-          Faithful stewardship is not an event. It is a lifelong calling.
-        </p>
-        <div className="space-y-16">
-          {journeySteps.map((step, index) => (
-            <div key={index} className="grid md:grid-cols-2 gap-12 items-center">
-              <motion.div
-                className={`${index % 2 === 1 ? "md:order-2" : ""} `}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="flex items-center mb-4">
-                  <div className="bg-gold/20 text-copper w-10 h-10 rounded-full flex items-center justify-center font-playfair font-bold text-lg mr-4">
-                    {step.number}
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-normal text-navy">{step.title}</h3>
-                </div>
-                <p className="text-lg mb-4 text-navy/80">{step.description}</p>
-                <p className="text-lg italic text-copper">{step.emphasis}</p>
-              </motion.div>
-              <div className={`relative h-[300px] rounded-lg overflow-hidden ${index % 2 === 1 ? "md:order-1" : ""}`}>
-                <OptimizedImage src={step.image} alt={step.title} type="medium" className="h-full object-cover" />
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="text-center mt-16">
-          <ContactButton className="btn-outline" href="https://discovery.1322legacystrategies.com/">
-            Walk The Journey <ArrowRight className="inline ml-2 h-4 w-4" />
-          </ContactButton>
-        </div>
-      </Section>
-
-      <Section id="services">
-        <h2 className="section-title">Stories of Stewardship</h2>
-        <p className="section-subtitle subtitle-center">
-          Real families who chose to control their capital and build lasting legacies
-        </p>
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {storyCards.map((card, index) => (
-            <motion.div
-              key={card.title}
-              className="bg-white p-8 rounded-lg shadow-lg flex flex-col"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+          <div className="border-t border-cream/30 pt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/learn"
+              className="inline-block bg-gold text-navy px-10 py-4 font-heading font-bold text-lg uppercase tracking-wider hover:bg-cream transition-colors"
             >
-              <div className="flex items-center mb-4">
-                <div className="bg-gold/10 text-gold p-3 rounded-full mr-4">
-                  <card.icon size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">{card.title}</h3>
-                  <p className="text-copper mb-0">{card.subtitle}</p>
-                </div>
-              </div>
-              <p className="text-navy/80 flex-grow">{card.description}</p>
-              <div className="text-green-600 font-semibold flex items-center mt-4">
-                <Check size={20} className="mr-2" />
-                {card.achievement}
-              </div>
-            </motion.div>
-          ))}
+              Start Learning
+            </Link>
+            <a
+              href="https://www.skool.com/1322-ibc-academy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border-2 border-cream text-cream px-10 py-4 font-heading font-bold text-lg uppercase tracking-wider hover:bg-cream hover:text-navy transition-colors"
+            >
+              Join Free Academy
+            </a>
+          </div>
         </div>
-      </Section>
+      </section>
+
+      {/* Learning Pathways Section - NEW */}
+      <section className="bg-cream py-20 border-b border-navy/10">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <p className="font-mono text-xs uppercase tracking-wider text-gold mb-2">
+              Education-First Approach
+            </p>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-navy mb-4">
+              Learn at Your Own Pace
+            </h2>
+            <p className="text-lg text-navy/70 max-w-2xl mx-auto">
+              We believe analytical minds should understand the concepts thoroughly before making decisions.
+              That&apos;s why we provide comprehensive free education.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            {/* Learning Center */}
+            <Link
+              href="/learn"
+              className="group border-2 border-navy/20 p-6 hover:border-gold transition-colors"
+            >
+              <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4">
+                <BookOpen className="w-6 h-6 text-gold" />
+              </div>
+              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                Learning Center
+              </h3>
+              <p className="text-sm text-navy/60 mb-4">
+                Three progressive tracks from foundations to mastery.
+              </p>
+              <span className="font-mono text-xs uppercase tracking-wider text-gold">
+                Explore Lessons →
+              </span>
+            </Link>
+
+            {/* Interactive Tools */}
+            <Link
+              href="/tools"
+              className="group border-2 border-navy/20 p-6 hover:border-gold transition-colors"
+            >
+              <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4">
+                <Calculator className="w-6 h-6 text-gold" />
+              </div>
+              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                Calculators
+              </h3>
+              <p className="text-sm text-navy/60 mb-4">
+                Run your own numbers. See exactly what IBC could mean for you.
+              </p>
+              <span className="font-mono text-xs uppercase tracking-wider text-gold">
+                Open Tools →
+              </span>
+            </Link>
+
+            {/* Case Studies */}
+            <Link
+              href="/case-studies"
+              className="group border-2 border-navy/20 p-6 hover:border-gold transition-colors"
+            >
+              <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-gold" />
+              </div>
+              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                Case Studies
+              </h3>
+              <p className="text-sm text-navy/60 mb-4">
+                Real entrepreneurs. Real numbers. Real results.
+              </p>
+              <span className="font-mono text-xs uppercase tracking-wider text-gold">
+                Read Stories →
+              </span>
+            </Link>
+
+            {/* Free Academy */}
+            <a
+              href="https://www.skool.com/1322-ibc-academy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border-2 border-gold bg-gold/5 p-6 hover:bg-gold/10 transition-colors"
+            >
+              <div className="w-12 h-12 bg-gold/20 flex items-center justify-center mb-4">
+                <Play className="w-6 h-6 text-gold" />
+              </div>
+              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                Free Academy
+              </h3>
+              <p className="text-sm text-navy/60 mb-4">
+                Join 1,000+ entrepreneurs. Weekly live AMAs with Brad.
+              </p>
+              <span className="font-mono text-xs uppercase tracking-wider text-gold">
+                Join Community →
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Three Pillars - Classical Grid */}
+      <section className="max-w-7xl mx-auto px-4 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-navy mb-4">
+            The Principled Authority Framework
+          </h2>
+          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
+          <p className="text-xl text-navy/70 max-w-3xl mx-auto">
+            Three foundational pillars that transform Christian entrepreneurs from bank-dependent to financially
+            sovereign
+          </p>
+        </div>
+
+        {/* Pillar 1: Stewardship */}
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-24 pb-24 border-b border-navy/10">
+          <div>
+            <div className="mb-8">
+              <div className="text-6xl font-mono text-gold mb-4">01</div>
+              <h3 className="text-4xl font-heading font-bold text-navy mb-2">Stewardship</h3>
+              <p className="text-xl text-copper font-mono">Your Capital. Your Control.</p>
+            </div>
+            <p className="text-lg text-navy/80 mb-8 leading-relaxed">
+              Most families unknowingly surrender control of their capital to institutions—banks, Wall Street, the IRS.
+              True stewardship means reclaiming ownership and directing your wealth according to your values, not
+              theirs.
+            </p>
+            <ul className="space-y-4">
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Eliminate dependence on banks for business financing</span>
+              </li>
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Control when, where, and how your capital is deployed</span>
+              </li>
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Build a system that works for you across generations</span>
+              </li>
+            </ul>
+          </div>
+          <div className="relative h-[500px]">
+            <OptimizedImage
+              src="/images/pillar-stewardship.png"
+              alt="Stewardship"
+              type="medium"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Pillar 2: Sovereignty */}
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-24 pb-24 border-b border-navy/10">
+          <div className="md:order-2">
+            <div className="mb-8">
+              <div className="text-6xl font-mono text-gold mb-4">02</div>
+              <h3 className="text-4xl font-heading font-bold text-navy mb-2">Sovereignty</h3>
+              <p className="text-xl text-copper font-mono">Financial Independence by Design.</p>
+            </div>
+            <p className="text-lg text-navy/80 mb-8 leading-relaxed">
+              Sovereignty is freedom—freedom from institutional gatekeepers, freedom from arbitrary lending decisions,
+              freedom to finance your business and life on your terms through the Infinite Banking Concept.
+            </p>
+            <ul className="space-y-4">
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Access capital without bank approval or credit checks</span>
+              </li>
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Fund equipment, real estate, and expansion debt-free</span>
+              </li>
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Keep interest payments flowing back to YOUR system</span>
+              </li>
+            </ul>
+          </div>
+          <div className="relative h-[500px] md:order-1">
+            <OptimizedImage
+              src="/images/pillar-sovereignty.png"
+              alt="Sovereignty"
+              type="medium"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Pillar 3: System */}
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
+          <div>
+            <div className="mb-8">
+              <div className="text-6xl font-mono text-gold mb-4">03</div>
+              <h3 className="text-4xl font-heading font-bold text-navy mb-2">System</h3>
+              <p className="text-xl text-copper font-mono">A Permanent Financial Foundation.</p>
+            </div>
+            <p className="text-lg text-navy/80 mb-8 leading-relaxed">
+              This isn't a strategy. It's a system—a family banking infrastructure that compounds over decades, funds
+              multiple generations, and creates permanent wealth through contractual certainty.
+            </p>
+            <ul className="space-y-4">
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Whole life policies designed for maximum cash value growth</span>
+              </li>
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Tax-advantaged wealth transfer to children and grandchildren</span>
+              </li>
+              <li className="flex items-start border-l-2 border-gold pl-4">
+                <span className="text-navy/80">Predictable, guaranteed foundation for family legacy</span>
+              </li>
+            </ul>
+          </div>
+          <div className="relative h-[500px]">
+            <OptimizedImage
+              src="/images/pillar-system.png"
+              alt="System"
+              type="medium"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Cost of Not Knowing - Classical Comparison */}
+      <section className="bg-navy text-cream py-24">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">The Cost of Not Knowing</h2>
+            <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
+            <p className="text-xl text-cream/70">
+              Most Christian entrepreneurs unknowingly build on shifting sands. Here's what they don't see.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Shifting Sands */}
+            <div className="border-2 border-cream/20 p-8">
+              <h3 className="text-2xl font-heading font-bold mb-6 pb-4 border-b border-cream/20">
+                Shifting Sands
+                <br />
+                <span className="text-lg text-cream/60 font-mono">Traditional Finance</span>
+              </h3>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-start">
+                  <span className="text-red-400 mr-4 text-2xl">✗</span>
+                  <span>Bleed $20K-$50K+ annually in interest to banks</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-400 mr-4 text-2xl">✗</span>
+                  <span>Beg for approval to access your own capital</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-400 mr-4 text-2xl">✗</span>
+                  <span>Surrender control to Wall Street volatility</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-400 mr-4 text-2xl">✗</span>
+                  <span>Pay taxes twice (growth + distribution)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-400 mr-4 text-2xl">✗</span>
+                  <span>Hope the market cooperates when you need it</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-400 mr-4 text-2xl">✗</span>
+                  <span>Die with assets, not systems</span>
+                </li>
+              </ul>
+              <div className="pt-6 border-t border-cream/20">
+                <p className="font-mono font-bold text-red-400">Wealth dissipates by the 3rd generation</p>
+              </div>
+            </div>
+
+            {/* Enduring Framework */}
+            <div className="border-2 border-gold p-8 bg-gold/5">
+              <h3 className="text-2xl font-heading font-bold mb-6 pb-4 border-b border-gold/30">
+                Enduring Framework
+                <br />
+                <span className="text-lg text-cream/60 font-mono">Infinite Banking</span>
+              </h3>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-start">
+                  <span className="text-gold mr-4 text-2xl">✓</span>
+                  <span>Recapture $20K-$50K+ in annual interest payments</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-gold mr-4 text-2xl">✓</span>
+                  <span>Access capital instantly through policy loans</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-gold mr-4 text-2xl">✓</span>
+                  <span>Control deployment—no bank gatekeepers</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-gold mr-4 text-2xl">✓</span>
+                  <span>Tax-advantaged growth + tax-free distributions</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-gold mr-4 text-2xl">✓</span>
+                  <span>Contractual guarantees, not market speculation</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-gold mr-4 text-2xl">✓</span>
+                  <span>Build a family bank that lasts generations</span>
+                </li>
+              </ul>
+              <div className="pt-6 border-t border-gold/30">
+                <p className="font-mono font-bold text-gold">Multi-generational wealth system</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Entrepreneur Stories - Classical Layout */}
+      <section className="max-w-7xl mx-auto px-4 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-navy mb-4">
+            Real Entrepreneurs. Real Results.
+          </h2>
+          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
+          <p className="text-xl text-navy/70">
+            Christian business owners who stopped bleeding interest and built family banking systems
+          </p>
+        </div>
+
+        <div className="space-y-16">
+          {/* Story 1 */}
+          <div className="border-b border-navy/10 pb-16">
+            <div className="grid md:grid-cols-[300px_1fr] gap-8">
+              <div className="relative h-[300px]">
+                <OptimizedImage
+                  src="/images/story-plumbing.png"
+                  alt="Plumbing Company"
+                  type="medium"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-2xl font-heading font-bold text-navy mb-2">Mike's Plumbing Company</h3>
+                <p className="text-copper font-mono mb-6">Tennessee · $1.8M Revenue</p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm font-mono text-navy/60 uppercase tracking-wide mb-1">The Problem</p>
+                    <p className="text-navy/80">Bleeding $35K/year in interest on trucks & equipment</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-mono text-navy/60 uppercase tracking-wide mb-1">The Solution</p>
+                    <p className="text-navy/80">Built IBC policy with $2,500/month premiums</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-mono text-gold uppercase tracking-wide mb-1">The Result</p>
+                    <p className="text-navy font-semibold text-lg">
+                      3 years later: $90K cash value, $0 to banks, funded daughter's college debt-free
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Story 2 */}
+          <div className="border-b border-navy/10 pb-16">
+            <div className="grid md:grid-cols-[300px_1fr] gap-8">
+              <div className="relative h-[300px]">
+                <OptimizedImage
+                  src="/images/story-hvac.png"
+                  alt="HVAC Company"
+                  type="medium"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-2xl font-heading font-bold text-navy mb-2">HVAC Fleet Operation</h3>
+                <p className="text-copper font-mono mb-6">Arizona · $3.2M Revenue</p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm font-mono text-navy/60 uppercase tracking-wide mb-1">The Problem</p>
+                    <p className="text-navy/80">Commercial loans draining $12K+ annually for 8 service vans</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-mono text-navy/60 uppercase tracking-wide mb-1">The Solution</p>
+                    <p className="text-navy/80">Financed entire fleet through IBC policy loans</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-mono text-gold uppercase tracking-wide mb-1">The Result</p>
+                    <p className="text-navy font-semibold text-lg">
+                      Saved $12K+ annually, kept capital in family system, now funding real estate
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Story 3 */}
+          <div>
+            <div className="grid md:grid-cols-[300px_1fr] gap-8">
+              <div className="relative h-[300px]">
+                <OptimizedImage
+                  src="/images/story-coffee.png"
+                  alt="Coffee Roasting Company"
+                  type="medium"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-2xl font-heading font-bold text-navy mb-2">Coffee Roasting Company</h3>
+                <p className="text-copper font-mono mb-6">Colorado · $850K Revenue</p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm font-mono text-navy/60 uppercase tracking-wide mb-1">The Problem</p>
+                    <p className="text-navy/80">Needed $120K for roasting equipment—SBA wanted 9.5% interest</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-mono text-navy/60 uppercase tracking-wide mb-1">The Solution</p>
+                    <p className="text-navy/80">Used policy loan at 6% instead</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-mono text-gold uppercase tracking-wide mb-1">The Result</p>
+                    <p className="text-navy font-semibold text-lg">
+                      Paid herself back over 4 years—interest stayed in HER policy
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <TestimonialCarousel />
 
-      <Section id="tools">
-        <h2 className="section-title">Tools & Services</h2>
-        <p className="section-subtitle subtitle-center">
-          Each tool ties back to the four-step strategy—nothing "extra," everything coordinated.
-        </p>
-        <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="bg-navy text-white p-4 flex">
-            <div className="w-1/2 font-bold">Your Concern</div>
-            <div className="w-1/2 font-bold">1322 Tool</div>
+      {/* Statistics - Classical */}
+      <section className="bg-navy text-cream py-24">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">Why Entrepreneurs Choose 1322</h2>
+            <div className="w-24 h-1 bg-gold mx-auto"></div>
           </div>
-          {tools.map((tool, index) => (
-            <div key={index} className="flex p-4 border-t border-gray-200 items-center">
-              <div className="w-1/2 text-navy/90">{tool.concern}</div>
-              <div className="w-1/2 text-navy font-semibold">{tool.tool}</div>
+
+          <div className="grid md:grid-cols-4 gap-12 mb-16">
+            <div className="text-center border-r border-cream/20 last:border-r-0">
+              <div className="text-6xl font-mono font-bold text-gold mb-4">10+</div>
+              <div className="text-lg font-heading font-semibold mb-2">Years IBC Implementation</div>
+              <p className="text-sm text-cream/70">Authorized Infinite Banking Practitioner</p>
             </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="bg-dark-blue text-cream" id="why-choose">
-        <h2 className="section-title text-white">WHY FAMILIES CHOOSE 1322</h2>
-        <div className="max-w-3xl mx-auto">
-          <ul className="space-y-4 text-lg">
-            {whyChooseUsPoints.map((point, index) => (
-              <li key={index} className="flex items-start">
-                <Check className="text-gold mr-3 mt-1 flex-shrink-0" />
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="text-center my-12">
-            <p className="font-playfair text-2xl italic">
-              “A good man leaves an inheritance to his children’s children.”
-            </p>
-            <p className="mt-2 text-cream/80">— Proverbs 13:22</p>
+            <div className="text-center border-r border-cream/20 last:border-r-0">
+              <div className="text-6xl font-mono font-bold text-gold mb-4">1,000+</div>
+              <div className="text-lg font-heading font-semibold mb-2">Entrepreneurs Educated</div>
+              <p className="text-sm text-cream/70">Through FREE 1322 IBC Academy</p>
+            </div>
+            <div className="text-center border-r border-cream/20 last:border-r-0">
+              <div className="text-6xl font-mono font-bold text-gold mb-4">$0</div>
+              <div className="text-lg font-heading font-semibold mb-2">Cost for Strategy Consultation</div>
+              <p className="text-sm text-cream/70">Complementary discovery calls</p>
+            </div>
+            <div className="text-center">
+              <div className="text-6xl font-mono font-bold text-gold mb-4">13:22</div>
+              <div className="text-lg font-heading font-semibold mb-2">Biblical Foundation</div>
+              <p className="text-sm text-cream/70">Proverbs 13:22 legacy planning</p>
+            </div>
           </div>
-          <p className="text-center text-sm">At 1322 Legacy Strategies, we help you do just that.</p>
-        </div>
-      </Section>
 
-      <Section id="how-it-works">
-        <h2 className="section-title">How It Works</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {howItWorksSteps.map((step, index) => (
-            <motion.div
-              key={index}
-              className="bg-navy/5 p-8 rounded-lg border border-navy/10 flex flex-col h-full"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+          <div className="text-center border-t border-cream/20 pt-12">
+            <blockquote className="text-3xl font-heading italic mb-4">
+              "A good man leaves an inheritance to his children's children."
+            </blockquote>
+            <p className="text-cream/70 font-mono">— Proverbs 13:22</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section - Classical */}
+      <section className="max-w-7xl mx-auto px-4 py-24">
+        <div className="grid md:grid-cols-2 gap-16 items-start">
+          <div className="relative h-[600px]">
+            <OptimizedImage
+              src="/images/brad-raschke-founder.png"
+              alt="Brad Raschke, Founder"
+              type="medium"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold text-navy mb-8">
+              Why I Built
+              <br />
+              1322 Legacy Strategies
+            </h2>
+            <div className="space-y-6 text-lg text-navy/80 leading-relaxed">
+              <p>
+                My grandfather quietly funded nine grandchildren's college educations through strategically designed
+                life-insurance policies. The lesson was simple:{" "}
+                <strong className="text-navy">contractual certainty beats institutional dependence.</strong>
+              </p>
+              <p>
+                Today, I watch Christian entrepreneurs bleed $20K-$50K annually in interest to banks—financing trucks,
+                equipment, real estate on someone else's terms. Meanwhile, Wall Street promises "growth" while charging
+                fees and exposing families to volatility.
+              </p>
+              <p>
+                There's a better way. The Infinite Banking Concept (IBC) allows you to{" "}
+                <strong className="text-navy">become your own bank</strong>—reclaiming control of your capital, funding
+                business growth debt-free, and building a family banking system that lasts generations.
+              </p>
+              <p className="text-copper italic">
+                Through 1322 IBC Academy (our FREE Skool community), I provide generous IBC education to help
+                entrepreneurs understand Infinite Banking before making policy decisions. No gatekeeping. No pressure.
+                Just education.
+              </p>
+            </div>
+            <div className="mt-8 pt-8 border-t border-navy/10">
+              <p className="font-heading text-2xl text-navy font-bold">Brad Raschke</p>
+              <p className="text-copper font-mono">
+                Founder & IBC Strategist
+                <br />
+                Authorized Infinite Banking Practitioner
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA - Classical */}
+      <section className="bg-gold/10 py-24">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-6xl font-heading font-bold text-navy mb-8">
+            Start with FREE Education.
+            <br />
+            No Sales Pitch.
+          </h2>
+          <p className="text-xl text-navy/80 mb-12 leading-relaxed">
+            Whether you prefer self-paced learning or community discussion,
+            <br />
+            we&apos;ve built comprehensive resources to help you master IBC at your own pace.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
+            <Link
+              href="/learn"
+              className="inline-flex items-center justify-center bg-navy text-cream px-12 py-5 font-heading font-bold text-lg uppercase tracking-wider hover:bg-navy/90 transition-colors"
             >
-              <div className="bg-gold/20 w-12 h-12 rounded-full flex items-center justify-center mb-6">
-                <span className="font-playfair font-bold text-xl text-copper">{index + 1}</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-navy">{step.title}</h3>
-              <p className="text-navy/80">{step.description}</p>
-            </motion.div>
-          ))}
+              Explore Learning Center <ArrowRight className="inline ml-2" />
+            </Link>
+            <a
+              href="https://www.skool.com/1322-ibc-academy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border-2 border-navy text-navy px-12 py-5 font-heading font-bold text-lg uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"
+            >
+              Join Free Academy
+            </a>
+          </div>
+          <p className="text-sm text-navy/60 mb-8">
+            No pressure. No obligation. Education first, always.
+          </p>
+          <div className="pt-8 border-t border-navy/10">
+            <p className="text-navy/70 mb-4">Ready to discuss your specific situation?</p>
+            <a
+              href="https://discovery.1322legacystrategies.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-sm uppercase tracking-wider text-gold hover:text-navy transition-colors"
+            >
+              Book a Free Strategy Call →
+            </a>
+          </div>
         </div>
-        <p className="section-subtitle subtitle-center">
-          Plain-English promise: You'll understand every step well enough to explain it at the dinner table.
-        </p>
-      </Section>
-
-      <Section className="text-center">
-        <h2 className="text-3xl md:text-4xl text-navy/80 mb-4">
-          Ready for a conversation that puts you back in the driver's seat?
-        </h2>
-        <p className="text-lg mb-8">Schedule Your Discovery Call and start controlling your capital.</p>
-        <ContactButton className="btn-outline text-lg" href="https://discovery.1322legacystrategies.com/">
-          Book My 90-Min Call <ArrowRight className="inline ml-2" />
-        </ContactButton>
-      </Section>
-    </>
+      </section>
+    </div>
   )
 }
