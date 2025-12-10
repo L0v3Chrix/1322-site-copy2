@@ -1,5 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import OptimizedImage from "@/components/optimized-image"
 
 export const metadata: Metadata = {
   title: "Foundations Track | 1322 Legacy Strategies",
@@ -48,7 +49,7 @@ const lessons = [
       "Dividends and mutual companies",
       "Why not universal life?",
     ],
-    available: false,
+    available: true,
   },
   {
     number: "04",
@@ -62,7 +63,7 @@ const lessons = [
       "Recapturing interest",
       "Multi-generational wealth",
     ],
-    available: false,
+    available: true,
   },
 ]
 
@@ -70,8 +71,18 @@ export default function FoundationsPage() {
   return (
     <main className="bg-cream min-h-screen">
       {/* Hero Section */}
-      <section className="bg-navy text-cream py-20 md:py-24">
-        <div className="container mx-auto px-4 md:px-8">
+      <section className="bg-navy text-cream py-20 md:py-24 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-15">
+          <OptimizedImage
+            src="/images/foundations-track-hero.png"
+            alt="Classical stone foundation"
+            type="hero"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumb */}
             <div className="mb-6">

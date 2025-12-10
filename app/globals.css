@@ -76,3 +76,314 @@
   width: 100%;
   grid-column: 1 / -1; /* spans full grid row if inside a CSS grid */
 }
+
+/* =============================================================================
+   1322 LEGACY STRATEGIES - MICRO-INTERACTION UTILITIES
+   ============================================================================= */
+
+@layer components {
+  /* === BRAND BUTTON UTILITIES === */
+
+  /* Gold CTA button with hover scale */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3;
+    @apply text-sm font-medium tracking-wider uppercase;
+    @apply bg-gold text-navy border-0;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-gold/90 hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2;
+  }
+
+  /* Navy solid button */
+  .btn-navy-solid {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3;
+    @apply text-sm font-medium tracking-wider uppercase;
+    @apply bg-navy text-cream border-0;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-navy/90 hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2;
+  }
+
+  /* Navy outline button */
+  .btn-navy-outline {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3;
+    @apply text-sm font-medium tracking-wider uppercase;
+    @apply bg-transparent text-navy border-2 border-navy;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-navy hover:text-cream hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2;
+  }
+
+  /* Cream outline button (for dark backgrounds) */
+  .btn-cream-outline {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3;
+    @apply text-sm font-medium tracking-wider uppercase;
+    @apply bg-transparent text-cream border-2 border-cream;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-cream hover:text-navy hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2;
+  }
+
+  /* === CARD ELEVATION UTILITIES === */
+
+  /* Card with hover elevation effect */
+  .card-elevate {
+    @apply transition-all duration-300 ease-out;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.08);
+  }
+
+  .card-elevate:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(44, 62, 80, 0.15);
+  }
+
+  /* Subtle card elevation (for less prominent cards) */
+  .card-elevate-subtle {
+    @apply transition-all duration-300 ease-out;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.05);
+  }
+
+  .card-elevate-subtle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(44, 62, 80, 0.10);
+  }
+
+  /* === LINK UNDERLINE ANIMATION === */
+
+  /* Animated underline that grows from left */
+  .link-underline {
+    @apply relative inline-block;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-full h-[2px] bg-gold;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
+  }
+
+  .link-underline:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Copper underline variant */
+  .link-underline-copper::after {
+    @apply bg-copper;
+  }
+
+  /* Navy underline variant */
+  .link-underline-navy::after {
+    @apply bg-navy;
+  }
+
+  /* === FOCUS STATE UTILITIES === */
+
+  /* Gold focus ring (primary) */
+  .focus-gold {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2;
+  }
+
+  /* Navy focus ring */
+  .focus-navy {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2;
+  }
+
+  /* Input focus state */
+  .input-focus {
+    @apply transition-all duration-200;
+    @apply focus:border-gold focus:ring-1 focus:ring-gold focus:outline-none;
+  }
+
+  /* === HOVER SCALE UTILITIES === */
+
+  .hover-scale {
+    @apply transition-transform duration-300 ease-out;
+    @apply hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .hover-scale-subtle {
+    @apply transition-transform duration-300 ease-out;
+    @apply hover:scale-[1.01] active:scale-[0.99];
+  }
+
+  .hover-scale-lg {
+    @apply transition-transform duration-300 ease-out;
+    @apply hover:scale-[1.05] active:scale-[0.97];
+  }
+
+  /* === IMAGE CONTAINER UTILITIES === */
+
+  /* Prevents images from breaking containers */
+  .img-container {
+    @apply relative overflow-hidden;
+  }
+
+  .img-container img,
+  .img-container > * {
+    @apply w-full h-full object-cover;
+  }
+
+  /* Aspect ratio containers with overflow hidden */
+  .aspect-hero {
+    @apply aspect-video overflow-hidden;
+  }
+
+  .aspect-card {
+    aspect-ratio: 4/3;
+    @apply overflow-hidden;
+  }
+
+  .aspect-square-img {
+    @apply aspect-square overflow-hidden;
+  }
+
+  /* === GLASS MORPHISM === */
+
+  .glass {
+    @apply backdrop-blur-md bg-white/80;
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-md bg-navy/80;
+  }
+
+  /* === SECTION SPACING === */
+
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-padding-sm {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .section-padding-lg {
+    @apply py-20 md:py-28 lg:py-36;
+  }
+
+  /* === DECORATIVE ELEMENTS === */
+
+  /* Gold accent bar (left border) */
+  .accent-bar-left {
+    @apply relative pl-4 border-l-4 border-gold;
+  }
+
+  /* Gold accent underline */
+  .accent-underline {
+    @apply relative pb-4;
+  }
+
+  .accent-underline::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-16 h-1 bg-gold;
+  }
+
+  .accent-underline-center::after {
+    @apply left-1/2 -translate-x-1/2;
+  }
+
+  /* Quote styling */
+  .quote-block {
+    @apply relative pl-6 border-l-4 border-gold italic text-navy/80;
+  }
+}
+
+@layer utilities {
+  /* === ANIMATION DELAY UTILITIES === */
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  /* === TRANSITION UTILITIES === */
+
+  .transition-transform-shadow {
+    transition-property: transform, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  /* === SCROLL BEHAVIOR === */
+
+  .scroll-margin-header {
+    scroll-margin-top: 100px;
+  }
+
+  /* === TEXT UTILITIES === */
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* === REDUCED MOTION === */
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Disable animations for users who prefer reduced motion */
+    .motion-safe {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* Global reduced motion - simplify all animations */
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Keep essential transitions for user feedback */
+    button,
+    a,
+    input,
+    select,
+    textarea {
+      transition-duration: 150ms !important;
+      transition-property: background-color, border-color, color !important;
+    }
+  }
+
+  /* Motion-reduce utility class for conditional animation */
+  .motion-reduce {
+    @apply motion-safe:animate-none motion-safe:transition-none;
+  }
+
+  /* === PRINT UTILITIES === */
+
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+}

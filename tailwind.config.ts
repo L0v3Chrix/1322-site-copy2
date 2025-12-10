@@ -93,14 +93,47 @@ const config: Config = {
         "prose-normal": "60ch",
         "prose-wide": "75ch",
       },
+      // === SPACING SCALE FOR SECTIONS ===
+      spacing: {
+        'section-sm': '4rem',   // 64px
+        'section': '6rem',      // 96px
+        'section-lg': '8rem',   // 128px
+      },
+      // === SHADOW ELEVATION SCALE ===
+      boxShadow: {
+        'card': '0 4px 12px rgba(44, 62, 80, 0.08)',
+        'card-hover': '0 12px 24px rgba(44, 62, 80, 0.15)',
+        'elevated': '0 20px 25px rgba(44, 62, 80, 0.15)',
+        'elevated-hover': '0 25px 50px rgba(44, 62, 80, 0.20)',
+      },
+      // === TRANSITION UTILITIES ===
+      transitionDuration: {
+        'fast': '150ms',
+        'default': '300ms',
+        'slow': '500ms',
+        'entrance': '600ms',
+      },
+      // === ANIMATIONS ===
       animation: {
+        // Existing
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 1.2s ease-out forwards",
-        "fade-up": "fade-up 0.8s ease-out forwards",
+        "fade-in": "fade-in 0.6s ease-out forwards",
+        "fade-up": "fade-up 0.6s ease-out forwards",
         "scroll-hint": "scroll-hint 2s ease-in-out infinite",
+        // New micro-interactions
+        "underline-grow": "underline-grow 0.3s ease-out forwards",
+        "scale-in": "scale-in 0.3s ease-out forwards",
+        "slide-in-left": "slide-in-left 0.6s ease-out forwards",
+        "slide-in-right": "slide-in-right 0.6s ease-out forwards",
+        "shimmer": "shimmer 1.5s linear infinite",
+        "pulse-soft": "pulse-soft 2s ease-in-out infinite",
+        "bounce-subtle": "bounce-subtle 0.4s ease-out",
+        "rotate-180": "rotate-180 0.3s ease-out forwards",
+        "counter-up": "counter-up 0.5s ease-out forwards",
       },
       keyframes: {
+        // Existing
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -120,6 +153,44 @@ const config: Config = {
         "scroll-hint": {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(10px)" },
+        },
+        // New keyframes
+        "underline-grow": {
+          "0%": { transform: "scaleX(0)", transformOrigin: "left" },
+          "100%": { transform: "scaleX(1)", transformOrigin: "left" },
+        },
+        "scale-in": {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "slide-in-left": {
+          "0%": { opacity: "0", transform: "translateX(-40px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-in-right": {
+          "0%": { opacity: "0", transform: "translateX(40px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
+        },
+        "bounce-subtle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "25%": { transform: "translateY(-2px)" },
+          "75%": { transform: "translateY(2px)" },
+        },
+        "rotate-180": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(180deg)" },
+        },
+        "counter-up": {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
     },

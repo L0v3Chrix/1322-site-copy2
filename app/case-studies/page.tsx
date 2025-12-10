@@ -1,16 +1,14 @@
+"use client"
+
+import { useState, useMemo } from "react"
 import Link from "next/link"
-import type { Metadata } from "next"
 
-export const metadata: Metadata = {
-  title: "Case Studies | 1322 Legacy Strategies",
-  description: "Real examples of how business owners became their own bankers. See the numbers, strategies, and results.",
-}
-
-// Case studies data
+// Case studies data with filter categories
 const caseStudies = [
   {
     slug: "mikes-hvac",
     industry: "HVAC Services",
+    category: "Service Business",
     revenue: "$750K",
     name: "Mike",
     title: "How Mike Stopped Paying Banks $32,000/Year and Started Building Family Wealth Instead",
@@ -26,6 +24,7 @@ const caseStudies = [
   {
     slug: "sarahs-ecommerce",
     industry: "E-commerce",
+    category: "E-commerce",
     revenue: "$400K",
     name: "Sarah",
     title: "How Sarah Eliminated Inventory Financing Stress and Increased Profit Margins by 12%",
@@ -41,6 +40,7 @@ const caseStudies = [
   {
     slug: "davids-real-estate",
     industry: "Real Estate Investment",
+    category: "Real Estate",
     revenue: "$1.2M",
     name: "David",
     title: "How David Uses His Family Bank for Bridge Financing and Closes Deals 3x Faster",
@@ -56,6 +56,7 @@ const caseStudies = [
   {
     slug: "pastor-james-ministry",
     industry: "Ministry",
+    category: "Ministry",
     revenue: "$600K",
     name: "Pastor James",
     title: "How Pastor James Built a Building Fund That Actually Builds Wealth",
@@ -71,6 +72,7 @@ const caseStudies = [
   {
     slug: "thomas-manufacturing",
     industry: "Manufacturing",
+    category: "Manufacturing",
     revenue: "$2.5M",
     name: "Thomas",
     title: "How Thomas Financed $400K in Equipment Without Banks and Kept Control of His Business",
@@ -85,7 +87,26 @@ const caseStudies = [
   },
 ]
 
+// Filter categories
+const filterCategories = [
+  { id: "all", label: "All Industries" },
+  { id: "Service Business", label: "Service Business" },
+  { id: "E-commerce", label: "E-commerce" },
+  { id: "Real Estate", label: "Real Estate" },
+  { id: "Manufacturing", label: "Manufacturing" },
+  { id: "Ministry", label: "Ministry" },
+]
+
 export default function CaseStudiesPage() {
+  const [activeFilter, setActiveFilter] = useState("all")
+
+  const filteredCaseStudies = useMemo(() => {
+    if (activeFilter === "all") return caseStudies
+    return caseStudies.filter((study) => study.category === activeFilter)
+  }, [activeFilter])
+
+  const studyCount = filteredCaseStudies.length
+
   return (
     <main className="bg-cream min-h-screen">
       {/* Hero Section */}
@@ -110,23 +131,25 @@ export default function CaseStudiesPage() {
       {/* Filter by Industry */}
       <section className="py-8 border-b border-navy/10">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 border-gold bg-gold/10 text-navy">
-              All Industries
-            </button>
-            <button className="font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 border-navy/20 text-navy/60 hover:border-gold hover:text-navy transition-colors">
-              Service Business
-            </button>
-            <button className="font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 border-navy/20 text-navy/60 hover:border-gold hover:text-navy transition-colors">
-              E-commerce
-            </button>
-            <button className="font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 border-navy/20 text-navy/60 hover:border-gold hover:text-navy transition-colors">
-              Real Estate
-            </button>
-            <button className="font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 border-navy/20 text-navy/60 hover:border-gold hover:text-navy transition-colors">
-              Ministry
-            </button>
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            {filterCategories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveFilter(category.id)}
+                className={`font-mono text-xs uppercase tracking-wider px-4 py-2 border-2 transition-colors ${
+                  activeFilter === category.id
+                    ? "border-gold bg-gold/10 text-navy"
+                    : "border-navy/20 text-navy/60 hover:border-gold hover:text-navy"
+                }`}
+              >
+                {category.label}
+              </button>
+            ))}
           </div>
+          <p className="text-center mt-4 font-mono text-xs text-navy/50">
+            Showing {studyCount} case {studyCount === 1 ? "study" : "studies"}
+            {activeFilter !== "all" && ` in ${activeFilter}`}
+          </p>
         </div>
       </section>
 
@@ -134,7 +157,14 @@ export default function CaseStudiesPage() {
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 md:px-8">
           <div className="max-w-6xl mx-auto space-y-8">
-            {caseStudies.map((study) => (
+            {filteredCaseStudies.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="font-mono text-sm text-navy/50 uppercase tracking-wider">
+                  No case studies found for this category
+                </p>
+              </div>
+            ) : null}
+            {filteredCaseStudies.map((study) => (
               <Link
                 key={study.slug}
                 href={`/case-studies/${study.slug}`}

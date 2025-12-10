@@ -4,12 +4,18 @@ import Link from "next/link"
 import OptimizedImage from "@/components/optimized-image"
 import { ArrowRight, BookOpen, Calculator, Users, Play } from "lucide-react"
 import TestimonialCarousel from "@/components/testimonial-carousel"
+import { Button } from "@/components/ui/button"
+import { AnimatedSection, AnimatedStaggerChild, AnimatedHeading, AnimatedParagraph } from "@/components/ui/animated-section"
+import { EnhancedCard, StaggerCardContainer, EnhancedCardTitle, EnhancedCardContent } from "@/components/ui/enhanced-card"
+import { AnimatedIcon } from "@/components/ui/animated-icon"
+import { motion } from "framer-motion"
+import { staggerContainer, fadeInUp, slideInLeft, slideInRight } from "@/lib/animation-variants"
 
 export default function Home() {
   return (
     <div className="bg-cream">
-      {/* Hero Section - Classical */}
-      <section className="relative min-h-[600px] flex items-center justify-center bg-navy text-cream">
+      {/* Hero Section - Classical with Entrance Animation */}
+      <section className="relative min-h-[600px] flex items-center justify-center bg-navy text-cream overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <OptimizedImage
             src="/images/classical-foundation.png"
@@ -18,152 +24,208 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 py-32 text-center">
-          <h1 className="text-5xl md:text-7xl font-heading font-bold leading-tight mb-8">
+        <motion.div
+          className="relative z-10 max-w-4xl mx-auto px-4 py-32 text-center"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+        >
+          <motion.h1
+            className="text-5xl md:text-7xl font-heading font-bold leading-tight mb-8"
+            variants={fadeInUp}
+          >
             Build on an Enduring Framework.
             <br />
             Not Shifting Sands.
-          </h1>
-          <p className="text-xl md:text-2xl mb-12 leading-relaxed">
+          </motion.h1>
+          <motion.p
+            className="text-xl md:text-2xl mb-12 leading-relaxed"
+            variants={fadeInUp}
+          >
             Master a timeless financial framework designed for your family&apos;s lasting legacy.
             <br />
             Start your education for FREE.
-          </p>
-          <div className="border-t border-cream/30 pt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/learn"
-              className="inline-block bg-gold text-navy px-10 py-4 font-heading font-bold text-lg uppercase tracking-wider hover:bg-cream transition-colors"
-            >
-              Start Learning
-            </Link>
-            <a
-              href="https://www.skool.com/1322-ibc-academy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block border-2 border-cream text-cream px-10 py-4 font-heading font-bold text-lg uppercase tracking-wider hover:bg-cream hover:text-navy transition-colors"
-            >
-              Join Free Academy
-            </a>
-          </div>
-        </div>
+          </motion.p>
+          <motion.div
+            className="border-t border-cream/30 pt-8 flex flex-col sm:flex-row gap-4 justify-center"
+            variants={fadeInUp}
+          >
+            <Button asChild variant="gold" size="xl">
+              <Link href="/learn">Start Learning</Link>
+            </Button>
+            <Button asChild variant="creamOutline" size="xl">
+              <a
+                href="https://www.skool.com/1322-ibc-academy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Join Free Academy
+              </a>
+            </Button>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* Learning Pathways Section - NEW */}
-      <section className="bg-cream py-20 border-b border-navy/10">
+      {/* Learning Pathways Section - With Staggered Animations */}
+      <AnimatedSection className="bg-cream py-20 border-b border-navy/10" animation="fade-up">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="font-mono text-xs uppercase tracking-wider text-gold mb-2">
+            <motion.p
+              className="font-mono text-xs uppercase tracking-wider text-gold mb-2"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
               Education-First Approach
-            </p>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-navy mb-4">
+            </motion.p>
+            <AnimatedHeading as="h2" className="text-3xl md:text-4xl font-heading font-bold text-navy mb-4">
               Learn at Your Own Pace
-            </h2>
-            <p className="text-lg text-navy/70 max-w-2xl mx-auto">
+            </AnimatedHeading>
+            <AnimatedParagraph className="text-lg text-navy/70 max-w-2xl mx-auto">
               We believe analytical minds should understand the concepts thoroughly before making decisions.
               That&apos;s why we provide comprehensive free education.
-            </p>
+            </AnimatedParagraph>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <StaggerCardContainer className="grid md:grid-cols-4 gap-6">
             {/* Learning Center */}
-            <Link
-              href="/learn"
-              className="group border-2 border-navy/20 p-6 hover:border-gold transition-colors"
-            >
-              <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4">
-                <BookOpen className="w-6 h-6 text-gold" />
-              </div>
-              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
-                Learning Center
-              </h3>
-              <p className="text-sm text-navy/60 mb-4">
-                Three progressive tracks from foundations to mastery.
-              </p>
-              <span className="font-mono text-xs uppercase tracking-wider text-gold">
-                Explore Lessons →
-              </span>
-            </Link>
+            <EnhancedCard staggerChild className="group p-0" padding="none">
+              <Link href="/learn" className="block p-6">
+                <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4 rounded-sm">
+                  <AnimatedIcon
+                    icon={<BookOpen className="w-6 h-6" />}
+                    animation="bounce"
+                    trigger="hover"
+                    colorClass="text-gold"
+                  />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                  Learning Center
+                </h3>
+                <p className="text-sm text-navy/60 mb-4">
+                  Three progressive tracks from foundations to mastery.
+                </p>
+                <span className="font-mono text-xs uppercase tracking-wider text-gold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Explore Lessons <ArrowRight className="w-3 h-3" />
+                </span>
+              </Link>
+            </EnhancedCard>
 
             {/* Interactive Tools */}
-            <Link
-              href="/tools"
-              className="group border-2 border-navy/20 p-6 hover:border-gold transition-colors"
-            >
-              <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4">
-                <Calculator className="w-6 h-6 text-gold" />
-              </div>
-              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
-                Calculators
-              </h3>
-              <p className="text-sm text-navy/60 mb-4">
-                Run your own numbers. See exactly what IBC could mean for you.
-              </p>
-              <span className="font-mono text-xs uppercase tracking-wider text-gold">
-                Open Tools →
-              </span>
-            </Link>
+            <EnhancedCard staggerChild className="group p-0" padding="none">
+              <Link href="/tools" className="block p-6">
+                <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4 rounded-sm">
+                  <AnimatedIcon
+                    icon={<Calculator className="w-6 h-6" />}
+                    animation="bounce"
+                    trigger="hover"
+                    colorClass="text-gold"
+                  />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                  Calculators
+                </h3>
+                <p className="text-sm text-navy/60 mb-4">
+                  Run your own numbers. See exactly what IBC could mean for you.
+                </p>
+                <span className="font-mono text-xs uppercase tracking-wider text-gold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Open Tools <ArrowRight className="w-3 h-3" />
+                </span>
+              </Link>
+            </EnhancedCard>
 
             {/* Case Studies */}
-            <Link
-              href="/case-studies"
-              className="group border-2 border-navy/20 p-6 hover:border-gold transition-colors"
-            >
-              <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-gold" />
-              </div>
-              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
-                Case Studies
-              </h3>
-              <p className="text-sm text-navy/60 mb-4">
-                Real entrepreneurs. Real numbers. Real results.
-              </p>
-              <span className="font-mono text-xs uppercase tracking-wider text-gold">
-                Read Stories →
-              </span>
-            </Link>
+            <EnhancedCard staggerChild className="group p-0" padding="none">
+              <Link href="/case-studies" className="block p-6">
+                <div className="w-12 h-12 bg-gold/10 flex items-center justify-center mb-4 rounded-sm">
+                  <AnimatedIcon
+                    icon={<Users className="w-6 h-6" />}
+                    animation="bounce"
+                    trigger="hover"
+                    colorClass="text-gold"
+                  />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                  Case Studies
+                </h3>
+                <p className="text-sm text-navy/60 mb-4">
+                  Real entrepreneurs. Real numbers. Real results.
+                </p>
+                <span className="font-mono text-xs uppercase tracking-wider text-gold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Read Stories <ArrowRight className="w-3 h-3" />
+                </span>
+              </Link>
+            </EnhancedCard>
 
             {/* Free Academy */}
-            <a
-              href="https://www.skool.com/1322-ibc-academy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group border-2 border-gold bg-gold/5 p-6 hover:bg-gold/10 transition-colors"
-            >
-              <div className="w-12 h-12 bg-gold/20 flex items-center justify-center mb-4">
-                <Play className="w-6 h-6 text-gold" />
-              </div>
-              <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
-                Free Academy
-              </h3>
-              <p className="text-sm text-navy/60 mb-4">
-                Join 1,000+ entrepreneurs. Weekly live AMAs with Brad.
-              </p>
-              <span className="font-mono text-xs uppercase tracking-wider text-gold">
-                Join Community →
-              </span>
-            </a>
-          </div>
+            <EnhancedCard staggerChild className="group bg-gold/5 border-2 border-gold p-0" padding="none">
+              <a
+                href="https://www.skool.com/1322-ibc-academy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-6"
+              >
+                <div className="w-12 h-12 bg-gold/20 flex items-center justify-center mb-4 rounded-sm">
+                  <AnimatedIcon
+                    icon={<Play className="w-6 h-6" />}
+                    animation="pulse"
+                    trigger="hover"
+                    colorClass="text-gold"
+                  />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-navy group-hover:text-gold transition-colors mb-2">
+                  Free Academy
+                </h3>
+                <p className="text-sm text-navy/60 mb-4">
+                  Join 1,000+ entrepreneurs. Weekly live AMAs with Brad.
+                </p>
+                <span className="font-mono text-xs uppercase tracking-wider text-gold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Join Community <ArrowRight className="w-3 h-3" />
+                </span>
+              </a>
+            </EnhancedCard>
+          </StaggerCardContainer>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Three Pillars - Classical Grid */}
+      {/* Three Pillars - Classical Grid with Alternating Animations */}
       <section className="max-w-7xl mx-auto px-4 py-24">
-        <div className="text-center mb-16">
+        <AnimatedSection className="text-center mb-16" animation="fade-up">
           <h2 className="text-4xl md:text-5xl font-heading font-bold text-navy mb-4">
             The Principled Authority Framework
           </h2>
-          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
+          <motion.div
+            className="w-24 h-1 bg-gold mx-auto mb-6"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          />
           <p className="text-xl text-navy/70 max-w-3xl mx-auto">
             Three foundational pillars that transform Christian entrepreneurs from bank-dependent to financially
             sovereign
           </p>
-        </div>
+        </AnimatedSection>
 
-        {/* Pillar 1: Stewardship */}
+        {/* Pillar 1: Stewardship - Slide in from left */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-24 pb-24 border-b border-navy/10">
-          <div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInLeft}
+          >
             <div className="mb-8">
-              <div className="text-6xl font-mono text-gold mb-4">01</div>
+              <motion.div
+                className="text-6xl font-mono text-gold mb-4"
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                01
+              </motion.div>
               <h3 className="text-4xl font-heading font-bold text-navy mb-2">Stewardship</h3>
               <p className="text-xl text-copper font-mono">Your Capital. Your Control.</p>
             </div>
@@ -173,32 +235,52 @@ export default function Home() {
               theirs.
             </p>
             <ul className="space-y-4">
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Eliminate dependence on banks for business financing</span>
               </li>
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Control when, where, and how your capital is deployed</span>
               </li>
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Build a system that works for you across generations</span>
               </li>
             </ul>
-          </div>
-          <div className="relative h-[500px]">
+          </motion.div>
+          <motion.div
+            className="relative h-[500px] overflow-hidden rounded-sm"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInRight}
+          >
             <OptimizedImage
               src="/images/pillar-stewardship.png"
               alt="Stewardship"
               type="medium"
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
         </div>
 
-        {/* Pillar 2: Sovereignty */}
+        {/* Pillar 2: Sovereignty - Slide in from right */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-24 pb-24 border-b border-navy/10">
-          <div className="md:order-2">
+          <motion.div
+            className="md:order-2"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInRight}
+          >
             <div className="mb-8">
-              <div className="text-6xl font-mono text-gold mb-4">02</div>
+              <motion.div
+                className="text-6xl font-mono text-gold mb-4"
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                02
+              </motion.div>
               <h3 className="text-4xl font-heading font-bold text-navy mb-2">Sovereignty</h3>
               <p className="text-xl text-copper font-mono">Financial Independence by Design.</p>
             </div>
@@ -207,32 +289,51 @@ export default function Home() {
               freedom to finance your business and life on your terms through the Infinite Banking Concept.
             </p>
             <ul className="space-y-4">
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Access capital without bank approval or credit checks</span>
               </li>
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Fund equipment, real estate, and expansion debt-free</span>
               </li>
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Keep interest payments flowing back to YOUR system</span>
               </li>
             </ul>
-          </div>
-          <div className="relative h-[500px] md:order-1">
+          </motion.div>
+          <motion.div
+            className="relative h-[500px] md:order-1 overflow-hidden rounded-sm"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInLeft}
+          >
             <OptimizedImage
               src="/images/pillar-sovereignty.png"
               alt="Sovereignty"
               type="medium"
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
         </div>
 
-        {/* Pillar 3: System */}
+        {/* Pillar 3: System - Slide in from left */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
-          <div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInLeft}
+          >
             <div className="mb-8">
-              <div className="text-6xl font-mono text-gold mb-4">03</div>
+              <motion.div
+                className="text-6xl font-mono text-gold mb-4"
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                03
+              </motion.div>
               <h3 className="text-4xl font-heading font-bold text-navy mb-2">System</h3>
               <p className="text-xl text-copper font-mono">A Permanent Financial Foundation.</p>
             </div>
@@ -241,25 +342,31 @@ export default function Home() {
               multiple generations, and creates permanent wealth through contractual certainty.
             </p>
             <ul className="space-y-4">
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Whole life policies designed for maximum cash value growth</span>
               </li>
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Tax-advantaged wealth transfer to children and grandchildren</span>
               </li>
-              <li className="flex items-start border-l-2 border-gold pl-4">
+              <li className="flex items-start border-l-2 border-gold pl-4 hover:border-l-4 transition-all">
                 <span className="text-navy/80">Predictable, guaranteed foundation for family legacy</span>
               </li>
             </ul>
-          </div>
-          <div className="relative h-[500px]">
+          </motion.div>
+          <motion.div
+            className="relative h-[500px] overflow-hidden rounded-sm"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInRight}
+          >
             <OptimizedImage
               src="/images/pillar-system.png"
               alt="System"
               type="medium"
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -564,51 +671,82 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA - Classical */}
-      <section className="bg-gold/10 py-24">
+      {/* Final CTA - Classical with Animations */}
+      <AnimatedSection className="bg-gold/10 py-24" animation="fade-up">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-heading font-bold text-navy mb-8">
+          <motion.h2
+            className="text-4xl md:text-6xl font-heading font-bold text-navy mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             Start with FREE Education.
             <br />
             No Sales Pitch.
-          </h2>
-          <p className="text-xl text-navy/80 mb-12 leading-relaxed">
+          </motion.h2>
+          <motion.p
+            className="text-xl text-navy/80 mb-12 leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             Whether you prefer self-paced learning or community discussion,
             <br />
             we&apos;ve built comprehensive resources to help you master IBC at your own pace.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
-            <Link
-              href="/learn"
-              className="inline-flex items-center justify-center bg-navy text-cream px-12 py-5 font-heading font-bold text-lg uppercase tracking-wider hover:bg-navy/90 transition-colors"
-            >
-              Explore Learning Center <ArrowRight className="inline ml-2" />
-            </Link>
-            <a
-              href="https://www.skool.com/1322-ibc-academy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block border-2 border-navy text-navy px-12 py-5 font-heading font-bold text-lg uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"
-            >
-              Join Free Academy
-            </a>
-          </div>
-          <p className="text-sm text-navy/60 mb-8">
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row gap-6 justify-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <Button asChild variant="navySolid" size="xl" className="gap-2">
+              <Link href="/learn">
+                Explore Learning Center <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+            <Button asChild variant="navyOutline" size="xl">
+              <a
+                href="https://www.skool.com/1322-ibc-academy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Join Free Academy
+              </a>
+            </Button>
+          </motion.div>
+          <motion.p
+            className="text-sm text-navy/60 mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
             No pressure. No obligation. Education first, always.
-          </p>
-          <div className="pt-8 border-t border-navy/10">
+          </motion.p>
+          <motion.div
+            className="pt-8 border-t border-navy/10"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+          >
             <p className="text-navy/70 mb-4">Ready to discuss your specific situation?</p>
             <a
               href="https://discovery.1322legacystrategies.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-sm uppercase tracking-wider text-gold hover:text-navy transition-colors"
+              className="font-mono text-sm uppercase tracking-wider text-gold hover:text-navy transition-colors inline-flex items-center gap-2 group"
             >
-              Book a Free Strategy Call →
+              Book a Free Strategy Call
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </AnimatedSection>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import OptimizedImage from "@/components/optimized-image"
 
 export const metadata: Metadata = {
   title: "Learn IBC | 1322 Legacy Strategies",
@@ -112,8 +113,18 @@ export default function LearnPage() {
   return (
     <main className="bg-cream min-h-screen">
       {/* Hero Section */}
-      <section className="bg-navy text-cream py-24 md:py-32">
-        <div className="container mx-auto px-4 md:px-8">
+      <section className="bg-navy text-cream py-24 md:py-32 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-15">
+          <OptimizedImage
+            src="/images/learn-hero-books.png"
+            alt="Classical books and learning"
+            type="hero"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="font-mono text-xs uppercase tracking-wider text-gold mb-4">
               Self-Paced Education
