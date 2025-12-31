@@ -200,6 +200,20 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Educational Disclaimer */}
+      <div className="border-t border-cream/10">
+        <div className="container mx-auto px-4 md:px-8 py-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-xs text-cream/50 leading-relaxed mb-4">
+              <strong className="text-cream/70">Educational Disclaimer:</strong> 1322 Legacy Strategies provides educational content about the Infinite Banking Concept (IBC). Brad Raschke is a licensed insurance professional in Texas, Illinois, Wisconsin, and other states. All information is for educational purposes only and does not constitute financial, legal, or tax advice. Individual results vary based on policy design and personal circumstances. Consult qualified professionals before making financial decisions.
+            </p>
+            <p className="text-xs text-cream/40 leading-relaxed">
+              Life insurance products are issued by insurance companies. Policy guarantees are subject to the claims-paying ability of the issuing carrier. This content is not sponsored by or affiliated with any insurance company.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Copyright Bar */}
       <motion.div
         className="border-t border-cream/10"

@@ -46,7 +46,7 @@ export default function Y1322() {
                 </li>
                 <li>
                   <p className="font-mono text-xs uppercase tracking-wide text-navy/60 mb-1">Client Window</p>
-                  <p className="text-navy/90">Christian entrepreneurs ages 30–50 | $500K-$5M annual revenue</p>
+                  <p className="text-navy/90">Christian entrepreneurs ages 30–50 | $250K-$5M annual revenue</p>
                 </li>
                 <li>
                   <p className="font-mono text-xs uppercase tracking-wide text-navy/60 mb-1">Guiding Philosophy</p>
@@ -98,7 +98,7 @@ export default function Y1322() {
             <ul className="space-y-6">
               <li className="flex items-start border-l-2 border-gold pl-6">
                 <span className="text-lg text-navy/80 leading-relaxed">
-                  Run established businesses with $500K-$5M in annual revenue (3+ years profitable)
+                  Run established businesses with $250K-$5M in annual revenue (3+ years profitable)
                 </span>
               </li>
               <li className="flex items-start border-l-2 border-gold pl-6">
@@ -323,7 +323,7 @@ export default function Y1322() {
                   <OptimizedImage src="/images/story-coffee.png" alt="Coffee Roaster" type="medium" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-heading font-bold text-navy mb-2">Coffee Roaster's Equipment Strategy</h3>
+                  <h3 className="text-2xl font-heading font-bold text-navy mb-2">Coffee Roaster&apos;s Equipment Strategy</h3>
                   <p className="text-copper font-mono mb-6">Colorado · $850K Revenue</p>
                   <div className="space-y-4">
                     <div>
@@ -348,6 +348,11 @@ export default function Y1322() {
               </div>
             </div>
           </div>
+
+          {/* Case Study Disclaimer */}
+          <p className="text-center text-sm text-navy/60 mt-12 max-w-2xl mx-auto">
+            Case studies represent actual client results. Names changed for privacy. Individual results vary based on policy design, premium amount, time horizon, and personal circumstances.
+          </p>
         </div>
       </section>
 

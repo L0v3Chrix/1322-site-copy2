@@ -117,6 +117,11 @@ export default function TestimonialCarousel() {
           ))}
         </div>
 
+        {/* Testimonial Disclaimer */}
+        <p className="text-center text-xs text-cream/50 mt-6 max-w-xl mx-auto">
+          Individual results vary based on policy design, premium amount, and personal circumstances. These testimonials reflect personal experiences and do not guarantee similar results.
+        </p>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 text-center">
           {stats.map((stat) => (
             <div key={stat.label}>

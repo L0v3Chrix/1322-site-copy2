@@ -189,50 +189,76 @@ export default function StrategyPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((index) => (
-              <div key={index} className="bg-cream/70 p-8 rounded-lg border border-navy/10 shadow-sm">
-                <div className="flex items-center mb-6">
-                  <div className="relative h-16 w-16 rounded-full overflow-hidden mr-4">
-                    <Image
-                      src="/placeholder.svg?height=64&width=64"
-                      alt={`Client ${index}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg">
-                      The {index === 1 ? "Johnson" : index === 2 ? "Smith" : "Williams"} Family
-                    </h3>
-                    <p className="text-navy/70">Client since 20{18 + index}</p>
-                  </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Testimonial 1 - Clint Endress */}
+            <div className="bg-cream/70 p-8 rounded-lg border border-navy/10 shadow-sm">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-gold font-bold text-lg">CE</span>
                 </div>
-
-                <p className="italic text-navy/80 mb-6">
-                  "Working with 1322 Legacy Strategies has transformed how we think about our family's wealth. We're no
-                  longer just planning for retirement—we're building a legacy that will bless our children and
-                  grandchildren."
-                </p>
-
-                <div className="flex items-center text-gold">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg
-                      key={star}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      stroke="none"
-                    >
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  ))}
+                <div>
+                  <h3 className="font-bold text-lg">Clint Endress</h3>
                 </div>
               </div>
-            ))}
+
+              <p className="italic text-navy/80 mb-6">
+                &ldquo;I reached out to Brad blindly not knowing what to expect. My perception and experience is that a lot of &apos;advisors&apos; in the financial space love taking your call and helping you get set up with someone and then fading into the background. Brad is different, but in a great way! In the many hours we spent speaking with him, he didn&apos;t waver as we asked many questions, he challenged the way we have been doing things, and he offered sound advice. He has quickly become someone we can trust as we truly believe he has our family&apos;s best interest in mind. We would highly recommend this personable, trustworthy man to anyone navigating the waters of the vast financial ocean!&rdquo;
+              </p>
+
+              <div className="flex items-center text-gold">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg
+                    key={star}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="none"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+
+            {/* Testimonial 2 - Rodriguez Family */}
+            <div className="bg-cream/70 p-8 rounded-lg border border-navy/10 shadow-sm">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-gold font-bold text-lg">TR</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg">Tanner &amp; Heather Rodriguez</h3>
+                </div>
+              </div>
+
+              <p className="italic text-navy/80 mb-6">
+                &ldquo;Working with Brad has been one of the best decisions we&apos;ve made for our family&apos;s financial future. He&apos;s extremely knowledgeable and always takes the time to explain things clearly so we feel confident in our decisions. Thanks to his guidance, we feel confident and well-prepared as we plan for business cashflows. We truly appreciate his expertise and the genuine care he shows for his clients. We couldn&apos;t recommend Brad more highly.&rdquo;
+              </p>
+
+              <div className="flex items-center text-gold">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg
+                    key={star}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="none"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+            </div>
           </div>
+
+          {/* Testimonial Disclaimer */}
+          <p className="text-center text-sm text-navy/60 mt-8 max-w-2xl mx-auto">
+            Individual results vary based on policy design, premium amount, time horizon, and personal financial situation. These testimonials reflect personal experiences and do not guarantee similar results.
+          </p>
         </div>
       </section>
 
@@ -246,9 +272,14 @@ export default function StrategyPage() {
               Schedule your no-cost, no-obligation Legacy Strategy Call today.
             </p>
 
-            <Link href="/contact" className="btn-primary inline-block">
+            <a
+              href="https://discovery.1322legacystrategies.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-block"
+            >
               Schedule Your Call
-            </Link>
+            </a>
           </div>
         </div>
       </section>

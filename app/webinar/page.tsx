@@ -166,7 +166,7 @@ export default function WebinarPage() {
               <ul className="space-y-6">
                 <li className="flex items-start border-l-2 border-gold pl-6">
                   <span className="text-lg text-navy/80 leading-relaxed">
-                    You run an established business ($500K-$5M revenue)
+                    You run an established business ($250K-$5M revenue)
                   </span>
                 </li>
                 <li className="flex items-start border-l-2 border-gold pl-6">
@@ -293,8 +293,11 @@ export default function WebinarPage() {
                   </button>
                 </div>
 
-                <p className="text-xs text-navy/60 text-center leading-relaxed">
+                <p className="text-xs text-navy/60 text-center leading-relaxed mb-4">
                   By registering, you agree to receive communications about this and future events.
+                </p>
+                <p className="text-xs text-navy/50 text-center leading-relaxed">
+                  This is a FREE educational webinar. No sales pitch. Education first, always.
                 </p>
               </form>
             </div>

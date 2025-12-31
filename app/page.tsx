@@ -34,17 +34,17 @@ export default function Home() {
             className="text-5xl md:text-7xl font-heading font-bold leading-tight mb-8"
             variants={fadeInUp}
           >
-            Build on an Enduring Framework.
+            Stop Bleeding $20K-$50K/Year
             <br />
-            Not Shifting Sands.
+            to Banks and Wall Street.
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl mb-12 leading-relaxed"
             variants={fadeInUp}
           >
-            Master a timeless financial framework designed for your family&apos;s lasting legacy.
+            Christian entrepreneurs earning $250K+ learn how to become their own banker,
             <br />
-            Start your education for FREE.
+            recapture lost interest, and build multi-generational wealth systems.
           </motion.p>
           <motion.div
             className="border-t border-cream/30 pt-8 flex flex-col sm:flex-row gap-4 justify-center"
@@ -576,6 +576,11 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Case Study Disclaimer */}
+        <p className="text-center text-sm text-navy/60 mt-12 max-w-2xl mx-auto">
+          Case studies represent actual client results. Names changed for privacy. Individual results vary based on policy design, premium amount, time horizon, and personal circumstances.
+        </p>
       </section>
 
       <TestimonialCarousel />
