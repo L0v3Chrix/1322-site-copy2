@@ -583,7 +583,7 @@ export default function OpportunityCostPage() {
               for your specific business purchases and financing needs.
             </p>
             <a
-              href="https://discovery.1322legacystrategies.com/"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block border-2 border-navy text-navy px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"

@@ -274,7 +274,7 @@ export default function IBCEducationPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <a
-              href="https://www.skool.com/1322-ibc-academy"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-gold text-navy px-12 py-4 font-heading font-bold text-lg uppercase tracking-wider hover:bg-gold/90 transition-colors"
@@ -282,7 +282,7 @@ export default function IBCEducationPage() {
               Join Free Academy
             </a>
             <a
-              href="https://discovery.1322legacystrategies.com/"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block border-2 border-cream text-cream px-12 py-4 font-heading font-bold text-lg uppercase tracking-wider hover:bg-cream hover:text-navy transition-colors"

@@ -202,7 +202,7 @@ export default function StrategyPage() {
               </div>
 
               <p className="italic text-navy/80 mb-6">
-                &ldquo;I reached out to Brad blindly not knowing what to expect. My perception and experience is that a lot of &apos;advisors&apos; in the financial space love taking your call and helping you get set up with someone and then fading into the background. Brad is different, but in a great way! In the many hours we spent speaking with him, he didn&apos;t waver as we asked many questions, he challenged the way we have been doing things, and he offered sound advice. He has quickly become someone we can trust as we truly believe he has our family&apos;s best interest in mind. We would highly recommend this personable, trustworthy man to anyone navigating the waters of the vast financial ocean!&rdquo;
+                &ldquo;I reached out to Brad blindly not knowing what to expect. My perception and experience is that a lot of &apos;advisors&apos; in the financial space love taking your call and helping you get set up with someone and then fading into the background and seemingly not showing you that they care. Brad is different, but in a great way! In the many hours we spent speaking with him, he didn&apos;t waver as we asked many questions, he challenged the way we have been doing things, and he offered sound advice, but in a manner that destroyed my &apos;perception&apos; of advisors. He has quickly become someone we can trust as we truly believe he has our family&apos;s best interest in mind and for that we are very thankful for Brad and his services! We would highly recommend this personable, trustworthy man to anyone navigating the waters of the vast financial ocean! He will help bring you clarity and direction while doing it with kindness and compassion!&rdquo;
               </p>
 
               <div className="flex items-center text-gold">
@@ -273,7 +273,7 @@ export default function StrategyPage() {
             </p>
 
             <a
-              href="https://discovery.1322legacystrategies.com/"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary inline-block"

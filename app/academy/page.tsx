@@ -106,7 +106,7 @@ export default function AcademyPage() {
           </p>
           <div className="border-t border-cream/30 pt-12">
             <a
-              href="https://www.skool.com/1322-ibc-academy"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-gold text-navy px-12 py-4 font-heading font-bold text-lg uppercase tracking-wider hover:bg-gold/90 transition-colors"
@@ -213,7 +213,7 @@ export default function AcademyPage() {
           <div className="max-w-3xl mx-auto space-y-6">
             <div className="flex items-start border-l-2 border-gold pl-6">
               <p className="text-xl leading-relaxed">
-                You run an established business ($500K-$5M revenue) and are tired of bleeding interest to banks
+                You run an established business ($250K-$5M revenue) and are tired of bleeding interest to banks
               </p>
             </div>
             <div className="flex items-start border-l-2 border-gold pl-6">
@@ -253,7 +253,7 @@ export default function AcademyPage() {
             weekly, and it costs you absolutely nothing.
           </p>
           <a
-            href="https://www.skool.com/1322-ibc-academy"
+            href="https://www.skool.com/ibc-academy-5448"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-navy text-cream px-12 py-5 font-heading font-bold text-xl uppercase tracking-wider hover:bg-navy/90 transition-colors"

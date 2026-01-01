@@ -21,14 +21,14 @@ const toolLinks = [
 ]
 
 const communityLinks = [
-  { name: "Free Academy", href: "https://www.skool.com/1322-ibc-academy", external: true },
+  { name: "Free Academy", href: "https://www.skool.com/ibc-academy-5448", external: true },
   { name: "Office Hours", href: "/learn/office-hours" },
   { name: "Blog", href: "/blog" },
   { name: "About Brad", href: "/about" },
 ]
 
 const connectLinks = [
-  { name: "Book a Call", href: "https://discovery.1322legacystrategies.com/", external: true },
+  { name: "Book a Call", href: "https://www.skool.com/ibc-academy-5448", external: true },
   { name: "Privacy Policy", href: "/legal/privacy-policy" },
   { name: "Terms & Conditions", href: "/legal/terms-and-conditions" },
 ]

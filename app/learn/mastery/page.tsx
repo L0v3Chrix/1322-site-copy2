@@ -265,7 +265,7 @@ export default function MasteryPage() {
               Plus, get access to weekly live Q&A where Brad answers your most complex questions.
             </p>
             <a
-              href="https://www.skool.com/1322-ibc-academy"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-gold text-navy px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"
@@ -291,7 +291,7 @@ export default function MasteryPage() {
               strategies for your specific situation, let&apos;s talk.
             </p>
             <a
-              href="https://discovery.1322legacystrategies.com/"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block border-2 border-navy text-navy px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"

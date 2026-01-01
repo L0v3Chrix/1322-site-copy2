@@ -12,7 +12,7 @@ export default function QualifyPage() {
 
   useEffect(() => {
     // Redirect to the external URL
-    router.push("https://discovery.1322legacystrategies.com/")
+    router.push("https://www.skool.com/ibc-academy-5448")
   }, [router])
 
   // If showing the call now form, render that instead

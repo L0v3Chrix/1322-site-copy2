@@ -535,7 +535,7 @@ export default function IBCConceptExplainedPage() {
                       Let&apos;s discuss how IBC could work for your situation.
                     </p>
                     <a
-                      href="https://discovery.1322legacystrategies.com/"
+                      href="https://www.skool.com/ibc-academy-5448"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block text-center bg-gold text-navy px-4 py-2 font-mono text-sm uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"
@@ -599,7 +599,7 @@ export default function IBCConceptExplainedPage() {
                 Continue to Deep Dives
               </Link>
               <a
-                href="https://discovery.1322legacystrategies.com/"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block border-2 border-cream text-cream px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-cream hover:text-navy transition-colors"
@@ -634,7 +634,7 @@ export default function IBCConceptExplainedPage() {
                 <h3 className="font-heading text-sm font-bold text-navy mt-1">Interest Bleed Calculator</h3>
               </Link>
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-navy/20 bg-cream p-4 hover:border-gold transition-colors"

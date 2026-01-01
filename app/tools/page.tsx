@@ -202,7 +202,7 @@ export default function ToolsPage() {
               </Link>
 
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-navy/20 bg-cream p-6 hover:border-gold transition-colors group"
@@ -234,7 +234,7 @@ export default function ToolsPage() {
               specific to your business situation, let&apos;s have a conversation.
             </p>
             <a
-              href="https://discovery.1322legacystrategies.com/"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block border-2 border-navy text-navy px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"

@@ -596,7 +596,7 @@ export default function WholeLifeExplainedPage() {
                 <h3 className="font-heading text-sm font-bold text-navy mt-1">Interest Bleed Calculator</h3>
               </Link>
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-navy/20 bg-cream p-4 hover:border-gold transition-colors"

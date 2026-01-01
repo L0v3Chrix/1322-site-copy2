@@ -251,7 +251,7 @@ export default function DeepDivesPage() {
               Plus, get access to weekly live Q&A with Brad.
             </p>
             <a
-              href="https://www.skool.com/1322-ibc-academy"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-gold text-navy px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"
@@ -310,7 +310,7 @@ export default function DeepDivesPage() {
               </Link>
 
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-navy/20 bg-cream p-6 hover:border-gold transition-colors group"

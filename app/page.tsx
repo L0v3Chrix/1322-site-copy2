@@ -55,7 +55,7 @@ export default function Home() {
             </Button>
             <Button asChild variant="creamOutline" size="xl">
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -161,7 +161,7 @@ export default function Home() {
             {/* Free Academy */}
             <EnhancedCard staggerChild className="group bg-gold/5 border-2 border-gold p-0" padding="none">
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block p-6"
@@ -630,10 +630,10 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <div className="relative h-[600px]">
             <OptimizedImage
-              src="/images/brad-raschke-founder.png"
+              src="/images/brad-headshot.jpeg"
               alt="Brad Raschke, Founder"
               type="medium"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
           </div>
           <div>
@@ -715,7 +715,7 @@ export default function Home() {
             </Button>
             <Button asChild variant="navyOutline" size="xl">
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -741,7 +741,7 @@ export default function Home() {
           >
             <p className="text-navy/70 mb-4">Ready to discuss your specific situation?</p>
             <a
-              href="https://discovery.1322legacystrategies.com/"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-sm uppercase tracking-wider text-gold hover:text-navy transition-colors inline-flex items-center gap-2 group"

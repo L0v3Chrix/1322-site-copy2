@@ -93,7 +93,7 @@ export default function WebinarPage() {
               IBC education.
             </p>
             <a
-              href="https://www.skool.com/1322-ibc-academy"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-navy text-cream px-12 py-4 font-heading font-bold uppercase tracking-wider hover:bg-navy/90 transition-colors"

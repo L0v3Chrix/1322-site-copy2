@@ -797,7 +797,7 @@ export default function TheBankingProblemPage() {
               </Link>
 
               <a
-                href="https://www.skool.com/1322-ibc-academy"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-navy/20 bg-cream p-6 hover:border-gold transition-colors group"

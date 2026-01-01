@@ -103,7 +103,7 @@ const learningStyles = [
   {
     name: "Discuss",
     description: "Join the Academy",
-    href: "https://www.skool.com/1322-ibc-academy",
+    href: "https://www.skool.com/ibc-academy-5448",
     icon: "community",
     external: true,
   },
@@ -314,7 +314,7 @@ export default function LearnPage() {
               Ask questions, hear real examples, and learn from fellow entrepreneurs.
             </p>
             <a
-              href="https://www.skool.com/1322-ibc-academy"
+              href="https://www.skool.com/ibc-academy-5448"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-navy text-cream px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-gold hover:text-navy transition-colors"
@@ -338,7 +338,7 @@ export default function LearnPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://discovery.1322legacystrategies.com/"
+                href="https://www.skool.com/ibc-academy-5448"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block border-2 border-navy text-navy px-8 py-3 font-heading font-bold uppercase tracking-wider hover:bg-navy hover:text-cream transition-colors"

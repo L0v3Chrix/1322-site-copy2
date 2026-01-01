@@ -181,7 +181,7 @@ export default function Header() {
           </div>
 
           <Link
-            href="https://www.skool.com/1322-ibc-academy"
+            href="https://www.skool.com/ibc-academy-5448"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm uppercase tracking-wider font-medium text-gold py-1 relative group"
@@ -210,7 +210,7 @@ export default function Header() {
         {/* Desktop CTA */}
         <div className="hidden lg:block">
           <Link
-            href="https://discovery.1322legacystrategies.com/"
+            href="https://www.skool.com/ibc-academy-5448"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-2 border-2 border-current text-sm uppercase tracking-wider font-heading font-bold hover:bg-gold hover:border-gold hover:text-navy transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
@@ -303,7 +303,7 @@ export default function Header() {
                 </div>
 
                 <Link
-                  href="https://www.skool.com/1322-ibc-academy"
+                  href="https://www.skool.com/ibc-academy-5448"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 text-sm uppercase tracking-wider font-medium text-gold border-b border-navy/10 hover:bg-gold/10 transition-colors"
@@ -330,7 +330,7 @@ export default function Header() {
 
                 <div className="px-6 py-4">
                   <Link
-                    href="https://discovery.1322legacystrategies.com/"
+                    href="https://www.skool.com/ibc-academy-5448"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-center px-6 py-3 bg-gold text-navy text-sm uppercase tracking-wider font-heading font-bold hover:bg-gold/90 transition-colors"
