@@ -1,0 +1,34 @@
+# 1322 Legacy Strategies
+# https://www.1322legacystrategies.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/static/
+Disallow: /*.json$
+
+# AI Crawlers - Explicitly allow for GEO (Generative Engine Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Sitemaps
+Sitemap: https://www.1322legacystrategies.com/sitemap.xml
