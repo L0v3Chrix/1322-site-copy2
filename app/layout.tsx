@@ -1,9 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Libre_Baskerville, Lora, IBM_Plex_Mono } from "next/font/google"
-import Script from "next/script" // Import the Script component
+import Script from "next/script"
 import "./globals.css"
 import ClientLayout from "./client-layout"
+import { OrganizationJsonLd } from "@/components/json-ld"
 
 // Principled Authority Typography System
 const libreBaskerville = Libre_Baskerville({
@@ -104,6 +105,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${libreBaskerville.variable} ${lora.variable} ${ibmPlexMono.variable} font-body bg-cream`}>
+        <OrganizationJsonLd />
         <ClientLayout>{children}</ClientLayout>
 
         {/* Google Tag Manager Scripts */}
