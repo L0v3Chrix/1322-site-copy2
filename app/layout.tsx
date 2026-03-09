@@ -95,6 +95,9 @@ export const metadata: Metadata = {
     // Add Google Search Console verification when available
     // google: "verification-code-here",
   },
+  other: {
+    "facebook-domain-verification": "ojk36bjak0wbru27t6lgog334o8oeg",
+  },
 }
 
 export default function RootLayout({
